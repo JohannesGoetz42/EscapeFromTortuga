@@ -3,13 +3,16 @@ using UnityEngine.UIElements;
 
 public class GameTime : MonoBehaviour
 {
-    private float startTime = 0;
     private TextElement gameTimeText;
+    private string textFormat = string.Empty;
 
     private void Awake()
     {
-        startTime = Time.realtimeSinceStartup;
         gameTimeText = GetComponent<UIDocument>().rootVisualElement.Q<TextElement>("GameTimeText");
+        if (gameTimeText != null)
+        {
+            textFormat = gameTimeText.text;
+        }
     }
 
     // Update is called once per frame
@@ -17,11 +20,11 @@ public class GameTime : MonoBehaviour
     {
         if (gameTimeText != null)
         {
-            float currentTime = Time.realtimeSinceStartup - startTime;
-            int minutes = Mathf.FloorToInt(currentTime / 60.0f);
-            int seconds = Mathf.FloorToInt(currentTime % 60);
-            int miliseconds = Mathf.FloorToInt((currentTime % 1) * 100);
-            gameTimeText.text = string.Format("CurrentTime: {0}:{1}:{2}", minutes, seconds.ToString("00"), miliseconds.ToString("00"));
+            float gameTime = PlayerController.Instance.gameTime;
+            int minutes = Mathf.FloorToInt(gameTime / 60.0f);
+            int seconds = Mathf.FloorToInt(gameTime % 60);
+            int miliseconds = Mathf.FloorToInt((gameTime % 1) * 100);
+            gameTimeText.text = string.Format(textFormat, minutes, seconds.ToString("00"), miliseconds.ToString("00"));
         }
     }
 }

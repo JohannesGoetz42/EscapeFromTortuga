@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : CharacterController
 {
     public static PlayerController Instance { get; private set; }
-    public float gameTime {  get; private set; }
+    public float gameTime { get; private set; }
 
-    public float movementSpeed = 10.0f;
     private bool canEscape = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public void TryEscape()
     {
-        if(!canEscape)
+        if (!canEscape)
         {
             return;
         }
@@ -37,10 +36,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         HandleMovement();
         gameTime += Time.deltaTime;
+
+        base.Update();
     }
 
     void HandleMovement()
@@ -49,6 +50,9 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 movementVector = Vector3.Normalize(new Vector3(horizontalInput, 0.0f, verticalInput));
 
+        transform.rotation = Quaternion.LookRotation(movementVector);
         transform.position += movementVector * Time.deltaTime * movementSpeed;
+
+        currentSpeed = movementVector == Vector3.zero ? 0.0f : movementSpeed;
     }
 }

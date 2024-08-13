@@ -8,10 +8,11 @@ public class PlayerController : CharacterController
     private bool canEscape = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
+        base.Start();
     }
 
     public void TryEscape()
@@ -50,9 +51,15 @@ public class PlayerController : CharacterController
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector3 movementVector = Vector3.Normalize(new Vector3(horizontalInput, 0.0f, verticalInput));
 
-        transform.rotation = Quaternion.LookRotation(movementVector);
-        transform.position += movementVector * Time.deltaTime * movementSpeed;
-
-        currentSpeed = movementVector == Vector3.zero ? 0.0f : movementSpeed;
+        if (movementVector == Vector3.zero)
+        {
+            currentSpeed = 0.0f;
+        }
+        else
+        {
+            transform.rotation = Quaternion.LookRotation(movementVector);
+            transform.position += movementVector * Time.deltaTime * movementSpeed;
+            currentSpeed = movementSpeed;
+        }
     }
 }

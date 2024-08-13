@@ -9,7 +9,7 @@ public class CharacterController : MonoBehaviour
 
     protected float currentSpeed;
 
-    private void Start()
+    protected virtual void Start()
     {
         animator = gameObject.GetComponent<Animator>();
     }

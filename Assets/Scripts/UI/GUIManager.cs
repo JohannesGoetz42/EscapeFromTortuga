@@ -18,14 +18,14 @@ public struct GUIModeDocument
 
 public class GUIManager : MonoBehaviour
 {
-    public static GUIManager instance { get; private set; }
+    public static GUIManager Instance { get; private set; }
     public GUIModeDocument[] modeDocuments;
 
     public void SetGuiMode(GUIMode newMode)
     {
         foreach (GUIModeDocument modeDocument in modeDocuments)
         {
-            modeDocument.document.rootVisualElement.visible = modeDocument.mode == newMode;
+            modeDocument.document.gameObject.SetActive(modeDocument.mode == newMode);
         }
     }
 
@@ -37,11 +37,11 @@ public class GUIManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(instance);
+            Destroy(Instance);
         }
 
-        instance = this;
+        Instance = this;
     }
 }

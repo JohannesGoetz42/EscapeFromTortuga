@@ -383,6 +383,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf0df57e40987a41ad24222ab89d6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1463048084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463048079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb9dbe9a81737af44863154300dfc095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableAnimations:
+  - Smoke
+  - Dance
+  - WipeMouth
+  - CheckWatch
+  MinAnimationInterval: 3
+  MaxAnimationInterval: 5
 --- !u!1 &1549882038
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +581,7 @@ PrefabInstance:
     - target: {fileID: 9500506, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 17c1159190448164981e2b136b85f014, type: 2}
+      objectReference: {fileID: 9100000, guid: 085748cf6a757a44ca8f7b4e9060a2eb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 123564, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
@@ -576,6 +595,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 126762, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1463048083}
+    - targetCorrespondingSourceObject: {fileID: 126762, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463048084}
   m_SourcePrefab: {fileID: 100100000, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
 --- !u!1 &1618305179
 GameObject:

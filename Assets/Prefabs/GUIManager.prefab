@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8943108252237589076}
   - component: {fileID: 3374575754888661384}
+  - component: {fileID: 4534543985735569528}
   m_Layer: 0
   m_Name: GUIManager
   m_TagString: Untagged
@@ -118,6 +119,19 @@ MonoBehaviour:
     document: {fileID: 7638994495742750186}
   - mode: 2
     document: {fileID: 9014706761473768396}
+--- !u!114 &4534543985735569528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3550996369201166750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b0bfec329a4f24c8f7f94c086ca606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: 
 --- !u!1 &4373366719531160802
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,8 +143,9 @@ GameObject:
   - component: {fileID: 5590050310251035398}
   - component: {fileID: 9014706761473768396}
   - component: {fileID: 3601583714716927123}
-  - component: {fileID: 7285328816335866031}
   - component: {fileID: 1397506630394392158}
+  - component: {fileID: 4886920955614207344}
+  - component: {fileID: 8193615614243189131}
   m_Layer: 0
   m_Name: EscapedScreen
   m_TagString: Untagged
@@ -184,18 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f774b34526a8141a3c8c62053572d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7285328816335866031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4373366719531160802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b0bfec329a4f24c8f7f94c086ca606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1397506630394392158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +211,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15641a55eefe9504aa6031918b10ef3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonName: StartGameButton
+--- !u!114 &4886920955614207344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373366719531160802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b0bfec329a4f24c8f7f94c086ca606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: QuitButton
+--- !u!114 &8193615614243189131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373366719531160802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac331f9e6d5f634492ece483e96249e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: BackToMenuButton
 --- !u!1 &8955784890074832633
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,8 +249,9 @@ GameObject:
   - component: {fileID: 2890033422159043170}
   - component: {fileID: 7638994495742750186}
   - component: {fileID: 4627721654075420751}
-  - component: {fileID: 7979524337448044793}
   - component: {fileID: 2969695928213539139}
+  - component: {fileID: 9127909943188513130}
+  - component: {fileID: 4752524596807695486}
   m_Layer: 0
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -274,18 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53f774b34526a8141a3c8c62053572d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7979524337448044793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8955784890074832633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b0bfec329a4f24c8f7f94c086ca606, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2969695928213539139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,3 +317,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15641a55eefe9504aa6031918b10ef3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonName: StartGameButton
+--- !u!114 &9127909943188513130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955784890074832633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15b0bfec329a4f24c8f7f94c086ca606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: QuitButton
+--- !u!114 &4752524596807695486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955784890074832633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac331f9e6d5f634492ece483e96249e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonName: BackToMenuButton

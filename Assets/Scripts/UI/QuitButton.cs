@@ -5,39 +5,14 @@ using UnityEngine.UIElements;
 using UnityEditor;
 #endif
 
-public class QuitButton : MonoBehaviour
+public class QuitButton : MenuButtonBase
 {
-    private Button _quitButton;
-
-    private void Awake()
+    QuitButton() : base()
     {
-        UIDocument document = GetComponent<UIDocument>();
-        if (document == null)
-        {
-            return;
-        }
-
-        _quitButton = document.rootVisualElement.Q("QuitButton") as Button;
-        if (_quitButton == null)
-        {
-            Debug.Log("script requires a Button named 'QuitButton'!");
-            return;
-        }
-
-        _quitButton.RegisterCallback<ClickEvent>(OnQuitClick);
+        buttonName = "QuitButton";
     }
 
-    private void OnDisable()
-    {
-        if (_quitButton == null)
-        {
-            return;
-        }
-
-        _quitButton.UnregisterCallback<ClickEvent>(OnQuitClick);
-    }
-
-    void OnQuitClick(ClickEvent clickEvent)
+    protected override void OnClick(ClickEvent clickEvent)
     {
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();

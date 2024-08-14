@@ -1,7 +1,21 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/DefaultStyle.uss?fileID=7433441132597879392&amp;guid=1e79e346ac518a849b6e7f514e907b1c&amp;type=3#DefaultStyle" />
-    <engine:VisualElement name="Container" style="flex-grow: 1; justify-content: center;">
+    <engine:VisualElement name="ContainerTop" style="flex-grow: 1; justify-content: center;">
         <engine:Label text="Escape from Tortuga" class="header" />
+    </engine:VisualElement>
+    <engine:VisualElement name="ContainerCenter" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: flex-end; align-self: center; width: 600px; margin-top: 500px;">
+        <engine:VisualElement name="ModelCycle" class="cycleContainer">
+            <engine:Button text="&lt;&#10;" name="CycleModelButtonPrevious" class="cycleButton" />
+            <engine:Label text="Select character" name="CycleModel" class="secondary" />
+            <engine:Button text="&gt;" name="CycleModelButtonNext" class="cycleButton" />
+        </engine:VisualElement>
+        <engine:VisualElement name="MaterialCycle" class="cycleContainer">
+            <engine:Button text="&lt;&#10;" name="CycleMaterialButtonPrevious" class="cycleButton alignLeft" />
+            <engine:Label text="Select color" name="CycleModel" class="secondary" />
+            <engine:Button text="&gt;" name="CycleMaterialButtonNext" class="cycleButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="ContainerBottom" style="flex-grow: 1; justify-content: flex-end; padding-bottom: 100px;">
         <engine:Button text="Start Game" name="StartGameButton" class="menuButton" />
         <engine:Button text="Quit" name="QuitButton" class="menuButton" />
     </engine:VisualElement>

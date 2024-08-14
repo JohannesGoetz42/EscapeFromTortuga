@@ -29,6 +29,11 @@ public class ModelSwitch : MonoBehaviour
 
     void SelectModel(int modelIndex)
     {
+        if (modelIndex < 0)
+        {
+            modelIndex = GameManager.Instance.AvailableMaterials.Length + modelIndex;
+        }
+
         modelIndex %= _availableModels.Count;
         
         // set the selected model active and all other available models inactive

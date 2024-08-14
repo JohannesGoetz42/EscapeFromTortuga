@@ -19,6 +19,11 @@ public class MaterialSwitch : MonoBehaviour
 
     void SelectMaterial(int materialIndex)
     {
+        if (materialIndex < 0)
+        {
+            materialIndex = GameManager.Instance.AvailableMaterials.Length + materialIndex;
+        }
+
         materialIndex %= GameManager.Instance.AvailableMaterials.Length;
 
         foreach (Transform child in transform)

@@ -4,7 +4,7 @@ public class PlayerController : CharacterControllerBase
 {
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
-    public bool isGameOver {  get; private set; }
+    public bool isGameOver { get; private set; }
 
     private bool canEscape = true;
 
@@ -40,6 +40,11 @@ public class PlayerController : CharacterControllerBase
     // Update is called once per frame
     protected override void Update()
     {
+        if (isGameOver)
+        {
+            return;
+        }
+
         HandleMovement();
         gameTime += Time.deltaTime;
 

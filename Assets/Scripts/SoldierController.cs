@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SoldierController : CharacterController
+public class SoldierController : CharacterControllerBase
 {
     protected override void Update()
     {

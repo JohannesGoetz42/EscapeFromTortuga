@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : CharacterController
+public class PlayerController : CharacterControllerBase
 {
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }

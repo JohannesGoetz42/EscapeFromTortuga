@@ -1265,6 +1265,7 @@ GameObject:
   - component: {fileID: 8940165893656762262}
   - component: {fileID: 8919068220602445499}
   - component: {fileID: 1837721068332947166}
+  - component: {fileID: 2107880847968426579}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Soldier
@@ -1385,7 +1386,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c79f950fe9dd243a172d984f29f97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 9
+--- !u!65 &2107880847968426579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252637909196985662}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6, y: 1.61, z: 2.02}
+  m_Center: {x: 0, y: 0.8, z: 0.75}
 --- !u!1 &2271145786958596323
 GameObject:
   m_ObjectHideFlags: 0

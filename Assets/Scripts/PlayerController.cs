@@ -4,6 +4,7 @@ public class PlayerController : CharacterController
 {
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
+    public bool isGameOver {  get; private set; }
 
     private bool canEscape = true;
 
@@ -23,7 +24,7 @@ public class PlayerController : CharacterController
         }
 
         Time.timeScale = 0.0f;
-        GUIManager.instance.SetGuiMode(GUIMode.Escaped);
+        GUIManager.Instance.SetGuiMode(GUIMode.Escaped);
     }
 
     private void Awake()
@@ -61,5 +62,11 @@ public class PlayerController : CharacterController
             transform.position += movementVector * Time.deltaTime * movementSpeed;
             currentSpeed = movementSpeed;
         }
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        GUIManager.Instance.SetGuiMode(GUIMode.GameOver);
     }
 }

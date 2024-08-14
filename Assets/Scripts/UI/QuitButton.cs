@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class QuitButton : MonoBehaviour
 {
     private Button _quitButton;
@@ -35,7 +39,10 @@ public class QuitButton : MonoBehaviour
 
     void OnQuitClick(ClickEvent clickEvent)
     {
-        Debug.Log("Quit Game");
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
         Application.Quit();
+#endif
     }
 }

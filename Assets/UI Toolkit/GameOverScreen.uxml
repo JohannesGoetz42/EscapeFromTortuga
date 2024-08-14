@@ -4,6 +4,7 @@
         <engine:Label text="You have been caught!" name="Headline" class="header header-bad" />
         <engine:Label text="Your escape took 1:42:42 Minutes!" name="EscapeTimeText" class="secondary" />
         <engine:Button text="Try again!" name="StartGameButton" class="menuButton" />
+        <engine:Button text="Back to menu" name="BackToMenuButton" class="menuButton" />
         <engine:Button text="Quit&#10;" name="QuitButton" class="menuButton" />
     </engine:VisualElement>
 </engine:UXML>

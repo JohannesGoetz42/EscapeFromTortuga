@@ -2,39 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class StartGameButton : MonoBehaviour
+public class StartGameButton : MenuButtonBase
 {
-    private Button _startGameButton;
-
-    private void Awake()
+    StartGameButton() : base()
     {
-        UIDocument document = GetComponent<UIDocument>();
-        if (document == null)
-        {
-            return;
-        }
-
-        _startGameButton = document.rootVisualElement.Q("StartGameButton") as Button;
-
-        if (_startGameButton == null)
-        {
-            Debug.Log("script requires a Button named 'StartGameButton'!");
-            return;
-        }
-        _startGameButton.RegisterCallback<ClickEvent>(OnStartGameClick);
+        buttonName = "StartGameButton";
     }
 
-    private void OnDisable()
-    {
-        if (_startGameButton == null)
-        {
-            return;
-        }
-
-        _startGameButton.UnregisterCallback<ClickEvent>(OnStartGameClick);
-    }
-
-    void OnStartGameClick(ClickEvent clickEvent)
+    protected override void OnClick(ClickEvent clickEvent)
     {
         Debug.Log("Starting Game");
         SceneManager.LoadScene(Constants.gameScene);

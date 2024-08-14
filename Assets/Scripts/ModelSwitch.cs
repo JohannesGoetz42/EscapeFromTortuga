@@ -15,7 +15,10 @@ public class ModelSwitch : MonoBehaviour
             }
         }
 
-        SelectModel(GameManager.Instance.SelectedCharacter);
+        if (GameManager.Instance != null)
+        {
+            SelectModel(GameManager.Instance.SelectedCharacter);
+        }
     }
 
     public void SelectNextModel()
@@ -35,7 +38,7 @@ public class ModelSwitch : MonoBehaviour
         }
 
         modelIndex %= _availableModels.Count;
-        
+
         // set the selected model active and all other available models inactive
         for (int i = 0; i < _availableModels.Count; i++)
         {

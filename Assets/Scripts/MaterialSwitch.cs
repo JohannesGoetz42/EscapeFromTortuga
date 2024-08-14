@@ -5,7 +5,10 @@ public class MaterialSwitch : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SelectMaterial(GameManager.Instance.SelectedMaterial);
+        if (GameManager.Instance != null)
+        {
+            SelectMaterial(GameManager.Instance.SelectedMaterial);
+        }
     }
 
     public void SelectNextMaterial()

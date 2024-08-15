@@ -13,6 +13,8 @@ public class PathfindingGrid : MonoBehaviour
     int gridSizeX;
     int gridSizeY;
 
+    public int MaxGridSize { get { return gridSizeX * gridSizeY; } }
+
     public PathfindingNode GetNodeAtWorldPosition(Vector3 worldPosition)
     {
         Vector3 relativePosition = worldPosition - transform.localPosition;

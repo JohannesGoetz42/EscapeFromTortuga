@@ -28,7 +28,8 @@ public class Pathfinding : MonoBehaviour
     public void FindPath(Vector3 startPosition, Vector3 targetPosition)
     {
         Profiler.BeginSample("Pathfinding");
-        List<PathfindingNode> openSet = new List<PathfindingNode>();
+        //List<PathfindingNode> openSet = new List<PathfindingNode>();
+        Heap<PathfindingNode> openSet = new Heap<PathfindingNode>(grid.MaxGridSize);
         HashSet<PathfindingNode> closedSet = new HashSet<PathfindingNode>();
 
 
@@ -38,17 +39,18 @@ public class Pathfinding : MonoBehaviour
 
         while (openSet.Count > 0)
         {
-            PathfindingNode currentNode = openSet[0];
+            //PathfindingNode currentNode = openSet[0];
+            //foreach (PathfindingNode node in openSet)
+            //{
+            //    if (node.IsCheaperThan(currentNode))
+            //    {
+            //        currentNode = node;
+            //    }
+            //}
+            //openSet.Remove(currentNode);
 
-            foreach (PathfindingNode node in openSet)
-            {
-                if (node.IsCheaperThan(currentNode))
-                {
-                    currentNode = node;
-                }
-            }
+            PathfindingNode currentNode = openSet.RemoveFirst();
 
-            openSet.Remove(currentNode);
             closedSet.Add(currentNode);
 
             // the target has been found

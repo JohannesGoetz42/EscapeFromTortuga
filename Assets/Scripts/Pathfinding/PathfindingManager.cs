@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
-struct PathRequest
+struct PathResult
 {
-    public Transform startTransform;
-    public Transform targetTransform;
-    public Action<Vector3[], bool> callback;
-
-    public PathRequest(Transform _startTransform, Transform _targetTransform, Action<Vector3[], bool> _callback)
+    public PathResult(Vector3[] _path, bool _success, Action<Vector3[], bool> _callback)
     {
-        startTransform = _startTransform;
-        targetTransform = _targetTransform;
+        path = _path;
+        success = _success;
         callback = _callback;
     }
+
+    public Vector3[] path;
+    public bool success;
+    public Action<Vector3[], bool> callback;
 }
 
 public class PathfindingManager : MonoBehaviour
@@ -21,10 +22,7 @@ public class PathfindingManager : MonoBehaviour
     public static PathfindingManager _instance { get; private set; }
     private static Pathfinding _pathFinder;
 
-    private Queue<PathRequest> _requestQueue = new Queue<PathRequest>();
-    PathRequest currentRequest;
-    private float queueProcessingInterval = 0.5f;
-    private bool isProcessing;
+    private Queue<PathResult> _pathResults = new Queue<PathResult>();
 
     private void Awake()
     {
@@ -38,38 +36,37 @@ public class PathfindingManager : MonoBehaviour
         _pathFinder = GetComponent<Pathfinding>();
     }
 
+    private void Update()
+    {
+        lock (_pathResults)
+        {
+            PathResult currentResult;
+            while (_pathResults.TryDequeue(out currentResult))
+            {
+                currentResult.callback(currentResult.path, currentResult.success);
+            }
+        }
+    }
+
     /** 
      * Request the path with transforms
      * Prefer transforms over Vector3, since it will be updated while waiting in the queue
      */
-    public static void RequestPath(Transform startTransform, Transform targetTransform, Action<Vector3[], bool> callback)
+    public static void RequestPath(PathRequest request)
     {
-        PathRequest request = new PathRequest(startTransform, targetTransform, callback);
-        _instance._requestQueue.Enqueue(request);
-
-        // invoke with delay to ensure everything is set up
-        _instance.Invoke(nameof(TryProcessNextInQueue), _instance.queueProcessingInterval);
-    }
-
-    void TryProcessNextInQueue()
-    {
-        if (isProcessing || _requestQueue.Count == 0)
+        if (_pathFinder)
         {
-            return;
+            ThreadStart thread = delegate { _pathFinder.FindPath(request, _instance.FinishedProcessingPath); };
+            thread.Invoke();
         }
-
-        isProcessing = true;
-        currentRequest = _requestQueue.Dequeue();
-        StartCoroutine(_pathFinder.FindPath(currentRequest.startTransform.position, currentRequest.targetTransform.position, this));
     }
 
-    public void FinishedProcessingPath(Vector3[] path, bool success)
+    public void FinishedProcessingPath(Vector3[] path, bool success, PathRequest originalRequest)
     {
-        currentRequest.callback(path, success);
-        isProcessing = false;
-        if (_requestQueue.Count > 0)
+        PathResult result = new PathResult(path, success, originalRequest.callback);
+        lock (_instance._pathResults)
         {
-            Invoke(nameof(TryProcessNextInQueue), queueProcessingInterval);
+            _instance._pathResults.Enqueue(result);
         }
     }
 }

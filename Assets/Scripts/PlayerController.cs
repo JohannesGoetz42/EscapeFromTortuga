@@ -38,7 +38,7 @@ public class PlayerController : CharacterControllerBase
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected void Update()
     {
         if (isGameOver)
         {
@@ -47,26 +47,14 @@ public class PlayerController : CharacterControllerBase
 
         HandleMovement();
         gameTime += Time.deltaTime;
-
-        base.Update();
     }
 
     void HandleMovement()
     {
         float verticalInput = Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
-        Vector3 movementVector = Vector3.Normalize(new Vector3(horizontalInput, 0.0f, verticalInput));
-
-        if (movementVector == Vector3.zero)
-        {
-            currentSpeed = 0.0f;
-        }
-        else
-        {
-            transform.rotation = Quaternion.LookRotation(movementVector);
-            transform.position += movementVector * Time.deltaTime * movementSpeed;
-            currentSpeed = movementSpeed;
-        }
+        Vector3 movementDirection = Vector3.Normalize(new Vector3(horizontalInput, 0.0f, verticalInput));
+        HandleMovement(movementDirection);
     }
 
     public void GameOver()

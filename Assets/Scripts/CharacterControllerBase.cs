@@ -7,18 +7,24 @@ public class CharacterControllerBase : MonoBehaviour
     [SerializeField]
     protected float movementSpeed = 10.0f;
 
-    protected float currentSpeed;
-
     protected virtual void Start()
     {
         animator = gameObject.GetComponent<Animator>();
     }
 
-    protected virtual void Update()
+    protected void HandleMovement(Vector3 direction)
     {
+        float speed = 0.0f;
+        if (direction != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(direction);
+            transform.position += direction * Time.deltaTime * movementSpeed;
+            speed = movementSpeed;
+        }
+
         if (animator != null)
         {
-            animator.SetFloat("MovementSpeed", currentSpeed);
+            animator.SetFloat("MovementSpeed", speed);
         }
     }
 }

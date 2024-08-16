@@ -6,7 +6,6 @@ public class PathfindingGrid : MonoBehaviour
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
-    public List<PathfindingNode> path;
 
     PathfindingNode[,] grid;
     float nodeDiameter;
@@ -85,21 +84,10 @@ public class PathfindingGrid : MonoBehaviour
         Debug.Log(string.Format("CreatedGrid: {0} x {1}", gridSizeX, gridSizeY));
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-        if (grid != null)
-        {
-            foreach (PathfindingNode node in grid)
-            {
-                Gizmos.color = node.isWalkable ? Color.white : Color.red;
-                if (path != null && path.Contains(node))
-                {
-                    Gizmos.color = Color.magenta;
-                }
-
-                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
-            }
-        }
     }
+#endif
 }

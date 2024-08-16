@@ -11,32 +11,44 @@ public class MoveTo : MonoBehaviour
      * will never update the path when interval is negative;
      */
     [SerializeField] float updatePathInterval = -1.0f;
+    [SerializeField] float updateIntervalRange = 0.3f;
 
     private Queue<Vector3> path;
     private bool hasFoundPath;
-    float timeSincePathUpdate;
+    private float timeSincePathUpdate;
+    /** randomize the update interval to avoid updating every instance at the same time */
+    private float nextUpdateInterval;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         controller = GetComponent<NPCController>();
-        if (controller != null)
+        // if no controller is found, suppress updates
+        if (controller == null)
         {
-            PathfindingManager.RequestPath(transform, target, OnPathFound);
+            nextUpdateInterval = -1.0f;
+            Debug.LogError(string.Format("MoveTo script on '{0}' could not find an NPCController!", gameObject.name));
+            return;
+        }
+
+        if (updatePathInterval > 0.0f)
+        {
+            nextUpdateInterval = Random.Range(updatePathInterval - updateIntervalRange, updatePathInterval + updateIntervalRange);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // update the path if the interval is non-negative and the time since the last update exceeds the interval
-        if (updatePathInterval > 0)
+        // update the path if the interval is positive and the time since the last update exceeds the interval
+        if (nextUpdateInterval > 0.0f)
         {
             timeSincePathUpdate += Time.deltaTime;
-            if (timeSincePathUpdate > updatePathInterval)
+            if (timeSincePathUpdate > nextUpdateInterval)
             {
-                PathfindingManager.RequestPath(transform, target, OnPathFound);
+                PathfindingManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
                 timeSincePathUpdate = 0;
+                nextUpdateInterval = Random.Range(updatePathInterval - updateIntervalRange, updatePathInterval + updateIntervalRange);
             }
         }
 

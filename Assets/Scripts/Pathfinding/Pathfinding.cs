@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using System.Collections;
 
+public struct PathRequest
+{
+    public Vector3 startPosition;
+    public Vector3 targetPosition;
+    public Action<Vector3[], bool> callback;
+
+    public PathRequest(Vector3 _startPosition, Vector3 _targetPosition, Action<Vector3[], bool> _callback)
+    {
+        startPosition = _startPosition;
+        targetPosition = _targetPosition;
+        callback = _callback;
+    }
+}
+
 public class Pathfinding : MonoBehaviour
 {
     /** The grid to use. If left empty, a grid on the same gameobject will be selected */
@@ -17,15 +31,15 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    public IEnumerator FindPath(Vector3 startPosition, Vector3 targetPosition, PathfindingManager pathfindingManager)
+    public void FindPath(PathRequest request, Action<Vector3[], bool, PathRequest> callback)
     {
         Profiler.BeginSample("Pathfinding");
-        PathfindingNode startNode = grid.GetNodeAtWorldPosition(startPosition);
-        PathfindingNode targetNode = grid.GetNodeAtWorldPosition(targetPosition);
+        PathfindingNode startNode = grid.GetNodeAtWorldPosition(request.startPosition);
+        PathfindingNode targetNode = grid.GetNodeAtWorldPosition(request.targetPosition);
 
         if (!startNode.isWalkable || !targetNode.isWalkable)
         {
-            yield return null;
+            return;
         }
 
         Vector3[] waypoints = new Vector3[0];
@@ -69,18 +83,21 @@ public class Pathfinding : MonoBehaviour
                     {
                         openSet.Add(neighbor);
                     }
+                    else
+                    {
+                        openSet.UpdateItem(neighbor);
+                    }
                 }
             }
 
         }
 
-        yield return null;
         if (success)
         {
             waypoints = RetracePath(startNode, targetNode);
         }
 
-        pathfindingManager.FinishedProcessingPath(waypoints, success);
+        callback(waypoints, success, request);
         Profiler.EndSample();
     }
 

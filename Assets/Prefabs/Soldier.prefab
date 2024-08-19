@@ -1032,9 +1032,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f73078798d7e384484e3d992ebdb166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 45
-  viewRange: 15
-  visualizationSubdivisions: 10
+  viewAngle: 70
+  viewRange: 20
+  visualizationSubdivisions: 15
+  visualizationGradiendEndPos: 0.7
   viewConeFilter: {fileID: 680589111504365170}
 --- !u!1 &2271145786958596323
 GameObject:

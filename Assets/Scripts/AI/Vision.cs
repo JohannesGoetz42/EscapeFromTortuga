@@ -8,6 +8,8 @@ public class Vision : MonoBehaviour
 
     [SerializeField]
     int visualizationSubdivisions = 10;
+    [SerializeField]
+    float visualizationGradiendEndPos = 0.9f;
 
     [SerializeField]
     private MeshFilter viewConeFilter;
@@ -75,7 +77,7 @@ public class Vision : MonoBehaviour
         vertices[0] = new Vector3(0.0f, 0.1f, 0.0f);
         vertices[1] = vertices[0] + stepDirection;
         uvs[0] = Vector2.zero;
-        uvs[1] = Vector2.one;
+        uvs[1] = new Vector2(visualizationGradiendEndPos, visualizationGradiendEndPos);
 
         // create all triangles
         for (int i = 2; i < requiredVectorCount; i++)
@@ -83,7 +85,7 @@ public class Vision : MonoBehaviour
             stepDirection = stepRotation * stepDirection;
 
             vertices[i] = vertices[0] + stepDirection;
-            uvs[i] = Vector2.one;
+            uvs[i] = new Vector2(visualizationGradiendEndPos, visualizationGradiendEndPos);
 
             int trianglesStartIndex = (i - 2) * 3;
             triangles[trianglesStartIndex] = 0;

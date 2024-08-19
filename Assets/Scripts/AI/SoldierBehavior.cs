@@ -59,4 +59,12 @@ public class SoldierBehavior : MonoBehaviour
 
         TrySetBehaviorState(SoldierBehavorState.Patrolling);
     }
+
+    void Update()
+    {
+        if (currentState != SoldierBehavorState.Chasing && vision.canSeePlayer)
+        {
+            TrySetBehaviorState(SoldierBehavorState.Chasing);
+        }
+    }
 }

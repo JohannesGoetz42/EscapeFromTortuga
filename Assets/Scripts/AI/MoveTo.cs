@@ -84,19 +84,19 @@ public class MoveTo : MonoBehaviour
         path = new Queue<Vector3>(pathResult);
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        if (path == null)
-        {
-            return;
-        }
+//#if UNITY_EDITOR
+//    private void OnDrawGizmos()
+//    {
+//        if (path == null)
+//        {
+//            return;
+//        }
 
-        foreach (Vector3 waypoint in path.ToArray())
-        {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawSphere(waypoint, 1);
-        }
-    }
-#endif
+//        foreach (Vector3 waypoint in path.ToArray())
+//        {
+//            Gizmos.color = Color.magenta;
+//            Gizmos.DrawSphere(waypoint, 1);
+//        }
+//    }
+//#endif
 }

@@ -5,6 +5,7 @@ public class Vision : MonoBehaviour
 {
     public float viewAngle = 90.0f;
     public float viewRange = 10.0f;
+    public bool canSeePlayer {  get; private set; }
 
     [SerializeField]
     int visualizationSubdivisions = 10;
@@ -34,10 +35,7 @@ public class Vision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (npcController != null)
-        {
-            npcController.canSeePlayer = IsVisible(PlayerController.Instance.transform);
-        }
+        canSeePlayer = IsVisible(PlayerController.Instance.transform);
     }
 
     bool IsVisible(Transform target)

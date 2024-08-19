@@ -858,6 +858,8 @@ GameObject:
   - component: {fileID: 1806353371436531315}
   - component: {fileID: 268778635724123120}
   - component: {fileID: 5992497764558774983}
+  - component: {fileID: 4732663759348452815}
+  - component: {fileID: 3635521341862847548}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Soldier
@@ -970,6 +972,7 @@ MonoBehaviour:
   movementSpeed: 9
   movementDirection: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
+  movementTarget: {fileID: 0}
 --- !u!65 &2107880847968426579
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1015,7 +1018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76ed7676b63f7f42a6acc8df2abbba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   controller: {fileID: 1837721068332947166}
   acceptanceRadius: 0.1
   updatePathInterval: 0.5
@@ -1037,6 +1039,36 @@ MonoBehaviour:
   visualizationSubdivisions: 15
   visualizationGradiendEndPos: 0.7
   viewConeFilter: {fileID: 680589111504365170}
+--- !u!114 &4732663759348452815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252637909196985662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08af29af7e56f24294e71217116ed29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviorTasks:
+  - state: 1
+    task: {fileID: 3635521341862847548}
+--- !u!114 &3635521341862847548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252637909196985662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32708e2de8b17814381abf96bb158beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldPatrolRandom: 0
+  patrolPoints: []
+  AcceptanceRadius: 2
 --- !u!1 &2271145786958596323
 GameObject:
   m_ObjectHideFlags: 0

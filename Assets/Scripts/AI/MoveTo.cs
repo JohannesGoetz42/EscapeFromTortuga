@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class MoveTo : MonoBehaviour
 {
-    [SerializeField] Transform target;
     [SerializeField] NPCController controller;
     [SerializeField] float acceptanceRadius = 0.1f;
     /** 
@@ -40,13 +39,18 @@ public class MoveTo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (controller.movementTarget == null)
+        {
+            return;
+        }
+
         // update the path if the interval is positive and the time since the last update exceeds the interval
         if (nextUpdateInterval > 0.0f)
         {
             timeSincePathUpdate += Time.deltaTime;
             if (timeSincePathUpdate > nextUpdateInterval)
             {
-                PathfindingManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+                PathfindingManager.RequestPath(new PathRequest(transform.position, controller.movementTarget.position, OnPathFound));
                 timeSincePathUpdate = 0;
                 nextUpdateInterval = Random.Range(updatePathInterval - updateIntervalRange, updatePathInterval + updateIntervalRange);
             }

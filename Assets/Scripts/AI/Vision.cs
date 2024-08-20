@@ -23,18 +23,17 @@ public class Vision : MonoBehaviour
     public bool canSeePlayer { get; private set; }
 
     [SerializeField]
-    int visualizationSubdivisions = 10;
+    private int visualizationSubdivisions = 10;
     [SerializeField]
-    float visualizationGradiendEndPos = 0.9f;
-
+    private float visualizationGradiendEndPos = 0.9f;
     [SerializeField]
     private ViewConeModeData[] viewConeModeData;
     [SerializeField]
     private MeshFilter viewConeFilter;
+
     private Mesh viewConeVisualization;
     private NPCController npcController;
     private PlayerController playerController;
-    private ViewConeMode viewConeMode = ViewConeMode.Idle;
 
     public void SetViewConeMode(ViewConeMode newMode)
     {

@@ -7,13 +7,13 @@ public class ChasePlayerTask : BehaviorTask
     public override void Activate()
     {
         controller.movementTarget = PlayerController.Instance.transform;
-        controller.isSprinting = true;
+        controller.wantsToSprint = true;
 
     }
     public override void Deactivate()
     {
         controller.movementTarget = null;
-        controller.isSprinting = false;
+        controller.wantsToSprint = false;
         base.Deactivate();
     }
 }

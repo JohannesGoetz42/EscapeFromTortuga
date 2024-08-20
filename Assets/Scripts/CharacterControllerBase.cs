@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class CharacterControllerBase : MonoBehaviour
 {
-    public bool isSprinting = false;
-
-    protected Animator animator;
+    public bool wantsToSprint = false;
 
     [SerializeField]
     protected float movementSpeed = 5.0f;
@@ -15,6 +13,11 @@ public class CharacterControllerBase : MonoBehaviour
     [SerializeField]
     /** The amount of stamina recovered per second while not sprinting */
     private float staminaRecoveryRate = 2.0f;
+
+    protected Animator animator;
+    private bool isRecoveringFromSprint;
+    /** the ratio (CurrentStamina/MaxStamina) above which the isRecoveringFromSprint flag will be cleared */
+    private float sprintRecoveryThreshold = 0.2f;
 
     public float CurrentStamina { get; private set; }
     public float MaxStamina { get => maxStamina; }
@@ -28,27 +31,38 @@ public class CharacterControllerBase : MonoBehaviour
     protected void HandleMovement(Vector3 direction)
     {
         float speed = 0.0f;
+        bool isSprinting = false;
         if (direction != Vector3.zero)
         {
             speed = movementSpeed;
 
             // if sprinting reduce current stamina and set sprint speed
-            if (isSprinting)
+            if (wantsToSprint && !isRecoveringFromSprint)
             {
                 CurrentStamina = Mathf.Clamp(CurrentStamina - Time.deltaTime, 0.0f, maxStamina);
                 if (CurrentStamina > 0)
                 {
                     speed = sprintSpeed;
+                    isSprinting = true;
                 }
-            }
-            // if not sprinting, recover stamina
-            else
-            {
-                CurrentStamina = Mathf.Clamp(CurrentStamina + Time.deltaTime * staminaRecoveryRate, 0.0f, maxStamina);
+                else
+                {
+                    isRecoveringFromSprint = true;
+                }
             }
 
             transform.rotation = Quaternion.LookRotation(direction);
             transform.position += direction * Time.deltaTime * speed;
+        }
+
+        // if not sprinting, recover stamina
+        if (!isSprinting)
+        {
+            CurrentStamina = Mathf.Clamp(CurrentStamina + Time.deltaTime * staminaRecoveryRate, 0.0f, maxStamina);
+            if (CurrentStamina / MaxStamina > sprintRecoveryThreshold)
+            {
+                isRecoveringFromSprint = false;
+            }
         }
 
         if (animator != null)

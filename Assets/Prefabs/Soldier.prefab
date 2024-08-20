@@ -974,7 +974,7 @@ MonoBehaviour:
   isSprinting: 0
   movementSpeed: 5
   sprintSpeed: 9
-  maxStamina: 20
+  maxStamina: 15
   staminaRecoveryRate: 2
   movementDirection: {x: 0, y: 0, z: 0}
   canSeePlayer: 0

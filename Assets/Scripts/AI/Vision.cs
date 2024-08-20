@@ -1,11 +1,26 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
+
+public enum ViewConeMode
+{
+    Idle,
+    Searching,
+    Hidden // while the player is seen, hide the view cone
+}
+
+[System.Serializable]
+struct ViewConeModeData
+{
+    public ViewConeMode coneMode;
+    public Material coneMaterial;
+}
 
 public class Vision : MonoBehaviour
 {
     public float viewAngle = 90.0f;
     public float viewRange = 10.0f;
-    public bool canSeePlayer {  get; private set; }
+    public bool canSeePlayer { get; private set; }
 
     [SerializeField]
     int visualizationSubdivisions = 10;
@@ -13,10 +28,33 @@ public class Vision : MonoBehaviour
     float visualizationGradiendEndPos = 0.9f;
 
     [SerializeField]
+    private ViewConeModeData[] viewConeModeData;
+    [SerializeField]
     private MeshFilter viewConeFilter;
     private Mesh viewConeVisualization;
     private NPCController npcController;
     private PlayerController playerController;
+    private ViewConeMode viewConeMode = ViewConeMode.Idle;
+
+    public void SetViewConeMode(ViewConeMode newMode)
+    {
+        MeshRenderer renderer = viewConeFilter.gameObject.GetComponent<MeshRenderer>();
+        if (newMode == ViewConeMode.Hidden)
+        {
+            renderer.enabled = false;
+            return;
+        }
+
+        renderer.enabled = true;
+        ViewConeModeData modeData = viewConeModeData.FirstOrDefault(x => x.coneMode == newMode);
+        if (modeData.coneMaterial != null)
+        {
+            if (renderer != null)
+            {
+                renderer.material = modeData.coneMaterial;
+            }
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -972,6 +972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 9
   movementDirection: {x: 0, y: 0, z: 0}
+  canSeePlayer: 0
   movementTarget: {fileID: 0}
 --- !u!65 &2107880847968426579
 BoxCollider:
@@ -1038,6 +1039,11 @@ MonoBehaviour:
   viewRange: 20
   visualizationSubdivisions: 15
   visualizationGradiendEndPos: 0.7
+  viewConeModeData:
+  - coneMode: 0
+    coneMaterial: {fileID: 2100000, guid: ad26accc25178b44297957ed9d4531a0, type: 2}
+  - coneMode: 1
+    coneMaterial: {fileID: 2100000, guid: c31642448b98e8742bb385333817525b, type: 2}
   viewConeFilter: {fileID: 680589111504365170}
 --- !u!114 &4732663759348452815
 MonoBehaviour:
@@ -1054,8 +1060,16 @@ MonoBehaviour:
   behaviorTasks:
   - state: 1
     task: {fileID: 3635521341862847548}
+    coneMode: 0
+  - state: 0
+    task: {fileID: 6161108936726393769}
+    coneMode: 0
+  - state: 2
+    task: {fileID: 6161108936726393769}
+    coneMode: 1
   - state: 3
     task: {fileID: 6161108936726393769}
+    coneMode: 2
 --- !u!114 &3635521341862847548
 MonoBehaviour:
   m_ObjectHideFlags: 0

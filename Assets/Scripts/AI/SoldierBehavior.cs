@@ -14,6 +14,7 @@ public struct SoldierBehaviorTask
 {
     public SoldierBehavorState state;
     public BehaviorTask task;
+    public ViewConeMode coneMode;
 }
 
 public class SoldierBehavior : MonoBehaviour
@@ -43,6 +44,7 @@ public class SoldierBehavior : MonoBehaviour
         currentTask = task.task;
         currentState = newState;
         task.task.Activate();
+        vision.SetViewConeMode(task.coneMode);
         return true;
     }
 

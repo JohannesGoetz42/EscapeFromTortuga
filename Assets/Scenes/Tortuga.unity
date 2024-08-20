@@ -1508,6 +1508,22 @@ PrefabInstance:
       propertyPath: 'patrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 1616840713}
+    - target: {fileID: 5992497764558774983, guid: c1d92185cba96d4479cf5d89533c1236, type: 3}
+      propertyPath: viewConeModeData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992497764558774983, guid: c1d92185cba96d4479cf5d89533c1236, type: 3}
+      propertyPath: viewConeModeData.Array.data[1].coneMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992497764558774983, guid: c1d92185cba96d4479cf5d89533c1236, type: 3}
+      propertyPath: viewConeModeData.Array.data[0].coneMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: ad26accc25178b44297957ed9d4531a0, type: 2}
+    - target: {fileID: 5992497764558774983, guid: c1d92185cba96d4479cf5d89533c1236, type: 3}
+      propertyPath: viewConeModeData.Array.data[1].coneMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c31642448b98e8742bb385333817525b, type: 2}
     - target: {fileID: 7305239127094822474, guid: c1d92185cba96d4479cf5d89533c1236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.51

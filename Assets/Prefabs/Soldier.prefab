@@ -970,7 +970,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c79f950fe9dd243a172d984f29f97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 9
+  isSprinting: 0
+  movementSpeed: 5
+  sprintSpeed: 9
   movementDirection: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   movementTarget: {fileID: 0}

@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class CharacterControllerBase : MonoBehaviour
 {
+    public bool isSprinting = false;
+
     protected Animator animator;
 
     [SerializeField]
-    protected float movementSpeed = 10.0f;
+    protected float movementSpeed = 5.0f;
+    [SerializeField]
+    protected float sprintSpeed = 10.0f;
 
     protected virtual void Start()
     {
@@ -17,9 +21,9 @@ public class CharacterControllerBase : MonoBehaviour
         float speed = 0.0f;
         if (direction != Vector3.zero)
         {
+            speed = isSprinting ? sprintSpeed : movementSpeed;
             transform.rotation = Quaternion.LookRotation(direction);
-            transform.position += direction * Time.deltaTime * movementSpeed;
-            speed = movementSpeed;
+            transform.position += direction * Time.deltaTime * speed;
         }
 
         if (animator != null)

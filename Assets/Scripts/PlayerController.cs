@@ -45,6 +45,8 @@ public class PlayerController : CharacterControllerBase
             return;
         }
 
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
+
         HandleMovement();
         gameTime += Time.deltaTime;
     }

@@ -18,6 +18,10 @@ struct ViewConeModeData
 
 public class Vision : MonoBehaviour
 {
+    /** 
+    * The view angle to each side of the character.
+    * viewAngle 90deg results in a 180deg field of view
+    */
     public float viewAngle = 90.0f;
     public float viewRange = 10.0f;
     public bool canSeePlayer { get; private set; }
@@ -91,7 +95,6 @@ public class Vision : MonoBehaviour
 
         float dotProduct = Vector3.Dot(transform.forward, direction.normalized);
         float angle = Mathf.Acos(dotProduct) * Mathf.Rad2Deg;
-
         return viewAngle > angle;
     }
 
@@ -105,8 +108,8 @@ public class Vision : MonoBehaviour
         int[] triangles = new int[visualizationSubdivisions * 3];
 
         Vector3 stepDirection = Vector3.forward * viewRange;
-        stepDirection = Quaternion.AngleAxis(-viewAngle * 0.5f, Vector3.up) * stepDirection;
-        Quaternion stepRotation = Quaternion.AngleAxis(viewAngle / visualizationSubdivisions, Vector3.up);
+        stepDirection = Quaternion.AngleAxis(-viewAngle, Vector3.up) * stepDirection;
+        Quaternion stepRotation = Quaternion.AngleAxis((viewAngle * 2) / visualizationSubdivisions, Vector3.up);
 
         // add the first two vertices at the source position
         vertices[0] = new Vector3(0.0f, 0.1f, 0.0f);

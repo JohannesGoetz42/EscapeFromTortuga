@@ -1,6 +1,9 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.Profiling;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public enum ViewConeMode
 {
@@ -74,12 +77,14 @@ public class Vision : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (PlayerController.Instance != null)
         {
             canSeePlayer = IsVisible(PlayerController.Instance.transform);
         }
+
+        UpdateVisualization();
     }
 
     bool IsVisible(Transform target)
@@ -100,7 +105,7 @@ public class Vision : MonoBehaviour
 
         RaycastHit hit;
         Vector3 rayDirection = target.position - transform.position;
-        if (Physics.Raycast(transform.position, rayDirection, out hit))
+        if (Physics.Raycast(transform.position, rayDirection, out hit, viewRange))
         {
             return hit.collider.gameObject.CompareTag("Player");
         }
@@ -111,19 +116,21 @@ public class Vision : MonoBehaviour
     void UpdateVisualization()
     {
         Profiler.BeginSample("Update vision cone");
+
+        // initialize polygon data arrays
         int requiredVectorCount = visualizationSubdivisions + 2;
         Vector3[] vertices = new Vector3[requiredVectorCount];
         Vector2[] uvs = new Vector2[requiredVectorCount];
-
         int[] triangles = new int[visualizationSubdivisions * 3];
 
         Vector3 stepDirection = Vector3.forward * viewRange;
         stepDirection = Quaternion.AngleAxis(-viewAngle, Vector3.up) * stepDirection;
         Quaternion stepRotation = Quaternion.AngleAxis((viewAngle * 2) / visualizationSubdivisions, Vector3.up);
 
-        // add the first two vertices at the source position
+        // since three vertices are required for a triangle, draw the first two vertices outside the loop
         vertices[0] = new Vector3(0.0f, 0.1f, 0.0f);
-        vertices[1] = vertices[0] + stepDirection;
+        GetConePositionWithCollision(stepDirection, vertices[0], ref vertices[1]);
+
         uvs[0] = Vector2.zero;
         uvs[1] = new Vector2(visualizationGradiendEndPos, visualizationGradiendEndPos);
 
@@ -132,7 +139,8 @@ public class Vision : MonoBehaviour
         {
             stepDirection = stepRotation * stepDirection;
 
-            vertices[i] = vertices[0] + stepDirection;
+            GetConePositionWithCollision(stepDirection, vertices[0], ref vertices[i]);
+
             uvs[i] = new Vector2(visualizationGradiendEndPos, visualizationGradiendEndPos);
 
             int trianglesStartIndex = (i - 2) * 3;
@@ -145,5 +153,19 @@ public class Vision : MonoBehaviour
         viewConeVisualization.triangles = triangles; // triangles must be set AFTER vertices!
         viewConeVisualization.uv = uvs;
         Profiler.EndSample();
+    }
+
+    void GetConePositionWithCollision(in Vector3 stepDirection, in Vector3 sourceLocation, ref Vector3 refConePosition)
+    {
+        RaycastHit hit;
+        Vector3 rayDirection = transform.rotation * stepDirection;
+        if (Physics.Raycast(transform.position, rayDirection, out hit, viewRange) && !hit.collider.gameObject.CompareTag("Player"))
+        {
+            refConePosition = Quaternion.Inverse(transform.rotation) * (hit.point - transform.position);
+        }
+        else
+        {
+            refConePosition = sourceLocation + stepDirection;
+        }
     }
 }

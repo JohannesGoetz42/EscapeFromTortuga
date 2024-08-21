@@ -971,7 +971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c79f950fe9dd243a172d984f29f97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSprinting: 0
+  wantsToSprint: 0
   movementSpeed: 5
   sprintSpeed: 9
   maxStamina: 15
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f73078798d7e384484e3d992ebdb166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 70
+  viewAngle: 50
   viewRange: 20
   visualizationSubdivisions: 15
   visualizationGradiendEndPos: 0.7

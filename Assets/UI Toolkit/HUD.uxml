@@ -2,5 +2,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/DefaultStyle.uss?fileID=7433441132597879392&amp;guid=1e79e346ac518a849b6e7f514e907b1c&amp;type=3#DefaultStyle" />
     <engine:VisualElement style="flex-grow: 1;">
         <engine:Label text="Current time: {0}:{1}:{2}" name="GameTimeText" class="primary" />
+        <engine:ProgressBar value="20" title="Stamina" name="StaminaBar" class="stamina-bar" style="-unity-background-image-tint-color: rgb(0, 113, 140); color: rgb(255, 255, 255); width: 400px; height: 50px; -unity-text-align: upper-left; align-self: center;" />
     </engine:VisualElement>
 </engine:UXML>

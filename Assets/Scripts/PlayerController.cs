@@ -5,6 +5,7 @@ public class PlayerController : CharacterControllerBase
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
     public bool isGameOver { get; private set; }
+    public Camera MainCamera { get; private set; }
 
     private bool canEscape = true;
 
@@ -13,6 +14,8 @@ public class PlayerController : CharacterControllerBase
     {
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
+        MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
         base.Start();
     }
 
@@ -44,6 +47,8 @@ public class PlayerController : CharacterControllerBase
         {
             return;
         }
+
+        wantsToSprint = Input.GetKey(KeyCode.LeftShift);
 
         HandleMovement();
         gameTime += Time.deltaTime;

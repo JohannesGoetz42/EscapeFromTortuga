@@ -24,7 +24,7 @@ public class PatrolTask : BehaviorTask
 
     public override void Deactivate()
     {
-        SetMovementTarget(null);
+        controller.movementTarget = null;
         base.Deactivate();
     }
 
@@ -55,6 +55,6 @@ public class PatrolTask : BehaviorTask
             selectedPatrolPoint = (selectedPatrolPoint + 1) % patrolPoints.Count;
         }
 
-        SetMovementTarget(patrolPoints[selectedPatrolPoint]);
+        controller.movementTarget = patrolPoints[selectedPatrolPoint];
     }
 }

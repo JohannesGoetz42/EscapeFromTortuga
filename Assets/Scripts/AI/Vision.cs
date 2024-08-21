@@ -1,9 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.Profiling;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public enum ViewConeMode
 {
@@ -28,6 +25,9 @@ public class Vision : MonoBehaviour
     public float viewAngle = 90.0f;
     public float viewRange = 10.0f;
     public bool canSeePlayer { get; private set; }
+    public float secondsSinceLastSeen { get; private set; }
+    public Vector3 lastSeenPosition { get; private set; }
+
 
     [SerializeField]
     private int visualizationSubdivisions = 10;
@@ -65,6 +65,8 @@ public class Vision : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        secondsSinceLastSeen = float.MaxValue;
+
         npcController = GetComponent<NPCController>();
         if (viewConeFilter != null)
         {
@@ -81,7 +83,17 @@ public class Vision : MonoBehaviour
     {
         if (PlayerController.Instance != null)
         {
-            canSeePlayer = IsVisible(PlayerController.Instance.transform);
+            if (IsVisible(PlayerController.Instance.transform))
+            {
+                canSeePlayer = true;
+                secondsSinceLastSeen = 0.0f;
+                lastSeenPosition = PlayerController.Instance.transform.position;
+            }
+            else
+            {
+                canSeePlayer = false;
+                secondsSinceLastSeen += Time.deltaTime;
+            }
         }
 
         UpdateVisualization();

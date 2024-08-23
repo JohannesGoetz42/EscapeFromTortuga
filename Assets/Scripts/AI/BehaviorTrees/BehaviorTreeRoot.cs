@@ -2,9 +2,16 @@
 public class BehaviorTreeRoot : BehaviorTreeNode
 {
     public BehaviorTreeLeaf currentLeaf;
-    private BehaviorTreeCompositeNode _rootComposite;
+    private BehaviorTreeNode _startNode;
 
     protected override BehaviorTreeRoot GetRoot() => this;
+
+    public BehaviorTreeRoot() : base()
+    {
+#if UNITY_EDITOR
+        nodeName = "Root";
+#endif
+    }
 
     private void Update()
     {
@@ -21,7 +28,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
         }
 
         // ... otherwise find the next activateable leaf
-        currentLeaf = _rootComposite.TryGetFirstActivateableLeaf();
+        currentLeaf = _startNode.TryGetFirstActivateableLeaf();
         if (currentLeaf != null)
         {
             currentLeaf.Update();
@@ -30,12 +37,18 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 
     public override BehaviorTreeLeaf TryGetFirstActivateableLeaf()
     {
-        if (_rootComposite == null || !_rootComposite.CanEnterNode())
+        if (_startNode == null || !_startNode.CanEnterNode())
         {
-            return _rootComposite.TryGetFirstActivateableLeaf();
+            return _startNode.TryGetFirstActivateableLeaf();
         }
 
         return null;
     }
 
+#if UNITY_EDITOR
+    public override void AddChild(BehaviorTreeNode child)
+    {
+        _startNode = child;
+    }
+#endif
 }

@@ -1,5 +1,7 @@
 
-public abstract class DecoratorBase
+using UnityEngine;
+
+public abstract class DecoratorBase : ScriptableObject
 {
     public bool abortActive = false;
 

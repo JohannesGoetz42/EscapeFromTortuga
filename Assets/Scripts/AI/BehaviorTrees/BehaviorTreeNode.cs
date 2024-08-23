@@ -1,4 +1,7 @@
 
+using UnityEditor;
+using UnityEngine;
+
 public enum BehaviorNodeResult
 {
     Success,
@@ -6,7 +9,7 @@ public enum BehaviorNodeResult
     Error
 }
 
-public abstract class BehaviorTreeNode
+public abstract class BehaviorTreeNode : ScriptableObject
 {
     public DecoratorBase[] Decorators = new DecoratorBase[0];
     protected BehaviorTreeNode parent;
@@ -45,4 +48,20 @@ public abstract class BehaviorTreeNode
             parent.OnChildExit(this, result);
         }
     }
+
+#if UNITY_EDITOR
+    public string nodeName;
+    public GUID id;
+    public Vector2 position;
+
+    public void SetParent(BehaviorTreeNode newParent)
+    {
+        parent = newParent;
+    }
+
+    public virtual void AddChild(BehaviorTreeNode child)
+    {
+        Debug.LogError("Tried to add child to invalid behavior node parent!");
+    }
+#endif
 }

@@ -80,8 +80,6 @@ public class PathfindingGrid : MonoBehaviour
                 grid[x, y] = new PathfindingNode(walkable, nodePosition, x, y);
             }
         }
-
-        Debug.Log(string.Format("CreatedGrid: {0} x {1}", gridSizeX, gridSizeY));
     }
 
 #if UNITY_EDITOR

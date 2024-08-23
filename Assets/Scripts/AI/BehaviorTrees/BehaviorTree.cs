@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BehaviorTree", menuName = "Scriptable Objects/BehaviorTree")]
 public class BehaviorTree : ScriptableObject
 {
-    public BehaviorTreeRoot root = new BehaviorTreeRoot();
+    public BehaviorTreeRoot root;
 
 #if UNITY_EDITOR
     public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();

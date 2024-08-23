@@ -5,8 +5,22 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 #if UNITY_EDITOR
+
+public struct EdgeData
+{
+    public EdgeData(BehaviorTreeNode parent, BehaviorTreeNodeView childView)
+    {
+        parentNode = parent;
+        childNodeView = childView;
+    }
+
+    public BehaviorTreeNode parentNode;
+    public BehaviorTreeNodeView childNodeView;
+}
+
 [UxmlElement]
 public partial class BehaviorTreeView : GraphView
 {
@@ -36,14 +50,33 @@ public partial class BehaviorTreeView : GraphView
         graphViewChanged += OnGraphViewChanged;
 
         currentTree = selectedTree;
+
+        List<EdgeData> edges = new List<EdgeData>();
+        List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
+
+        // create nodes
         foreach (BehaviorTreeNode node in selectedTree.nodes)
         {
-            CreateNodeView(node);
+            BehaviorTreeNodeView createdNode = CreateNodeView(node);
+            nodeViews.Add(createdNode);
+            if (node.parent != null)
+            {
+                edges.Add(new EdgeData(node.parent, createdNode));
+            }
+        }
+
+        // create edges after every node is created
+        foreach (EdgeData edge in edges)
+        {
+            BehaviorTreeNodeView parentView = nodeViews.First(x => x.node == edge.parentNode);
+            Edge graphEdge = parentView.childrenPort.ConnectTo(edge.childNodeView.parentPort);
+            AddElement(graphEdge);
         }
     }
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
     {
+        // TODO: avoid circles
         return ports.ToList().Where(endPort => endPort.direction != startPort.direction && endPort.node != startPort.node).ToList();
     }
 
@@ -52,19 +85,33 @@ public partial class BehaviorTreeView : GraphView
         // remove removed elements from tree
         if (graphViewChange.elementsToRemove != null)
         {
-            IEnumerable<BehaviorTreeNodeView> removedNodes = graphViewChange.elementsToRemove.Select(x => x as BehaviorTreeNodeView)
-                .Where(x => x != null);
 
-            foreach (BehaviorTreeNodeView nodeView in removedNodes)
+            foreach (var item in graphViewChange.elementsToRemove)
             {
-                currentTree.DeleteNode(nodeView.node);
+                // remove nodes
+                BehaviorTreeNodeView nodeView = item as BehaviorTreeNodeView;
+                if (nodeView != null)
+                {
+                    currentTree.DeleteNode(nodeView.node);
+                    continue;
+                }
+
+                // remove edges
+                Edge edge = item as Edge;
+                if (edge != null)
+                {
+                    BehaviorTreeNodeView parent = edge.output.node as BehaviorTreeNodeView;
+                    BehaviorTreeNodeView child = edge.input.node as BehaviorTreeNodeView;
+                    parent.node.RemoveChild(child.node);
+                    child.node.SetParent(null);
+                }
             }
         }
 
         // connect nodes
-        if(graphViewChange.edgesToCreate != null)
+        if (graphViewChange.edgesToCreate != null)
         {
-            foreach(Edge edge in graphViewChange.edgesToCreate)
+            foreach (Edge edge in graphViewChange.edgesToCreate)
             {
                 BehaviorTreeNodeView parent = edge.output.node as BehaviorTreeNodeView;
                 BehaviorTreeNodeView child = edge.input.node as BehaviorTreeNodeView;
@@ -85,16 +132,19 @@ public partial class BehaviorTreeView : GraphView
         return graphViewChange;
     }
 
-    private void CreateNode(Type nodeType)
+    private void CreateNode(Type nodeType, Vector2 position)
     {
+
         BehaviorTreeNode node = currentTree.CreateNode(nodeType);
-        CreateNodeView(node);
+        BehaviorTreeNodeView nodeView = CreateNodeView(node);
+        nodeView.SetPosition(new Rect(position, new Vector2(200,50)));
     }
 
-    public void CreateNodeView(BehaviorTreeNode node)
+    public BehaviorTreeNodeView CreateNodeView(BehaviorTreeNode node)
     {
         BehaviorTreeNodeView nodeView = new BehaviorTreeNodeView(node);
         AddElement(nodeView);
+        return nodeView;
     }
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
@@ -102,9 +152,11 @@ public partial class BehaviorTreeView : GraphView
         // add composite nodes
         TypeCache.TypeCollection availableComposites = TypeCache.GetTypesDerivedFrom<BehaviorTreeCompositeNode>();
         evt.menu.AppendSeparator();
+        Vector2 position = evt.mousePosition; // capture this as a local variable so it will not be reset in the lambda function
+
         foreach (Type compositeType in availableComposites)
         {
-            evt.menu.AppendAction(compositeType.Name, x => CreateNode(compositeType));
+            evt.menu.AppendAction(compositeType.Name, x => CreateNode(compositeType, position));
             //evt.menu.AppendAction(string.Format("[{0}] {1}", compositeType.BaseType.Name, compositeType.Name), x => CreateNode(compositeType));
         }
 
@@ -113,7 +165,7 @@ public partial class BehaviorTreeView : GraphView
         evt.menu.AppendSeparator();
         foreach (Type leafType in availableNodes)
         {
-            evt.menu.AppendAction(leafType.Name, x => CreateNode(leafType));
+            evt.menu.AppendAction(leafType.Name, x => CreateNode(leafType, position));
             //evt.menu.AppendAction(string.Format("[{0}] {1}", leafType.BaseType.Name, leafType.Name), x => CreateNode(leafType));
         }
     }

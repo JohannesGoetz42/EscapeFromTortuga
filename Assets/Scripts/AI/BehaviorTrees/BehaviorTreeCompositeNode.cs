@@ -13,5 +13,10 @@ public abstract class BehaviorTreeCompositeNode : BehaviorTreeNode
     {
         children.Add(child);
     }
+
+    public override void RemoveChild(BehaviorTreeNode node) 
+    {
+        children.Remove(node);
+    }
 #endif
 }

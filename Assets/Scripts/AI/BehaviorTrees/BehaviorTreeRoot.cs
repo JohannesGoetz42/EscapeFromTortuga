@@ -50,5 +50,13 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     {
         _startNode = child;
     }
+
+    public override void RemoveChild(BehaviorTreeNode node) 
+    {
+        if(_startNode == node)
+        {
+            _startNode = null;
+        }
+    }
 #endif
 }

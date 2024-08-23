@@ -1,4 +1,5 @@
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ public enum BehaviorNodeResult
 
 public abstract class BehaviorTreeNode : ScriptableObject
 {
-    public DecoratorBase[] Decorators = new DecoratorBase[0];
-    protected BehaviorTreeNode parent;
+
+    public DecoratorBase[] Decorators;
+    //public DecoratorBase[] Decorators = new DecoratorBase[0];
+    public BehaviorTreeNode parent;
     virtual protected BehaviorTreeRoot GetRoot() => parent.GetRoot();
 
     virtual public bool CanEnterNode()
@@ -63,5 +66,7 @@ public abstract class BehaviorTreeNode : ScriptableObject
     {
         Debug.LogError("Tried to add child to invalid behavior node parent!");
     }
+
+    public virtual void RemoveChild(BehaviorTreeNode node) { }
 #endif
 }

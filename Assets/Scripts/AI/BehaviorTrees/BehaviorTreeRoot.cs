@@ -1,5 +1,4 @@
 
-using static Unity.VisualScripting.Metadata;
 
 public class BehaviorTreeRoot : BehaviorTreeNode
 {
@@ -15,7 +14,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 #endif
     }
 
-    private void Update()
+    public void Update()
     {
         // update the current  if it can stay active
         if (currentAction != null)

@@ -1,11 +1,16 @@
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BehaviorTree", menuName = "Scriptable Objects/BehaviorTree")]
+#if UNITY_EDITOR
+using System.Collections.Generic;
+using UnityEditor;
+#endif
+
+[CreateAssetMenu(fileName = "BehaviorTree", menuName = "Scriptable Objects/Behavior/BehaviorTree")]
 public class BehaviorTree : ScriptableObject
 {
     public BehaviorTreeRoot root;
+    [SerializeField] Blackboard blackboard;
+    public Blackboard Blackboard { get => blackboard; }
 
 #if UNITY_EDITOR
     public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();

@@ -14,12 +14,12 @@ public enum BehaviorNodeResult
 
 public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 {
-    public List<DecoratorBase> Decorators = new List<DecoratorBase>();
-    public List<BehaviorTreeServiceBase> Services = new List<BehaviorTreeServiceBase>();
+    public List<DecoratorBase> decorators = new List<DecoratorBase>();
+    public List<BehaviorTreeServiceBase> services = new List<BehaviorTreeServiceBase>();
 
     virtual public bool CanEnterNode()
     {
-        foreach (DecoratorBase decorator in Decorators)
+        foreach (DecoratorBase decorator in decorators)
         {
             if (!decorator.Evaluate())
             {
@@ -32,7 +32,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 
     virtual public bool CanStayActive()
     {
-        foreach (DecoratorBase decorator in Decorators)
+        foreach (DecoratorBase decorator in decorators)
         {
             if (decorator.abortActive && !decorator.Evaluate()) { return false; }
         }
@@ -59,14 +59,14 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         BehaviorTreeServiceBase service = child as BehaviorTreeServiceBase;
         if (service != null)
         {
-            Services.Add(service);
+            services.Add(service);
             return;
         }
 
         DecoratorBase decorator = child as DecoratorBase;
         if (decorator != null)
         {
-            Decorators.Add(decorator);
+            decorators.Add(decorator);
             return;
         }
     }
@@ -76,14 +76,14 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         BehaviorTreeServiceBase service = child as BehaviorTreeServiceBase;
         if (service != null)
         {
-            Services.Remove(service);
+            services.Remove(service);
             return;
         }
 
         DecoratorBase decorator = child as DecoratorBase;
         if (decorator != null)
         {
-            Decorators.Remove(decorator);
+            decorators.Remove(decorator);
             return;
         }
     }

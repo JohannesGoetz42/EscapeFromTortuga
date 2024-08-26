@@ -8,9 +8,9 @@ public class BehaviorTreeNodeView : Node
     public BehaviorTreeNode node;
     public Port parentPort;
     public Port childrenPort;
+    public VisualElement serviceContainer;
+    public VisualElement decoratorContainer;
 
-    private VisualElement _serviceContainer;
-    private VisualElement _decoratorContainer;
     private BehaviorTreeView _behaviorTreeView;
 
     public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
@@ -25,8 +25,8 @@ public class BehaviorTreeNodeView : Node
         CreateParentPort();
         CreateChildrenPort();
 
-        _serviceContainer = this.Q("services");
-        _decoratorContainer = this.Q("decorators");
+        serviceContainer = this.Q("services");
+        decoratorContainer = this.Q("decorators");
 
         if (node is BehaviorTreeRoot)
         {
@@ -106,12 +106,12 @@ public class BehaviorTreeNodeView : Node
 
         if(embeddedNode is DecoratorBase)
         {
-            _decoratorContainer.Add(CreateEmbeddedNodeView(embeddedNode));
+            decoratorContainer.Add(CreateEmbeddedNodeView(embeddedNode));
         }
 
         if(embeddedNode is BehaviorTreeServiceBase)
         {
-            _serviceContainer.Add(CreateEmbeddedNodeView(embeddedNode));
+            serviceContainer.Add(CreateEmbeddedNodeView(embeddedNode));
         }
     }
 

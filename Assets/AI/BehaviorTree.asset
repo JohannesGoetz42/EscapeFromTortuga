@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86333f16ebe309546a640baa82c7e15e, type: 3}
+  m_Name: BehaviorTree
+  m_EditorClassIdentifier: 
+  root: {fileID: 0}
+  nodes:
+  - {fileID: 2611440068551004006}
+--- !u!114 &2611440068551004006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
+  m_Name: BehaviorTreeSelector
+  m_EditorClassIdentifier: 
+  Decorators: []
+  parent: {fileID: 0}
+  nodeName: Selector
+  position: {x: -96, y: 1516}
+  children: []

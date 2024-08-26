@@ -50,6 +50,11 @@ public partial class BehaviorTreeView : GraphView
         graphViewChanged += OnGraphViewChanged;
 
         currentTree = selectedTree;
+        if (currentTree.root == null)
+        {
+            currentTree.root = ScriptableObject.CreateInstance<BehaviorTreeRoot>();
+            currentTree.nodes.Insert(0, currentTree.root);
+        }
 
         List<EdgeData> edges = new List<EdgeData>();
         List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
@@ -76,8 +81,23 @@ public partial class BehaviorTreeView : GraphView
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
     {
-        // TODO: avoid circles
-        return ports.ToList().Where(endPort => endPort.direction != startPort.direction && endPort.node != startPort.node).ToList();
+        BehaviorTreeNodeView startPortView = startPort.node as BehaviorTreeNodeView;
+        List<Port> result = new List<Port>();
+        foreach (Port endPort in ports)
+        {
+            if (endPort.direction != startPort.direction && endPort.node != startPort.node)
+            {
+                BehaviorTreeNodeView endPortView = endPort.node as BehaviorTreeNodeView;
+                if (endPortView == null || endPortView.node.IsAncestorOf(startPortView.node) || endPortView.node.IsDescendantOf(startPortView.node))
+                {
+                    continue;
+                }
+
+                result.Add(endPort);
+            }
+        }
+
+        return result;
     }
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
@@ -121,11 +141,10 @@ public partial class BehaviorTreeView : GraphView
                     continue;
                 }
 
-                BehaviorTreeCompositeNode parentNode = parent.node as BehaviorTreeCompositeNode;
                 child.node.SetParent(parent.node);
 
                 // TODO: order children
-                parentNode.AddChild(child.node);
+                parent.node.AddChild(child.node);
             }
         }
 
@@ -134,10 +153,14 @@ public partial class BehaviorTreeView : GraphView
 
     private void CreateNode(Type nodeType, Vector2 position)
     {
+        if (currentTree == null)
+        {
+            return;
+        }
 
         BehaviorTreeNode node = currentTree.CreateNode(nodeType);
         BehaviorTreeNodeView nodeView = CreateNodeView(node);
-        nodeView.SetPosition(new Rect(position, new Vector2(200,50)));
+        nodeView.SetPosition(new Rect(position, new Vector2(200, 50)));
     }
 
     public BehaviorTreeNodeView CreateNodeView(BehaviorTreeNode node)
@@ -152,8 +175,8 @@ public partial class BehaviorTreeView : GraphView
         // add composite nodes
         TypeCache.TypeCollection availableComposites = TypeCache.GetTypesDerivedFrom<BehaviorTreeCompositeNode>();
         evt.menu.AppendSeparator();
-        Vector2 position = evt.mousePosition; // capture this as a local variable so it will not be reset in the lambda function
-
+        // capture this as a local variable so it will not be reset in the lambda function
+        Vector2 position = viewTransform.matrix.inverse.MultiplyPoint(evt.localMousePosition);
         foreach (Type compositeType in availableComposites)
         {
             evt.menu.AppendAction(compositeType.Name, x => CreateNode(compositeType, position));

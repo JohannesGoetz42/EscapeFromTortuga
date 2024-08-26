@@ -27,6 +27,12 @@ public class BehaviorTreeNodeView : Node
 
     private void CreateParentPort()
     {
+        // root node should not have a parent
+        if(node is BehaviorTreeRoot)
+        {
+            return;
+        }
+
         parentPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(BehaviorTreeNode));
         parentPort.portName = "";
         inputContainer.Add(parentPort);

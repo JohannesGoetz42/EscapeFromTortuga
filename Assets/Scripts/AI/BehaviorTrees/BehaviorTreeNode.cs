@@ -68,5 +68,37 @@ public abstract class BehaviorTreeNode : ScriptableObject
     }
 
     public virtual void RemoveChild(BehaviorTreeNode node) { }
+
+    public bool IsAncestorOf(BehaviorTreeNode node)
+    {
+        BehaviorTreeNode ancestor = node.parent;
+        while (ancestor != null)
+        {
+            if (ancestor == this)
+            {
+                return true;
+            }
+
+            ancestor = ancestor.parent;
+        }
+
+        return false;
+    }
+
+    public bool IsDescendantOf(BehaviorTreeNode node)
+    {
+        BehaviorTreeNode ancestor = parent;
+        while (ancestor != null)
+        {
+            if (ancestor == node)
+            {
+                return true;
+            }
+
+            ancestor = ancestor.parent;
+        }
+
+        return false;
+    }
 #endif
 }

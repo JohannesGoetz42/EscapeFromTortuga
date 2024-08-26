@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8770730357993584528
+--- !u!114 &-8624033161596259241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,16 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
+  m_Script: {fileID: 11500000, guid: 017c7c3dac8b96946b50adadfbb9fb81, type: 3}
+  m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: -3186953879518074836}
-  nodeName: Selector
+  parent: {fileID: 0}
+  nodeName: Root
   decorators: []
   services: []
-  position: {x: 369, y: 302}
-  children: []
---- !u!114 &-7626076762566041437
+  position: {x: 8, y: 29}
+  currentAction: {fileID: 0}
+--- !u!114 &-4143601333363419454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,162 +27,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
+  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
+  m_Name: BehaviorTreeSequence
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-6826724845821115394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Selector
-  decorators: []
-  services:
-  - {fileID: -6442707702000781169}
-  - {fileID: 2885397331247320655}
-  position: {x: 210.1416, y: 569.2443}
-  children: []
---- !u!114 &-6709270492440780331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-6442707702000781169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-5989929191517174380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Selector
-  decorators: []
-  services:
-  - {fileID: -6709270492440780331}
-  - {fileID: 4809179848867651272}
-  - {fileID: 9071778545981789258}
-  position: {x: 684, y: 406}
-  children: []
---- !u!114 &-5905695911878149256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-5780870965491786732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-5225134836133415094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Selector
-  decorators: []
-  services:
-  - {fileID: -7626076762566041437}
-  - {fileID: 262154819380953961}
-  position: {x: 960, y: 703}
-  children: []
---- !u!114 &-4517866594046925826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &-3186953879518074836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Selector
+  parent: {fileID: 965858817092938015}
+  nodeName: Sequence
   decorators: []
   services: []
-  position: {x: 198, y: 80}
-  children:
-  - {fileID: 1777595181606491067}
-  - {fileID: -8770730357993584528}
+  position: {x: 179, y: 457}
+  children: []
+--- !u!114 &-2863119601761846113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
+  m_Name: BehaviorTreeSequence
+  m_EditorClassIdentifier: 
+  parent: {fileID: 965858817092938015}
+  nodeName: Sequence
+  decorators: []
+  services: []
+  position: {x: -126, y: 450}
+  children: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,80 +66,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86333f16ebe309546a640baa82c7e15e, type: 3}
   m_Name: BehaviorTree
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
-  blackboard: {fileID: 11400000, guid: 8313b694ec786874fbf5e97ec80c9220, type: 2}
+  root: {fileID: -8624033161596259241}
+  blackboard: {fileID: 0}
   nodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: -3186953879518074836}
-  - {fileID: 1777595181606491067}
-  - {fileID: -8770730357993584528}
-  - {fileID: -6826724845821115394}
-  - {fileID: -5989929191517174380}
-  - {fileID: -5225134836133415094}
-  - {fileID: 3862822921504542421}
-  - {fileID: 8027659559080478974}
+  - {fileID: 965858817092938015}
+  - {fileID: -2863119601761846113}
+  - {fileID: -4143601333363419454}
   embeddedNodes:
-  - {fileID: 4512547951766086491}
-  - {fileID: -5905695911878149256}
-  - {fileID: -6442707702000781169}
-  - {fileID: 2885397331247320655}
-  - {fileID: -6709270492440780331}
-  - {fileID: 4809179848867651272}
-  - {fileID: 9071778545981789258}
-  - {fileID: -7626076762566041437}
-  - {fileID: 262154819380953961}
-  - {fileID: -5780870965491786732}
-  - {fileID: -4517866594046925826}
---- !u!114 &262154819380953961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &1777595181606491067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
-  m_Name: BehaviorTreeSequence
-  m_EditorClassIdentifier: 
-  parent: {fileID: -3186953879518074836}
-  nodeName: Sequence
-  decorators: []
-  services:
-  - {fileID: 4512547951766086491}
-  position: {x: 164, y: 302}
-  children: []
---- !u!114 &2885397331247320655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &3862822921504542421
+  - {fileID: 5568773378906477519}
+--- !u!114 &965858817092938015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,59 +86,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
   m_Name: BehaviorTreeSelector
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  parent: {fileID: -8624033161596259241}
   nodeName: Selector
   decorators: []
-  services:
-  - {fileID: -4517866594046925826}
-  position: {x: 180.99992, y: 177.35}
-  children: []
---- !u!114 &4512547951766086491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &4809179848867651272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Vision
---- !u!114 &8027659559080478974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
-  m_Name: MoveToAction
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  nodeName: Move to
-  decorators: []
   services: []
-  position: {x: 0, y: 0}
---- !u!114 &9071778545981789258
+  position: {x: 66, y: 233}
+  children:
+  - {fileID: -2863119601761846113}
+  - {fileID: -4143601333363419454}
+--- !u!114 &5568773378906477519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

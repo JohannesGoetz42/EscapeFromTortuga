@@ -5,7 +5,6 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.InputSystem;
 
 #if UNITY_EDITOR
 
@@ -50,18 +49,27 @@ public partial class BehaviorTreeView : GraphView
         graphViewChanged += OnGraphViewChanged;
 
         currentTree = selectedTree;
+        List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
         if (currentTree.root == null)
         {
             currentTree.root = ScriptableObject.CreateInstance<BehaviorTreeRoot>();
-            currentTree.nodes.Insert(0, currentTree.root);
+            AssetDatabase.AddObjectToAsset(currentTree.root, currentTree);
+            AssetDatabase.SaveAssets();
         }
 
+        nodeViews.Add(CreateNodeView(currentTree.root));
+
         List<EdgeData> edges = new List<EdgeData>();
-        List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
 
         // create nodes
         foreach (BehaviorTreeNode node in selectedTree.nodes)
         {
+            if (node == null)
+            {
+                Debug.LogWarning("Behavior tree has null node!");
+                continue;
+            }
+
             BehaviorTreeNodeView createdNode = CreateNodeView(node);
             nodeViews.Add(createdNode);
             if (node.parent != null)

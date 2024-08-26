@@ -8,13 +8,13 @@ public class BehaviorTreeSelector : BehaviorTreeCompositeNode
 #endif
     }
 
-    public override BehaviorTreeLeaf TryGetFirstActivateableLeaf()
+    public override BehaviorTreeAction TryGetFirstActivateableAction()
     {
         foreach (BehaviorTreeNode descendant in children)
         {
             if (descendant.CanEnterNode())
             {
-                return descendant.TryGetFirstActivateableLeaf();
+                return descendant.TryGetFirstActivateableAction();
             }
         }
 

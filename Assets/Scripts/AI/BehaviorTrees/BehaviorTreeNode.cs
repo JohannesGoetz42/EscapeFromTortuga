@@ -1,7 +1,9 @@
 
-using System;
-using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public enum BehaviorNodeResult
 {
@@ -10,13 +12,10 @@ public enum BehaviorNodeResult
     Error
 }
 
-public abstract class BehaviorTreeNode : ScriptableObject
+public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 {
-
-    public DecoratorBase[] Decorators;
-    //public DecoratorBase[] Decorators = new DecoratorBase[0];
-    public BehaviorTreeNode parent;
-    virtual protected BehaviorTreeRoot GetRoot() => parent.GetRoot();
+    public List<DecoratorBase> Decorators = new List<DecoratorBase>();
+    public List<BehaviorTreeServiceBase> Services = new List<BehaviorTreeServiceBase>();
 
     virtual public bool CanEnterNode()
     {
@@ -41,7 +40,7 @@ public abstract class BehaviorTreeNode : ScriptableObject
         return parent.CanStayActive();
     }
 
-    public virtual BehaviorTreeLeaf TryGetFirstActivateableLeaf() => null;
+    public virtual BehaviorTreeAction TryGetFirstActivateableAction() => null;
 
     /** Called by the child when it exits active state */
     virtual public void OnChildExit(BehaviorTreeNode child, BehaviorNodeResult result)
@@ -53,21 +52,41 @@ public abstract class BehaviorTreeNode : ScriptableObject
     }
 
 #if UNITY_EDITOR
-    public string nodeName;
-    public GUID id;
     public Vector2 position;
 
-    public void SetParent(BehaviorTreeNode newParent)
+    public virtual void AddChild(BehaviorTreeNodeBase child)
     {
-        parent = newParent;
+        BehaviorTreeServiceBase service = child as BehaviorTreeServiceBase;
+        if (service != null)
+        {
+            Services.Add(service);
+            return;
+        }
+
+        DecoratorBase decorator = child as DecoratorBase;
+        if (decorator != null)
+        {
+            Decorators.Add(decorator);
+            return;
+        }
     }
 
-    public virtual void AddChild(BehaviorTreeNode child)
+    public virtual void RemoveChild(BehaviorTreeNodeBase child) 
     {
-        Debug.LogError("Tried to add child to invalid behavior node parent!");
-    }
+        BehaviorTreeServiceBase service = child as BehaviorTreeServiceBase;
+        if (service != null)
+        {
+            Services.Remove(service);
+            return;
+        }
 
-    public virtual void RemoveChild(BehaviorTreeNode node) { }
+        DecoratorBase decorator = child as DecoratorBase;
+        if (decorator != null)
+        {
+            Decorators.Remove(decorator);
+            return;
+        }
+    }
 
     public bool IsAncestorOf(BehaviorTreeNode node)
     {

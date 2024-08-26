@@ -77,7 +77,7 @@ GridBackground {
     margin-left: 0;
 }
 
-.leaf {
+.action {
     background-color: rgb(125, 0, 212);
 }
 
@@ -99,4 +99,16 @@ GridBackground {
     border-right-width: 8px;
     border-bottom-width: 8px;
     border-left-width: 8px;
+}
+
+.selector {
+}
+
+.decorator {
+    background-color: rgb(0, 0, 108);
+    color: rgb(255, 255, 255);
+}
+
+.service {
+    background-color: rgb(0, 166, 111);
 }

@@ -6,6 +6,8 @@
             <ui:VisualElement name="top">
                 <ui:VisualElement name="input" class="port" />
                 <ui:VisualElement name="divider" class="vertical" />
+                <ui:VisualElement name="services" style="flex-grow: 1;" />
+                <ui:VisualElement name="decorators" style="flex-grow: 1;" />
                 <ui:VisualElement name="title">
                     <ui:Label name="title-label" text="Sequence" class="unity-text-element unity-label" style="-unity-text-align: upper-center;" />
                     <ui:VisualElement name="title-button-container">

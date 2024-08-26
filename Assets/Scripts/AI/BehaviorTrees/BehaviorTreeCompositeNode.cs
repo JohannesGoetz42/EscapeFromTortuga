@@ -9,14 +9,26 @@ public abstract class BehaviorTreeCompositeNode : BehaviorTreeNode
     }
 
 #if UNITY_EDITOR
-    public override void AddChild(BehaviorTreeNode child)
+    public override void AddChild(BehaviorTreeNodeBase child)
     {
-        children.Add(child);
+        BehaviorTreeNode childNode = child as BehaviorTreeNode;
+        if (childNode != null)
+        {
+            children.Add(childNode);
+        }
+
+        base.AddChild(child);
     }
 
-    public override void RemoveChild(BehaviorTreeNode node) 
+    public override void RemoveChild(BehaviorTreeNodeBase child)
     {
-        children.Remove(node);
+        BehaviorTreeNode childNode = child as BehaviorTreeNode;
+        if (childNode != null)
+        {
+            children.Remove(childNode);
+        }
+
+        base.RemoveChild(child);
     }
 #endif
 }

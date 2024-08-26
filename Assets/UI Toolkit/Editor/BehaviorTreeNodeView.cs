@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,16 +9,24 @@ public class BehaviorTreeNodeView : Node
     public Port parentPort;
     public Port childrenPort;
 
-    public BehaviorTreeNodeView(BehaviorTreeNode node) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
+    private VisualElement _serviceContainer;
+    private VisualElement _decoratorContainer;
+    private BehaviorTreeView _behaviorTreeView;
+
+    public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
         this.node = node;
         title = node.nodeName;
+        _behaviorTreeView = behaviorTreeView;
 
         style.left = node.position.x;
         style.top = node.position.y;
 
         CreateParentPort();
         CreateChildrenPort();
+
+        _serviceContainer = this.Q("services");
+        _decoratorContainer = this.Q("decorators");
 
         if (node is BehaviorTreeRoot)
         {
@@ -27,9 +36,9 @@ public class BehaviorTreeNodeView : Node
         {
             titleContainer.AddToClassList("selector");
         }
-        else if (node is BehaviorTreeLeaf)
+        else if (node is BehaviorTreeAction)
         {
-            titleContainer.AddToClassList("leaf");
+            titleContainer.AddToClassList("action");
         }
     }
 
@@ -54,8 +63,8 @@ public class BehaviorTreeNodeView : Node
     }
     private void CreateChildrenPort()
     {
-        // leafs cant't have children
-        if (node is BehaviorTreeLeaf)
+        // actions cant't have children
+        if (node is BehaviorTreeAction)
         {
             return;
         }
@@ -66,4 +75,49 @@ public class BehaviorTreeNodeView : Node
         outputContainer.Add(childrenPort);
     }
 
+    public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+    {
+        // add composite nodes
+        TypeCache.TypeCollection availableComposites = TypeCache.GetTypesDerivedFrom<BehaviorTreeServiceBase>();
+        evt.menu.AppendSeparator();
+        foreach (System.Type compositeType in availableComposites)
+        {
+            evt.menu.AppendAction(compositeType.Name, x => CreateEmbeddedNode(compositeType));
+        }
+
+        // add leaf nodes
+        TypeCache.TypeCollection availableDecorators = TypeCache.GetTypesDerivedFrom<DecoratorBase>();
+        evt.menu.AppendSeparator();
+        foreach (System.Type decoratorType in availableDecorators)
+        {
+            evt.menu.AppendAction(decoratorType.Name, x => CreateEmbeddedNode(decoratorType));
+        }
+    }
+
+    void CreateEmbeddedNode(System.Type nodeType)
+    {
+        if(nodeType == null)
+        {
+            return;
+        }
+
+        EmbeddedBehaviorTreeNode embeddedNode = _behaviorTreeView.currentTree.CreateNode(nodeType) as EmbeddedBehaviorTreeNode;
+        node.AddChild(embeddedNode);
+
+        if(embeddedNode is DecoratorBase)
+        {
+            _decoratorContainer.Add(CreateEmbeddedNodeView(embeddedNode));
+        }
+
+        if(embeddedNode is BehaviorTreeServiceBase)
+        {
+            _serviceContainer.Add(CreateEmbeddedNodeView(embeddedNode));
+        }
+    }
+
+    EmbeddedBehaviorTreeNodeView CreateEmbeddedNodeView(EmbeddedBehaviorTreeNode node)
+    {
+        EmbeddedBehaviorTreeNodeView nodeView = new EmbeddedBehaviorTreeNodeView(node);
+        return nodeView;
+    }
 }

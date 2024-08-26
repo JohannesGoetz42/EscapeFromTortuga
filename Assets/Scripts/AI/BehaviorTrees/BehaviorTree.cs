@@ -9,24 +9,49 @@ public class BehaviorTree : ScriptableObject
 
 #if UNITY_EDITOR
     public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();
+    public List<EmbeddedBehaviorTreeNode> embeddedNodes = new List<EmbeddedBehaviorTreeNode>();
 
-    public BehaviorTreeNode CreateNode(System.Type type)
+    public BehaviorTreeNodeBase CreateNode(System.Type type)
     {
-        BehaviorTreeNode node = CreateInstance(type) as BehaviorTreeNode;
+        BehaviorTreeNodeBase node = CreateInstance(type) as BehaviorTreeNodeBase;
         node.name = type.Name;
         node.id = GUID.Generate();
-        nodes.Add(node);
+
+        BehaviorTreeNode standaloneNode = node as BehaviorTreeNode;
+        if (standaloneNode != null)
+        {
+            nodes.Add(standaloneNode);
+        }
+
+        EmbeddedBehaviorTreeNode embeddedNode = node as EmbeddedBehaviorTreeNode;
+        if (embeddedNode != null)
+        {
+            embeddedNodes.Add(embeddedNode);
+        }
 
         AssetDatabase.AddObjectToAsset(node, this);
         AssetDatabase.SaveAssets();
         return node;
     }
 
-    public void DeleteNode(BehaviorTreeNode node)
+    public void DeleteNode(BehaviorTreeNodeBase node)
     {
-        nodes.Remove(node);
+
+        BehaviorTreeNode standaloneNode = node as BehaviorTreeNode;
+        if (standaloneNode != null)
+        {
+            nodes.Remove(standaloneNode);
+        }
+
+        EmbeddedBehaviorTreeNode embeddedNode = node as EmbeddedBehaviorTreeNode;
+        if (embeddedNode != null)
+        {
+            embeddedNodes.Remove(embeddedNode);
+        }
+
         AssetDatabase.RemoveObjectFromAsset(node);
         AssetDatabase.SaveAssets();
     }
+
 #endif
 }

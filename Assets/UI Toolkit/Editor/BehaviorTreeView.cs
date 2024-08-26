@@ -24,7 +24,7 @@ public struct EdgeData
 [UxmlElement]
 public partial class BehaviorTreeView : GraphView
 {
-    private BehaviorTree currentTree;
+    public BehaviorTree currentTree { get; private set; }
     public BehaviorTreeView()
     {
         Insert(0, new GridBackground());
@@ -158,14 +158,17 @@ public partial class BehaviorTreeView : GraphView
             return;
         }
 
-        BehaviorTreeNode node = currentTree.CreateNode(nodeType);
-        BehaviorTreeNodeView nodeView = CreateNodeView(node);
-        nodeView.SetPosition(new Rect(position, new Vector2(200, 50)));
+        BehaviorTreeNode node = currentTree.CreateNode(nodeType) as BehaviorTreeNode;
+        if (node != null)
+        {
+            BehaviorTreeNodeView nodeView = CreateNodeView(node);
+            nodeView.SetPosition(new Rect(position, new Vector2(200, 50)));
+        }
     }
 
     public BehaviorTreeNodeView CreateNodeView(BehaviorTreeNode node)
     {
-        BehaviorTreeNodeView nodeView = new BehaviorTreeNodeView(node);
+        BehaviorTreeNodeView nodeView = new BehaviorTreeNodeView(node, this);
         AddElement(nodeView);
         return nodeView;
     }
@@ -184,7 +187,7 @@ public partial class BehaviorTreeView : GraphView
         }
 
         // add leaf nodes
-        TypeCache.TypeCollection availableNodes = TypeCache.GetTypesDerivedFrom<BehaviorTreeLeaf>();
+        TypeCache.TypeCollection availableNodes = TypeCache.GetTypesDerivedFrom<BehaviorTreeAction>();
         evt.menu.AppendSeparator();
         foreach (Type leafType in availableNodes)
         {

@@ -10,3 +10,93 @@ GridBackground {
     --thick-line-color: rgba(193, 196, 192, 0.1);
     --spacing: 15;
 }
+
+#node-border {
+    background-color: rgb(72, 72, 72);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 7, 7);
+    border-right-color: rgb(0, 7, 7);
+    border-top-color: rgb(0, 7, 7);
+    border-bottom-color: rgb(0, 7, 7);
+}
+
+.port {
+    align-items: center;
+}
+
+#selection-border:hover {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+#selection-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgb(1, 163, 255);
+    border-right-color: rgb(1, 163, 255);
+    border-top-color: rgb(1, 163, 255);
+    border-bottom-color: rgb(1, 163, 255);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+:selected > #selection-border {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+:selected > #selection-border:hover {
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+}
+
+.node {
+    min-width: 150px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.leaf {
+    background-color: rgb(125, 0, 212);
+}
+
+.root {
+    background-color: rgb(200, 200, 200);
+    color: rgb(27, 27, 27);
+}
+
+.leaf {
+    background-color: rgb(125, 0, 212);
+}
+
+.active {
+    border-left-color: rgb(255, 239, 0);
+    border-right-color: rgb(255, 239, 0);
+    border-top-color: rgb(255, 239, 0);
+    border-bottom-color: rgb(255, 239, 0);
+    border-top-width: 8px;
+    border-right-width: 8px;
+    border-bottom-width: 8px;
+    border-left-width: 8px;
+}

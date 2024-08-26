@@ -1,5 +1,6 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BehaviorTreeNodeView : Node
 {
@@ -7,7 +8,7 @@ public class BehaviorTreeNodeView : Node
     public Port parentPort;
     public Port childrenPort;
 
-    public BehaviorTreeNodeView(BehaviorTreeNode node)
+    public BehaviorTreeNodeView(BehaviorTreeNode node) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
         this.node = node;
         title = node.nodeName;
@@ -17,6 +18,19 @@ public class BehaviorTreeNodeView : Node
 
         CreateParentPort();
         CreateChildrenPort();
+
+        if (node is BehaviorTreeRoot)
+        {
+            titleContainer.AddToClassList("root");
+        }
+        else if (node is BehaviorTreeSelector)
+        {
+            titleContainer.AddToClassList("selector");
+        }
+        else if (node is BehaviorTreeLeaf)
+        {
+            titleContainer.AddToClassList("leaf");
+        }
     }
 
     public override void SetPosition(Rect newPos)
@@ -28,13 +42,14 @@ public class BehaviorTreeNodeView : Node
     private void CreateParentPort()
     {
         // root node should not have a parent
-        if(node is BehaviorTreeRoot)
+        if (node is BehaviorTreeRoot)
         {
             return;
         }
 
-        parentPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(BehaviorTreeNode));
+        parentPort = InstantiatePort(Orientation.Vertical, Direction.Input, Port.Capacity.Single, typeof(BehaviorTreeNode));
         parentPort.portName = "";
+        parentPort.style.flexDirection = FlexDirection.Column;
         inputContainer.Add(parentPort);
     }
     private void CreateChildrenPort()
@@ -45,8 +60,9 @@ public class BehaviorTreeNodeView : Node
             return;
         }
 
-        childrenPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Multi, typeof(BehaviorTreeNode));
+        childrenPort = InstantiatePort(Orientation.Vertical, Direction.Output, Port.Capacity.Multi, typeof(BehaviorTreeNode));
         childrenPort.portName = "";
+        childrenPort.style.flexDirection = FlexDirection.ColumnReverse;
         outputContainer.Add(childrenPort);
     }
 

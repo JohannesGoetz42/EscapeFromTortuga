@@ -68,7 +68,22 @@ public partial class BehaviorTreeView : GraphView
             {
                 edges.Add(new EdgeData(node.parent, createdNode));
             }
+
+            // create decorators
+            foreach (DecoratorBase decorator in node.decorators)
+            {
+                EmbeddedBehaviorTreeNodeView decoratorView = new EmbeddedBehaviorTreeNodeView(decorator);
+                createdNode.decoratorContainer.Add(decoratorView);
+            }
+
+            // create decorators
+            foreach (BehaviorTreeServiceBase service in node.services)
+            {
+                EmbeddedBehaviorTreeNodeView serviceView = new EmbeddedBehaviorTreeNodeView(service);
+                createdNode.decoratorContainer.Add(serviceView);
+            }
         }
+
 
         // create edges after every node is created
         foreach (EdgeData edge in edges)

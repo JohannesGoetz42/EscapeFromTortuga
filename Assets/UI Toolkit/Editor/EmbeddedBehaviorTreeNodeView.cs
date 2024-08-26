@@ -4,8 +4,7 @@ using UnityEngine.UIElements;
 public class EmbeddedBehaviorTreeNodeView : VisualElement
 {
     public EmbeddedBehaviorTreeNode embeddedNode;
-    private VisualElement _titleContainer;
-    private TextElement _title;
+    private Button _button;
 
     public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node) : base()
     {
@@ -16,18 +15,17 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement
         StyleSheet style = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/Editor/BehaviorTreeEditor.uss");
         styleSheets.Add(style);
 
-        _titleContainer = this.Q("titleContainer");
-        _title = this.Q("title") as TextElement;
+        _button = this.Q("button") as Button;
 
         if (node is DecoratorBase)
         {
-            _titleContainer.AddToClassList("decorator");
+            _button.AddToClassList("decorator");
         }
         else if (node is BehaviorTreeServiceBase)
         {
-            _titleContainer.AddToClassList("service");
+            _button.AddToClassList("service");
         }
 
-        _title.text = embeddedNode.nodeName;
+        _button.text = embeddedNode.nodeName;
     }
 }

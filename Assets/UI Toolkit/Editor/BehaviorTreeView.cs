@@ -23,7 +23,9 @@ public struct EdgeData
 [UxmlElement]
 public partial class BehaviorTreeView : GraphView
 {
-    public BehaviorTree currentTree { get; private set; }
+    public BehaviorTree CurrentTree { get; private set; }
+    public BehaviorTreeEditor editor;
+
     public BehaviorTreeView()
     {
         Insert(0, new GridBackground());
@@ -48,16 +50,16 @@ public partial class BehaviorTreeView : GraphView
         DeleteElements(graphElements);
         graphViewChanged += OnGraphViewChanged;
 
-        currentTree = selectedTree;
+        CurrentTree = selectedTree;
         List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
-        if (currentTree.root == null)
+        if (CurrentTree.root == null)
         {
-            currentTree.root = ScriptableObject.CreateInstance<BehaviorTreeRoot>();
-            AssetDatabase.AddObjectToAsset(currentTree.root, currentTree);
+            CurrentTree.root = ScriptableObject.CreateInstance<BehaviorTreeRoot>();
+            AssetDatabase.AddObjectToAsset(CurrentTree.root, CurrentTree);
             AssetDatabase.SaveAssets();
         }
 
-        nodeViews.Add(CreateNodeView(currentTree.root));
+        nodeViews.Add(CreateNodeView(CurrentTree.root));
 
         List<EdgeData> edges = new List<EdgeData>();
 
@@ -80,14 +82,14 @@ public partial class BehaviorTreeView : GraphView
             // create decorators
             foreach (DecoratorBase decorator in node.decorators)
             {
-                EmbeddedBehaviorTreeNodeView decoratorView = new EmbeddedBehaviorTreeNodeView(decorator);
+                EmbeddedBehaviorTreeNodeView decoratorView = new EmbeddedBehaviorTreeNodeView(decorator, createdNode);
                 createdNode.decoratorContainer.Add(decoratorView);
             }
 
             // create decorators
             foreach (BehaviorTreeServiceBase service in node.services)
             {
-                EmbeddedBehaviorTreeNodeView serviceView = new EmbeddedBehaviorTreeNodeView(service);
+                EmbeddedBehaviorTreeNodeView serviceView = new EmbeddedBehaviorTreeNodeView(service, createdNode);
                 createdNode.decoratorContainer.Add(serviceView);
             }
         }
@@ -135,7 +137,7 @@ public partial class BehaviorTreeView : GraphView
                 BehaviorTreeNodeView nodeView = item as BehaviorTreeNodeView;
                 if (nodeView != null)
                 {
-                    currentTree.DeleteNode(nodeView.node);
+                    CurrentTree.DeleteNode(nodeView.node);
                     continue;
                 }
 
@@ -176,12 +178,12 @@ public partial class BehaviorTreeView : GraphView
 
     private void CreateNode(Type nodeType, Vector2 position)
     {
-        if (currentTree == null)
+        if (CurrentTree == null)
         {
             return;
         }
 
-        BehaviorTreeNode node = currentTree.CreateNode(nodeType) as BehaviorTreeNode;
+        BehaviorTreeNode node = CurrentTree.CreateNode(nodeType) as BehaviorTreeNode;
         if (node != null)
         {
             BehaviorTreeNodeView nodeView = CreateNodeView(node);

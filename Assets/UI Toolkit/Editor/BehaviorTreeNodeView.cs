@@ -11,13 +11,13 @@ public class BehaviorTreeNodeView : Node
     public VisualElement serviceContainer;
     public VisualElement decoratorContainer;
 
-    private BehaviorTreeView _behaviorTreeView;
+    public BehaviorTreeView BehaviorTreeView {  get; private set; }
 
     public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
         this.node = node;
         title = node.nodeName;
-        _behaviorTreeView = behaviorTreeView;
+        BehaviorTreeView = behaviorTreeView;
 
         style.left = node.position.x;
         style.top = node.position.y;
@@ -101,7 +101,7 @@ public class BehaviorTreeNodeView : Node
             return;
         }
 
-        EmbeddedBehaviorTreeNode embeddedNode = _behaviorTreeView.currentTree.CreateNode(nodeType) as EmbeddedBehaviorTreeNode;
+        EmbeddedBehaviorTreeNode embeddedNode = BehaviorTreeView.CurrentTree.CreateNode(nodeType) as EmbeddedBehaviorTreeNode;
         node.AddChild(embeddedNode);
 
         if(embeddedNode is DecoratorBase)
@@ -117,7 +117,7 @@ public class BehaviorTreeNodeView : Node
 
     EmbeddedBehaviorTreeNodeView CreateEmbeddedNodeView(EmbeddedBehaviorTreeNode node)
     {
-        EmbeddedBehaviorTreeNodeView nodeView = new EmbeddedBehaviorTreeNodeView(node);
+        EmbeddedBehaviorTreeNodeView nodeView = new EmbeddedBehaviorTreeNodeView(node, this);
         return nodeView;
     }
 }

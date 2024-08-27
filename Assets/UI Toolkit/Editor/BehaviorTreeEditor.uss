@@ -112,3 +112,15 @@ GridBackground {
 .service {
     background-color: rgb(0, 166, 111);
 }
+
+.detailView {
+    background-color: rgb(41, 41, 41);
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.propertyLabel {
+    -unity-text-align: upper-left;
+    font-size: 18px;
+    margin-top: 5px;
+}

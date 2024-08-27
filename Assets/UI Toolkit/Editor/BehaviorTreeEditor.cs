@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class AssetHandler
 public class BehaviorTreeEditor : EditorWindow
 {
     BehaviorTreeView treeView;
+    BehaviorNodeDetails nodeDetails;
 
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
@@ -30,20 +32,21 @@ public class BehaviorTreeEditor : EditorWindow
     {
         BehaviorTreeEditor editor = GetWindow<BehaviorTreeEditor>();
         editor.treeView.SetBehaviorTree(tree);
+        editor.treeView.editor = editor;
     }
 
-    [MenuItem("Window/AI/BehaviorTreeEditor")]
-    public static void ShowExample()
+    public void SelectNode(BehaviorTreeNodeBase node)
     {
-        BehaviorTreeEditor wnd = GetWindow<BehaviorTreeEditor>();
-        wnd.titleContent = new GUIContent("BehaviorTreeEditor");
+        if (nodeDetails != null && node != null)
+        {
+            nodeDetails.SetNode(node);
+        }
     }
 
     public void CreateGUI()
     {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
-
         m_VisualTreeAsset.CloneTree(rootVisualElement);
 
 
@@ -51,6 +54,7 @@ public class BehaviorTreeEditor : EditorWindow
         root.styleSheets.Add(style);
 
         treeView = root.Q<BehaviorTreeView>();
+        nodeDetails = root.Q<BehaviorNodeDetails>();
     }
 
     private void OnSelectionChange()

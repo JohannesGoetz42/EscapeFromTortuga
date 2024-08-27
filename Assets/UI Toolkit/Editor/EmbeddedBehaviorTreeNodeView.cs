@@ -4,9 +4,11 @@ using UnityEngine.UIElements;
 public class EmbeddedBehaviorTreeNodeView : VisualElement
 {
     public EmbeddedBehaviorTreeNode embeddedNode;
+
+    private BehaviorTreeNodeView _parentView;
     private Button _button;
 
-    public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node) : base()
+    public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node, BehaviorTreeNodeView parentView) : base()
     {
         embeddedNode = node;
         VisualTreeAsset visualTreeAsset = EditorGUIUtility.Load("Assets/UI Toolkit/Editor/EmbeddedBehaviorTreeNode.uxml") as VisualTreeAsset;
@@ -27,5 +29,12 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement
         }
 
         _button.text = embeddedNode.nodeName;
+        _button.clicked += SelectNode;
+        _parentView = parentView;
+    }
+
+    void SelectNode()
+    {
+        _parentView.BehaviorTreeView.editor.SelectNode(embeddedNode);
     }
 }

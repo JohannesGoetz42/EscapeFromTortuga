@@ -1,9 +1,8 @@
 using System.Linq;
-using Unity.Properties;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEditor;
+using UnityEditor.UIElements;
 
 
 struct PropertyDetailData
@@ -91,6 +90,10 @@ public partial class BehaviorNodeDetails : VisualElement
                 IntegerField intField = new IntegerField(property.name);
                 intField.value = property.intValue;
                 propertyElement = intField;
+                break;
+            case SerializedPropertyType.Enum:
+                EnumField enumField = new EnumField(property.displayName);
+                propertyElement = enumField;
                 break;
             case SerializedPropertyType.Generic:
                 if (!TryAddGenericProperty(serializedObject, property))

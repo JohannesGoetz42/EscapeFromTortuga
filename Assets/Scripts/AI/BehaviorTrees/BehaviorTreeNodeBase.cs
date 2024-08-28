@@ -6,8 +6,8 @@ using UnityEditor;
 
 public class BehaviorTreeNodeBase : ScriptableObject
 {
-    virtual protected BehaviorTreeRoot GetRoot() => parent.GetRoot();
     public BehaviorTreeNode parent;
+    public BehaviorTree behaviorTree;
 
 #if UNITY_EDITOR
     public string nodeName;

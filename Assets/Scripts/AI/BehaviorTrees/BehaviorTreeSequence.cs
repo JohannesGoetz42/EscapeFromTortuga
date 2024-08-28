@@ -17,7 +17,7 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
             int nextChild = children.IndexOf(child) + 1;
             if (children.Count > nextChild)
             {
-                GetRoot().currentAction = children[nextChild].TryGetFirstActivateableAction();
+                behaviorTree.root.currentAction = children[nextChild].TryGetFirstActivateableAction();
                 return;
             }
         }

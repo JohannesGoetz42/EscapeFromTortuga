@@ -10,7 +10,7 @@ public struct BlackboardKeySelector
     }
 
     public string selectedKey;
-    System.Type type;
+    public System.Type type;
 
     public string[] GetBlackboardKeys(Blackboard blackboard)
     {
@@ -77,7 +77,7 @@ public class Blackboard : ScriptableObject
         }
     }
     public bool GetValueAsBool(string key) => _boolValues.ContainsKey(key) ? _boolValues[key] : false;
-
+    
     public void SetValueAsObject(string key, Object value)
     {
         if (_objectValues.ContainsKey(key))

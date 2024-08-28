@@ -5,8 +5,6 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     public BehaviorTreeAction currentAction;
     private BehaviorTreeNode _startNode;
 
-    protected override BehaviorTreeRoot GetRoot() => this;
-
     public BehaviorTreeRoot() : base()
     {
 #if UNITY_EDITOR
@@ -52,9 +50,9 @@ public class BehaviorTreeRoot : BehaviorTreeNode
         _startNode = child as BehaviorTreeCompositeNode;
     }
 
-    public override void RemoveChild(BehaviorTreeNodeBase node) 
+    public override void RemoveChild(BehaviorTreeNodeBase node)
     {
-        if(_startNode == node)
+        if (_startNode == node)
         {
             _startNode = null;
         }

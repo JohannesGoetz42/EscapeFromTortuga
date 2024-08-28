@@ -23,6 +23,7 @@ public class BehaviorTree : ScriptableObject
         BehaviorTreeNodeBase node = CreateInstance(type) as BehaviorTreeNodeBase;
         node.name = type.Name;
         node.id = GUID.Generate();
+        node.behaviorTree = this;
 
         BehaviorTreeNode standaloneNode = node as BehaviorTreeNode;
         if (standaloneNode != null)

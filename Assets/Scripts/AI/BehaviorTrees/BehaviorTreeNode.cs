@@ -60,6 +60,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         if (service != null)
         {
             services.Add(service);
+            service.SetParent(this);
             return;
         }
 
@@ -67,6 +68,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         if (decorator != null)
         {
             decorators.Add(decorator);
+            decorator.SetParent(this);
             return;
         }
     }

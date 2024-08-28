@@ -11,7 +11,7 @@ public class BehaviorTreeNodeView : Node
     public VisualElement serviceContainer;
     public VisualElement decoratorContainer;
 
-    public BehaviorTreeView BehaviorTreeView {  get; private set; }
+    public BehaviorTreeView BehaviorTreeView { get; private set; }
 
     public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
@@ -61,6 +61,7 @@ public class BehaviorTreeNodeView : Node
         parentPort.style.flexDirection = FlexDirection.Column;
         inputContainer.Add(parentPort);
     }
+
     private void CreateChildrenPort()
     {
         // actions cant't have children
@@ -96,7 +97,7 @@ public class BehaviorTreeNodeView : Node
 
     void CreateEmbeddedNode(System.Type nodeType)
     {
-        if(nodeType == null)
+        if (nodeType == null)
         {
             return;
         }
@@ -104,12 +105,12 @@ public class BehaviorTreeNodeView : Node
         EmbeddedBehaviorTreeNode embeddedNode = BehaviorTreeView.CurrentTree.CreateNode(nodeType) as EmbeddedBehaviorTreeNode;
         node.AddChild(embeddedNode);
 
-        if(embeddedNode is DecoratorBase)
+        if (embeddedNode is DecoratorBase)
         {
             decoratorContainer.Add(CreateEmbeddedNodeView(embeddedNode));
         }
 
-        if(embeddedNode is BehaviorTreeServiceBase)
+        if (embeddedNode is BehaviorTreeServiceBase)
         {
             serviceContainer.Add(CreateEmbeddedNodeView(embeddedNode));
         }

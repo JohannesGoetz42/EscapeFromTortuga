@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Linq;
+
 
 #if UNITY_EDITOR
 using System.Collections.Generic;
@@ -41,16 +43,39 @@ public class BehaviorTree : ScriptableObject
 
     public void DeleteNode(BehaviorTreeNodeBase node)
     {
-
+        // remove node as standalone node
         BehaviorTreeNode standaloneNode = node as BehaviorTreeNode;
         if (standaloneNode != null)
         {
+            // remove services and decorators
+            foreach (EmbeddedBehaviorTreeNode service in standaloneNode.services.ToArray())
+            {
+                DeleteNode(service);
+            }
+            foreach (EmbeddedBehaviorTreeNode decorator in standaloneNode.decorators.ToArray())
+            {
+                DeleteNode(decorator);
+            }
+
             nodes.Remove(standaloneNode);
         }
 
+        // remove decorator node
         EmbeddedBehaviorTreeNode embeddedNode = node as EmbeddedBehaviorTreeNode;
         if (embeddedNode != null)
         {
+            // remove embedded node from parent
+            BehaviorTreeServiceBase service = node as BehaviorTreeServiceBase;
+            if (service != null)
+            {
+                embeddedNode.parent.services.Remove(service);
+            }
+            DecoratorBase decorator = node as DecoratorBase;
+            if (decorator != null)
+            {
+                embeddedNode.parent.decorators.Remove(decorator);
+            }
+
             embeddedNodes.Remove(embeddedNode);
         }
 

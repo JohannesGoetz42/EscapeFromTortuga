@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1a550442ab9294bbc4656e399e232e, type: 3}
   m_Name: SoldierBlackboard
   m_EditorClassIdentifier: 
-  boolKeys: []
+  boolKeys:
+  - hasTarget
   objectKeys:
   - Target

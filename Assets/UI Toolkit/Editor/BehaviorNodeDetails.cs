@@ -10,13 +10,14 @@ struct PropertyDetailData
 {
     public VisualElement element;
     public SerializedProperty property;
-
 }
 
 [UxmlElement]
 public partial class BehaviorNodeDetails : VisualElement
 {
     static readonly string[] ignoredProperties = { "id", "m_Script", "parent" };
+
+    public BehaviorTreeEditor editor;
 
     private BehaviorTreeNodeBase _node;
     private VisualElement _propertyContainer;
@@ -50,7 +51,7 @@ public partial class BehaviorNodeDetails : VisualElement
         {
             if (ignoredProperties.Contains(property.name))
             {
-                bHasAdditionalProperty = property.NextVisible(true);
+                bHasAdditionalProperty = property.NextVisible(false);
                 continue;
             }
 
@@ -64,15 +65,15 @@ public partial class BehaviorNodeDetails : VisualElement
             }
             else
             {
-                AddProperty(property);
+                AddProperty(serializedObject, property);
             }
 
-            bHasAdditionalProperty = property.NextVisible(true);
+            bHasAdditionalProperty = property.NextVisible(false);
         }
 
     }
 
-    void AddProperty(SerializedProperty property)
+    void AddProperty(SerializedObject serializedObject, SerializedProperty property)
     {
         BindableElement propertyElement = null;
         switch (property.propertyType)
@@ -91,6 +92,12 @@ public partial class BehaviorNodeDetails : VisualElement
                 intField.value = property.intValue;
                 propertyElement = intField;
                 break;
+            case SerializedPropertyType.Generic:
+                if (!TryAddGenericProperty(serializedObject, property))
+                {
+                    Debug.LogWarning(string.Format("decorator properties of type '{0}' are not supported: {1}!", property.propertyType.ToString(), property.name));
+                }
+                return;
             default:
                 Debug.LogWarning(string.Format("decorator properties of type '{0}' are not supported: {1}!", property.propertyType.ToString(), property.name));
                 return;
@@ -101,5 +108,24 @@ public partial class BehaviorNodeDetails : VisualElement
             propertyElement.BindProperty(property);
             _propertyContainer.Add(propertyElement);
         }
+    }
+
+    bool TryAddGenericProperty(SerializedObject serializedObject, SerializedProperty property)
+    {
+        if (property.type == nameof(BlackboardKeySelector))
+        {
+            BlackboardKeySelector keySelector = (BlackboardKeySelector)property.boxedValue;
+            Blackboard blackboard = editor.TreeView.CurrentTree.Blackboard;
+
+            DropdownField keyDropdown = new DropdownField(property.name, keySelector.GetBlackboardKeys(blackboard).ToList(), 0);
+            keyDropdown.bindingPath = property.name + "." + nameof(BlackboardKeySelector.selectedKey);
+            keyDropdown.Bind(serializedObject);
+
+            _propertyContainer.Add(keyDropdown);
+            return true;
+
+        }
+
+        return false;
     }
 }

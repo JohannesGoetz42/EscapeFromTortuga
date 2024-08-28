@@ -1,9 +1,52 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+public struct BlackboardKeySelector
+{
+    public BlackboardKeySelector(System.Type type) : this()
+    {
+        this.type = type;
+    }
+
+    public string selectedKey;
+    System.Type type;
+
+    public string[] GetBlackboardKeys(Blackboard blackboard)
+    {
+        if (blackboard == null)
+        {
+            return new string[0];
+        }
+
+        if (type == null)
+        {
+            List<string> keys = new List<string>();
+            keys.AddRange(blackboard.BoolKeys);
+            keys.AddRange(blackboard.ObjectKeys);
+            return keys.ToArray();
+        }
+
+        if (type == typeof(bool))
+        {
+            return blackboard.BoolKeys;
+        }
+
+        if (type == typeof(Object))
+        {
+            return blackboard.ObjectKeys;
+        }
+
+        return new string[0];
+    }
+}
+
 [CreateAssetMenu(fileName = "Blackboard", menuName = "Scriptable Objects/Behavior/Blackboard")]
 public class Blackboard : ScriptableObject
 {
+    public string[] BoolKeys { get => boolKeys; }
+    public string[] ObjectKeys { get => objectKeys; }
+
     [SerializeField] string[] boolKeys;
     [SerializeField] string[] objectKeys;
 

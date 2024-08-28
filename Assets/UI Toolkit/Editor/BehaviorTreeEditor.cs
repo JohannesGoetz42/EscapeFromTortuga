@@ -22,8 +22,8 @@ public class AssetHandler
 
 public class BehaviorTreeEditor : EditorWindow
 {
-    BehaviorTreeView treeView;
-    BehaviorNodeDetails nodeDetails;
+    public BehaviorTreeView TreeView {  get; private set; }
+    public BehaviorNodeDetails NodeDetails { get; private set; }
 
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
@@ -31,15 +31,15 @@ public class BehaviorTreeEditor : EditorWindow
     public static void Open(BehaviorTree tree)
     {
         BehaviorTreeEditor editor = GetWindow<BehaviorTreeEditor>();
-        editor.treeView.SetBehaviorTree(tree);
-        editor.treeView.editor = editor;
+        editor.TreeView.SetBehaviorTree(tree);
+        editor.TreeView.editor = editor;
     }
 
     public void SelectNode(BehaviorTreeNodeBase node)
     {
-        if (nodeDetails != null && node != null)
+        if (NodeDetails != null && node != null)
         {
-            nodeDetails.SetNode(node);
+            NodeDetails.SetNode(node);
         }
     }
 
@@ -53,8 +53,9 @@ public class BehaviorTreeEditor : EditorWindow
         StyleSheet style = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/Editor/BehaviorTreeEditor.uss");
         root.styleSheets.Add(style);
 
-        treeView = root.Q<BehaviorTreeView>();
-        nodeDetails = root.Q<BehaviorNodeDetails>();
+        TreeView = root.Q<BehaviorTreeView>();
+        NodeDetails = root.Q<BehaviorNodeDetails>();
+        NodeDetails.editor = this;
     }
 
     private void OnSelectionChange()
@@ -62,7 +63,7 @@ public class BehaviorTreeEditor : EditorWindow
         BehaviorTree selectedTree = Selection.activeObject as BehaviorTree;
         if(selectedTree)
         {
-            treeView.SetBehaviorTree(selectedTree);
+            TreeView.SetBehaviorTree(selectedTree);
         }
     }
 }

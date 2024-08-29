@@ -1,7 +1,8 @@
+using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
-public enum BlackboardValueType
+public enum ValueType
 {
     Bool,
     Object
@@ -19,32 +20,8 @@ public class IsValueSetDecorator : DecoratorBase
 
 #if UNITY_EDITOR
     [SerializeField]
-    BlackboardValueType _valueType = BlackboardValueType.Bool;
-
-    public BlackboardValueType ValueType
-    {
-        get => _valueType;
-        set
-        {
-            switch (value)
-            {
-                case BlackboardValueType.Bool:
-                    comparedBlackboardValue.type = typeof(bool);
-                    break;
-                case BlackboardValueType.Object:
-                    comparedBlackboardValue.type = typeof(Object);
-                    break;
-                default:
-                    Debug.LogError("Selected unsupported blackboard type for IsValueSetDecorator!");
-                    return;
-
-            }
-            _valueType = value;
-            updateDetails.Invoke();
-        }
-    }
+    ValueType valueType = ValueType.Bool;
 #endif
-
     [SerializeField]
     BlackboardKeySelector comparedBlackboardValue;
     [SerializeField]
@@ -54,19 +31,51 @@ public class IsValueSetDecorator : DecoratorBase
      */
     bool bInvertResult;
 
-
     public override bool Evaluate(Blackboard blackboard)
     {
         bool result = false;
-        if (comparedBlackboardValue.type == typeof(bool))
+        if (comparedBlackboardValue.type == BlackboardValueType.Bool)
         {
             result = blackboard.GetValueAsBool(comparedBlackboardValue.selectedKey);
         }
-        else if (comparedBlackboardValue.type == typeof(Object))
+        else if (comparedBlackboardValue.type == BlackboardValueType.Object)
         {
-            result = blackboard.GetValueAsObject(comparedBlackboardValue.selectedKey);
+            result = blackboard.GetValueAsObject(comparedBlackboardValue.selectedKey) != null;
         }
 
         return bInvertResult ? !result : result;
     }
+
+#if UNITY_EDITOR
+    public override string[] GetRefreshProperties()
+    {
+        return new string[] { nameof(valueType) };
+    }
+
+    public override void OnPropertyChanged(SerializedProperty property)
+    {
+        if (property == null)
+        {
+            return;
+        }
+
+        if (property.name == nameof(valueType))
+        {
+            switch (valueType)
+            {
+                case ValueType.Bool:
+                    comparedBlackboardValue.type = BlackboardValueType.Bool;
+                    break;
+                case ValueType.Object:
+                    comparedBlackboardValue.type = BlackboardValueType.Object;
+                    break;
+                default:
+                    Debug.LogError("Selected unsupported blackboard type for IsValueSetDecorator!");
+                    return;
+
+            }
+        }
+    }
+
+#endif
 }

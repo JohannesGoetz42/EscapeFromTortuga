@@ -14,13 +14,19 @@ struct PropertyDetailData
 [UxmlElement]
 public partial class BehaviorNodeDetails : VisualElement
 {
-    static readonly string[] ignoredProperties = { "id", "m_Script", "parent" };
+    static readonly string[] ignoredProperties = {
+        "m_Script",
+        nameof(BehaviorTreeNode.id),
+        nameof(BehaviorTreeNode.parent),
+        nameof(BehaviorTreeNode.behaviorTree)
+    };
 
     public BehaviorTreeEditor editor;
 
     private BehaviorTreeNodeBase _node;
     private VisualElement _propertyContainer;
     private TextField _nodeName;
+    private string[] refreshProperties = new string[0];
 
     public BehaviorNodeDetails() : base()
     {
@@ -31,19 +37,12 @@ public partial class BehaviorNodeDetails : VisualElement
         _propertyContainer = this.Q("propertyContainer");
     }
 
-    public void SetNode(BehaviorTreeNodeBase node)
+    public void UpdateContent()
     {
-        if (node == null || node == _node)
-        {
-            return;
-        }
-
-        _node = node;
-
         // clear previous properties
         _propertyContainer.Clear();
 
-        SerializedObject serializedObject = new SerializedObject(node);
+        SerializedObject serializedObject = new SerializedObject(_node);
         SerializedProperty property = serializedObject.GetIterator();
         bool bHasAdditionalProperty = property.NextVisible(true);
         while (bHasAdditionalProperty)
@@ -69,7 +68,27 @@ public partial class BehaviorNodeDetails : VisualElement
 
             bHasAdditionalProperty = property.NextVisible(false);
         }
+    }
 
+    public void SetNode(BehaviorTreeNodeBase node)
+    {
+        if (node == null || node == _node)
+        {
+            return;
+        }
+
+        EmbeddedBehaviorTreeNode embeddedNode = node as EmbeddedBehaviorTreeNode;
+        if (embeddedNode == null)
+        {
+            refreshProperties = new string[0];
+        }
+        else
+        {
+            refreshProperties = embeddedNode.GetRefreshProperties();
+        }
+
+        _node = node;
+        UpdateContent();
     }
 
     void AddProperty(SerializedObject serializedObject, SerializedProperty property)
@@ -108,8 +127,23 @@ public partial class BehaviorNodeDetails : VisualElement
 
         if (propertyElement != null)
         {
+            if (refreshProperties.Contains(property.name))
+            {
+                propertyElement.TrackPropertyValue(property, x => OnPropertyUpdated(x));
+            }
+
             propertyElement.BindProperty(property);
             _propertyContainer.Add(propertyElement);
+        }
+    }
+
+    void OnPropertyUpdated(SerializedProperty property)
+    {
+        EmbeddedBehaviorTreeNode embeddedNode = _node as EmbeddedBehaviorTreeNode;
+        if (embeddedNode != null)
+        {
+            embeddedNode.OnPropertyChanged(property);
+            UpdateContent();
         }
     }
 
@@ -122,6 +156,12 @@ public partial class BehaviorNodeDetails : VisualElement
 
             DropdownField keyDropdown = new DropdownField(property.name, keySelector.GetBlackboardKeys(blackboard).ToList(), 0);
             keyDropdown.bindingPath = property.name + "." + nameof(BlackboardKeySelector.selectedKey);
+
+            if (refreshProperties.Contains(property.name))
+            {
+                keyDropdown.TrackPropertyValue(property, x => UpdateContent());
+            }
+
             keyDropdown.Bind(serializedObject);
 
             _propertyContainer.Add(keyDropdown);

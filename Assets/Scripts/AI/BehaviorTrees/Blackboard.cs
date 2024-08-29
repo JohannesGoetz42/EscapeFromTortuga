@@ -1,16 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+
+public enum BlackboardValueType
+{
+    Any,
+    Bool,
+    Object
+}
 
 [System.Serializable]
 public struct BlackboardKeySelector
 {
-    public BlackboardKeySelector(System.Type type) : this()
+    public BlackboardKeySelector(BlackboardValueType type) : this()
     {
         this.type = type;
     }
 
     public string selectedKey;
-    public System.Type type;
+    public BlackboardValueType type;
 
     public string[] GetBlackboardKeys(Blackboard blackboard)
     {
@@ -19,24 +27,25 @@ public struct BlackboardKeySelector
             return new string[0];
         }
 
-        if (type == null)
+        switch (type)
         {
-            List<string> keys = new List<string>();
-            keys.AddRange(blackboard.BoolKeys);
-            keys.AddRange(blackboard.ObjectKeys);
-            return keys.ToArray();
-        }
+            case BlackboardValueType.Any:
+                List<string> keys = new List<string>();
+                keys.AddRange(blackboard.BoolKeys);
+                keys.AddRange(blackboard.ObjectKeys);
+                return keys.ToArray();
 
-        if (type == typeof(bool))
-        {
-            return blackboard.BoolKeys;
-        }
+            case BlackboardValueType.Bool:
+                return blackboard.BoolKeys;
 
-        if (type == typeof(Object))
-        {
-            return blackboard.ObjectKeys;
-        }
+            case BlackboardValueType.Object:
+                return blackboard.ObjectKeys;
 
+            default:
+                Debug.LogError(string.Format("BlackboardValueType {0} is not implemented!", type));
+                break;
+
+        }
         return new string[0];
     }
 }
@@ -77,7 +86,7 @@ public class Blackboard : ScriptableObject
         }
     }
     public bool GetValueAsBool(string key) => _boolValues.ContainsKey(key) ? _boolValues[key] : false;
-    
+
     public void SetValueAsObject(string key, Object value)
     {
         if (_objectValues.ContainsKey(key))
@@ -85,5 +94,5 @@ public class Blackboard : ScriptableObject
             _objectValues[key] = value;
         }
     }
-    public bool GetValueAsObject(string key) => _objectValues.ContainsKey(key) ? _objectValues[key] : null;
+    public Object GetValueAsObject(string key) => _objectValues.ContainsKey(key) ? _objectValues[key] : null;
 }

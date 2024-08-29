@@ -78,6 +78,8 @@ public class BehaviorTreeNodeView : Node
 
     public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
     {
+        evt.StopPropagation();
+
         // add composite nodes
         TypeCache.TypeCollection availableComposites = TypeCache.GetTypesDerivedFrom<BehaviorTreeServiceBase>();
         evt.menu.AppendSeparator();

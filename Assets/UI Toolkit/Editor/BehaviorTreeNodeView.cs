@@ -80,6 +80,13 @@ public class BehaviorTreeNodeView : Node
     {
         evt.StopPropagation();
 
+        EmbeddedBehaviorTreeNodeView embeddedNode = TryGetClickedEmbeddedNode(evt);
+        if (embeddedNode != null)
+        {
+            evt.menu.AppendAction("Remove", x => RemoveEmbeddedNode(embeddedNode));
+            return;
+        }
+
         // add composite nodes
         TypeCache.TypeCollection availableComposites = TypeCache.GetTypesDerivedFrom<BehaviorTreeServiceBase>();
         evt.menu.AppendSeparator();
@@ -95,6 +102,34 @@ public class BehaviorTreeNodeView : Node
         {
             evt.menu.AppendAction(decoratorType.Name, x => CreateEmbeddedNode(decoratorType));
         }
+    }
+
+    EmbeddedBehaviorTreeNodeView TryGetClickedEmbeddedNode(IMouseEvent mouseEvent)
+    {
+        // try find service that is hit
+        if (serviceContainer.worldBound.Contains(mouseEvent.mousePosition))
+        {
+            foreach (VisualElement service in serviceContainer.Children())
+            {
+                if (service.worldBound.Contains(mouseEvent.mousePosition))
+                {
+                    return service as EmbeddedBehaviorTreeNodeView;
+                }
+            }
+        }
+        // try find decorator that is hit
+        else if (decoratorContainer.worldBound.Contains(mouseEvent.mousePosition))
+        {
+            foreach (VisualElement decorator in decoratorContainer.Children())
+            {
+                if (decorator.worldBound.Contains(mouseEvent.mousePosition))
+                {
+                    return decorator as EmbeddedBehaviorTreeNodeView;
+                }
+            }
+        }
+
+        return null;
     }
 
     void CreateEmbeddedNode(System.Type nodeType)
@@ -122,5 +157,18 @@ public class BehaviorTreeNodeView : Node
     {
         EmbeddedBehaviorTreeNodeView nodeView = new EmbeddedBehaviorTreeNodeView(node, this);
         return nodeView;
+    }
+
+    void RemoveEmbeddedNode(EmbeddedBehaviorTreeNodeView embeddedView)
+    {
+        node.behaviorTree.DeleteNode(embeddedView.embeddedNode);
+        if (embeddedView.embeddedNode is DecoratorBase)
+        {
+            decoratorContainer.Remove(embeddedView);
+        }
+        else if (embeddedView.embeddedNode is BehaviorTreeServiceBase)
+        {
+            serviceContainer.Remove(embeddedView);
+        }
     }
 }

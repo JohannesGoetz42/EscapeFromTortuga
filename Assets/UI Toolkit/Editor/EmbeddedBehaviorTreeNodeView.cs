@@ -6,7 +6,8 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement
     public EmbeddedBehaviorTreeNode embeddedNode;
 
     private BehaviorTreeNodeView _parentView;
-    private Button _button;
+    private TextElement _nodeNameText;
+    private VisualElement _background;
 
     public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node, BehaviorTreeNodeView parentView) : base()
     {
@@ -17,20 +18,18 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement
         StyleSheet style = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/Editor/BehaviorTreeEditor.uss");
         styleSheets.Add(style);
 
-        _button = this.Q("button") as Button;
-
         if (node is DecoratorBase)
         {
-            _button.AddToClassList("decorator");
+            AddToClassList("decorator");
         }
         else if (node is BehaviorTreeServiceBase)
         {
-            _button.AddToClassList("service");
+            AddToClassList("service");
         }
 
-        _button.text = embeddedNode.nodeName;
-        _button.clicked += SelectNode;
         _parentView = parentView;
+        _background = this.Q("background");
+        _nodeNameText = this.Q("nodeNameText") as TextElement;
     }
 
     void SelectNode()

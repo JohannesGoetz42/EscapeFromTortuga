@@ -86,11 +86,11 @@ public partial class BehaviorTreeView : GraphView
                 createdNode.decoratorContainer.Add(decoratorView);
             }
 
-            // create decorators
+            // create services
             foreach (BehaviorTreeServiceBase service in node.services)
             {
                 EmbeddedBehaviorTreeNodeView serviceView = new EmbeddedBehaviorTreeNodeView(service, createdNode);
-                createdNode.decoratorContainer.Add(serviceView);
+                createdNode.serviceContainer.Add(serviceView);
             }
         }
 

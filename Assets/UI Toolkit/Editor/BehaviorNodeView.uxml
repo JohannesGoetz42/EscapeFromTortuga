@@ -1,13 +1,17 @@
 <UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Editor/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=c0af06e2d7598a24ba367a32372ece19&amp;type=3#BehaviorTreeEditor" />
-    <ui:VisualElement name="node-border">
+    <ui:VisualElement name="node-border" picking-mode="Ignore">
         <ui:VisualElement name="contents">
             <ui:VisualElement name="divider" class="horizontal" />
             <ui:VisualElement name="top">
                 <ui:VisualElement name="input" class="port" />
                 <ui:VisualElement name="divider" class="vertical" />
-                <ui:VisualElement name="services" style="flex-grow: 1;" />
-                <ui:VisualElement name="decorators" style="flex-grow: 1;" />
+                <ui:VisualElement name="services" style="flex-grow: 1; margin-left: 5px; background-color: rgb(91, 91, 91); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px;">
+                    <ui:Label text="services" />
+                </ui:VisualElement>
+                <ui:VisualElement name="decorators" style="flex-grow: 1; margin-left: 5px; background-color: rgb(91, 91, 91); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px;">
+                    <ui:Label text="decorators" />
+                </ui:VisualElement>
                 <ui:VisualElement name="title">
                     <ui:Label name="title-label" text="Sequence" class="unity-text-element unity-label" style="-unity-text-align: upper-center;" />
                     <ui:VisualElement name="title-button-container">

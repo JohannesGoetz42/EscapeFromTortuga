@@ -8,9 +8,9 @@ public class RunBehaviorTree : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (behaviorTree != null && behaviorTree.Blackboard != null && behaviorTree.root != null)
+        if (behaviorTree != null && behaviorTree.blackboard != null && behaviorTree.root != null)
         {
-            _blackboardInstance = ScriptableObject.CreateInstance(behaviorTree.Blackboard.GetType()) as Blackboard;
+            _blackboardInstance = ScriptableObject.CreateInstance(behaviorTree.blackboard.GetType()) as Blackboard;
             _blackboardInstance.InitializeValues();
             enabled = true;
         }

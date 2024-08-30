@@ -23,7 +23,7 @@ public struct EdgeData
 [UxmlElement]
 public partial class BehaviorTreeView : GraphView
 {
-    public BehaviorTree CurrentTree { get; private set; }
+    public BehaviorTree CurrentTree { get => editor != null ? editor.CurrentTree : null; }
     public BehaviorTreeEditor editor;
 
     public BehaviorTreeView()
@@ -39,9 +39,9 @@ public partial class BehaviorTreeView : GraphView
         styleSheets.Add(style);
     }
 
-    public void SetBehaviorTree(BehaviorTree selectedTree)
+    public void OnBehaviorTreeChanged()
     {
-        if (selectedTree == null)
+        if (CurrentTree == null)
         {
             return;
         }
@@ -50,7 +50,6 @@ public partial class BehaviorTreeView : GraphView
         DeleteElements(graphElements);
         graphViewChanged += OnGraphViewChanged;
 
-        CurrentTree = selectedTree;
         List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
         if (CurrentTree.root == null)
         {
@@ -64,7 +63,7 @@ public partial class BehaviorTreeView : GraphView
         List<EdgeData> edges = new List<EdgeData>();
 
         // create nodes
-        foreach (BehaviorTreeNode node in selectedTree.nodes)
+        foreach (BehaviorTreeNode node in CurrentTree.nodes)
         {
             if (node == null)
             {

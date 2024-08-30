@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -22,8 +23,10 @@ public class AssetHandler
 
 public class BehaviorTreeEditor : EditorWindow
 {
-    public BehaviorTreeView TreeView {  get; private set; }
+    public BehaviorTree CurrentTree { get; private set; }
+    public BehaviorTreeView TreeView { get; private set; }
     public BehaviorNodeDetails NodeDetails { get; private set; }
+    public BehaviorTreeDetails TreeDetails { get; private set; }
 
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
@@ -31,16 +34,8 @@ public class BehaviorTreeEditor : EditorWindow
     public static void Open(BehaviorTree tree)
     {
         BehaviorTreeEditor editor = GetWindow<BehaviorTreeEditor>();
-        editor.TreeView.SetBehaviorTree(tree);
         editor.TreeView.editor = editor;
-    }
-
-    public void SelectNode(INodeView nodeView)
-    {
-        if (NodeDetails != null && nodeView != null)
-        {
-            NodeDetails.SetNode(nodeView);
-        }
+        editor.SetTree(tree);
     }
 
     public void CreateGUI()
@@ -56,14 +51,42 @@ public class BehaviorTreeEditor : EditorWindow
         TreeView = root.Q<BehaviorTreeView>();
         NodeDetails = root.Q<BehaviorNodeDetails>();
         NodeDetails.editor = this;
+
+        TreeDetails = root.Q<BehaviorTreeDetails>();
+        TreeDetails.editor = this;
+        TreeDetails.Update();
+    }
+
+    internal void SetTree(BehaviorTree tree)
+    {
+        CurrentTree = tree;
+
+        TreeView.OnBehaviorTreeChanged();
+        TreeDetails.Update();
+    }
+
+    internal void SelectNode(INodeView nodeView)
+    {
+        if (NodeDetails != null && nodeView != null)
+        {
+            NodeDetails.SetNode(nodeView);
+        }
+    }
+
+    internal void SetBlackboard(Blackboard blackboard)
+    {
+        CurrentTree.blackboard = blackboard;
+        NodeDetails.UpdateContent();
     }
 
     private void OnSelectionChange()
     {
         BehaviorTree selectedTree = Selection.activeObject as BehaviorTree;
-        if(selectedTree)
+        if (selectedTree != null)
         {
-            TreeView.SetBehaviorTree(selectedTree);
+            CurrentTree = selectedTree;
+            TreeView.OnBehaviorTreeChanged();
+            TreeDetails.Update();
         }
     }
 }

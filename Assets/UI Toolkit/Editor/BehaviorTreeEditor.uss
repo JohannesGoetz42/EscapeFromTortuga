@@ -124,3 +124,7 @@ GridBackground {
     font-size: 18px;
     margin-top: 5px;
 }
+
+.detailHeadline {
+    -unity-text-align: upper-center;
+}

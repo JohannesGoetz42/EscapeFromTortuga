@@ -21,7 +21,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (!decorator.Evaluate(behaviorTree.Blackboard))
+            if (!decorator.Evaluate(behaviorTree.blackboard))
             {
                 return false;
             }
@@ -34,7 +34,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (decorator.abortActive && !decorator.Evaluate(behaviorTree.Blackboard)) { return false; }
+            if (decorator.abortActive && !decorator.Evaluate(behaviorTree.blackboard)) { return false; }
         }
 
         return parent.CanStayActive();

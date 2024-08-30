@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7994165481340240226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
+  m_Name: VisionService
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Vision
+  canSeePlayer:
+    selectedKey: 
+    type: 1
+  target:
+    selectedKey: 
+    type: 2
+--- !u!114 &-5494207938040190914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017c7c3dac8b96946b50adadfbb9fb81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 0}
+  nodeName: Root
+  decorators: []
+  services: []
+  position: {x: 0, y: 0}
+  currentAction: {fileID: 0}
+--- !u!114 &-1485018608049288987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
+  m_Name: BehaviorTreeSelector
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Selector
+  decorators: []
+  services: []
+  position: {x: 120, y: 196}
+  children: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86333f16ebe309546a640baa82c7e15e, type: 3}
+  m_Name: BehaviorTreeTest
+  m_EditorClassIdentifier: 
+  root: {fileID: -5494207938040190914}
+  blackboard: {fileID: 11400000, guid: 2fc1c191070657b40bbc8b4b27089ecc, type: 2}
+  nodes:
+  - {fileID: -1485018608049288987}
+  embeddedNodes:
+  - {fileID: -7994165481340240226}

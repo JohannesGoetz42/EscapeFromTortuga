@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Linq;
+using System;
+
 
 
 #if UNITY_EDITOR
@@ -11,8 +13,7 @@ using UnityEditor;
 public class BehaviorTree : ScriptableObject
 {
     public BehaviorTreeRoot root;
-    [SerializeField] Blackboard blackboard;
-    public Blackboard Blackboard { get => blackboard; }
+    public Blackboard blackboard;
 
 #if UNITY_EDITOR
     public List<BehaviorTreeNode> nodes = new List<BehaviorTreeNode>();

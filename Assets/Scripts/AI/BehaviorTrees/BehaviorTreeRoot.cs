@@ -3,7 +3,7 @@
 public class BehaviorTreeRoot : BehaviorTreeNode
 {
     public BehaviorTreeAction currentAction;
-    private BehaviorTreeNode _startNode;
+    public BehaviorTreeNode StartNode { get; private set; }
 
     public BehaviorTreeRoot() : base()
     {
@@ -12,14 +12,14 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 #endif
     }
 
-    public void Update(IBehaviorTreeUser user)
+    public void UpdateBehavior(IBehaviorTreeUser user)
     {
         // update the current  if it can stay active
         if (currentAction != null)
         {
             if (currentAction.CanStayActive())
             {
-                currentAction.Update(user);
+                currentAction.UpdateNode(user);
                 return;
             }
 
@@ -27,34 +27,36 @@ public class BehaviorTreeRoot : BehaviorTreeNode
         }
 
         // ... otherwise find the next activateable 
-        currentAction = _startNode.TryGetFirstActivateableAction();
+        currentAction = StartNode.TryGetFirstActivateableAction();
         if (currentAction != null)
         {
-            currentAction.Update(user);
+            currentAction.UpdateNode(user);
         }
     }
 
     public override BehaviorTreeAction TryGetFirstActivateableAction()
     {
-        if (_startNode == null || !_startNode.CanEnterNode())
+        if (StartNode == null || !StartNode.CanEnterNode())
         {
-            return _startNode.TryGetFirstActivateableAction();
+            return StartNode.TryGetFirstActivateableAction();
         }
 
         return null;
     }
 
+    public override bool CanStayActive() => true;
+
 #if UNITY_EDITOR
     public override void AddChild(BehaviorTreeNodeBase child)
     {
-        _startNode = child as BehaviorTreeCompositeNode;
+        StartNode = child as BehaviorTreeCompositeNode;
     }
 
     public override void RemoveChild(BehaviorTreeNodeBase node)
     {
-        if (_startNode == node)
+        if (StartNode == node)
         {
-            _startNode = null;
+            StartNode = null;
         }
     }
 #endif

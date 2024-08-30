@@ -6,5 +6,7 @@
         <engine:DropdownField name="behaviorTreeSelection" />
         <engine:Label text="Selected blackboard" style="margin-top: 10px;" />
         <engine:DropdownField name="blackboardSelection" />
+        <engine:Label text="Debug instance" style="margin-top: 10px;" />
+        <engine:DropdownField name="debugInstanceSelection" />
     </engine:VisualElement>
 </engine:UXML>

@@ -1,20 +1,20 @@
 using UnityEditor;
 using UnityEngine.UIElements;
-using UnityEngine;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 [UxmlElement]
 public partial class BehaviorTreeDetails : VisualElement
 {
     public BehaviorTreeEditor editor;
 
-    BehaviorTree behaviorTree;
     DropdownField _behaviorTreeSelection;
     DropdownField _blackboardSelection;
+    DropdownField _debugInstanceSelection;
 
     List<BehaviorTree> _behaviorTreeAssets = new List<BehaviorTree>();
     List<Blackboard> _blackboardAssets = new List<Blackboard>();
+    List<IBehaviorTreeUser> _behaviorUsers = new List<IBehaviorTreeUser>();
 
     public BehaviorTreeDetails() : base()
     {
@@ -26,6 +26,9 @@ public partial class BehaviorTreeDetails : VisualElement
 
         _blackboardSelection = this.Q("blackboardSelection") as DropdownField;
         _blackboardSelection.RegisterValueChangedCallback(x => OnBlackboardSelected());
+
+        _debugInstanceSelection = this.Q("debugInstanceSelection") as DropdownField;
+        _debugInstanceSelection.RegisterValueChangedCallback(x => OnDebugUserSelected());
     }
 
     /** updates the view without changing the underlaying state */
@@ -63,6 +66,32 @@ public partial class BehaviorTreeDetails : VisualElement
             }
         }
         _blackboardSelection.SetValueWithoutNotify(editor.CurrentTree.blackboard.name);
+    }
+
+    internal void UpdateUsers()
+    {
+        // TODO: implement a cleaner solution to user updates
+        // if the child count is the same, assume thi user count is the same
+        if (editor.CurrentTree.ActiveUsers.Count == _debugInstanceSelection.childCount)
+        {
+            return;
+        }
+
+        _behaviorUsers = editor.CurrentTree.ActiveUsers.ToList();
+        _debugInstanceSelection.choices.Clear();
+        foreach (IBehaviorTreeUser user in editor.CurrentTree.ActiveUsers)
+        {
+            _debugInstanceSelection.choices.Add(user.GetBehaviorUser().name);
+        }
+    }
+
+    void OnDebugUserSelected()
+    {
+        int selectedIndex = _debugInstanceSelection.index;
+        if (_behaviorUsers.Count > selectedIndex)
+        {
+            editor.debugUser = _behaviorUsers[selectedIndex];
+        }
     }
 
     void OnBehaviorTreeSelected()

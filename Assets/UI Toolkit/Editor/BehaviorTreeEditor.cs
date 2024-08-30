@@ -28,6 +28,8 @@ public class BehaviorTreeEditor : EditorWindow
     public BehaviorNodeDetails NodeDetails { get; private set; }
     public BehaviorTreeDetails TreeDetails { get; private set; }
 
+    public IBehaviorTreeUser debugUser;
+
     [SerializeField]
     private VisualTreeAsset m_VisualTreeAsset = default;
 
@@ -87,6 +89,20 @@ public class BehaviorTreeEditor : EditorWindow
             CurrentTree = selectedTree;
             TreeView.OnBehaviorTreeChanged();
             TreeDetails.Update();
+        }
+    }
+
+    private void OnInspectorUpdate()
+    {
+        if (!Application.isPlaying || TreeDetails == null)
+        {
+            return;
+        }
+
+        TreeDetails.UpdateUsers();
+        if (debugUser == null)
+        {
+            return;
         }
     }
 }

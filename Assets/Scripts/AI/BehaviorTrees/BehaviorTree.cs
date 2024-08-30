@@ -67,16 +67,21 @@ public class BehaviorTree : ScriptableObject
     private HashSet<IBehaviorTreeUser> _activeUsers = new HashSet<IBehaviorTreeUser>();
     public HashSet<IBehaviorTreeUser> ActiveUsers { get => _activeUsers; }
 
+    public bool IsValidTree()
+    {
+        return root != null && root.StartNode != null && blackboard != null;
+    }
+
     public Blackboard RunBehavior(IBehaviorTreeUser user)
     {
-        if (blackboard == null)
+        if (!IsValidTree())
         {
-            Debug.LogWarning(string.Format("Behavior {0} has no blackbboard assigned and can't be run!", name));
+            Debug.LogError(string.Format("Behaviortree {0} is invalid and can't be run!", name));
             return null;
         }
 
         _activeUsers.Add(user);
-        Blackboard blackboardInstance = CreateInstance(blackboard.GetType()) as Blackboard;
+        Blackboard blackboardInstance = Instantiate(blackboard);
         blackboardInstance.InitializeValues();
 
         BehaviorTreeUpdater.RegisterBehaviorTree(this);
@@ -97,7 +102,7 @@ public class BehaviorTree : ScriptableObject
     {
         foreach(IBehaviorTreeUser user in _activeUsers)
         {
-            root.Update(user);
+            root.UpdateBehavior(user);
         }
     }
 

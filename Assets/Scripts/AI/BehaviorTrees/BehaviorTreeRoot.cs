@@ -12,14 +12,14 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 #endif
     }
 
-    public void Update()
+    public void Update(IBehaviorTreeUser user)
     {
         // update the current  if it can stay active
         if (currentAction != null)
         {
             if (currentAction.CanStayActive())
             {
-                currentAction.Update();
+                currentAction.Update(user);
                 return;
             }
 
@@ -30,7 +30,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
         currentAction = _startNode.TryGetFirstActivateableAction();
         if (currentAction != null)
         {
-            currentAction.Update();
+            currentAction.Update(user);
         }
     }
 

@@ -1,28 +1,27 @@
 using UnityEngine;
 
-public class RunBehaviorTree : MonoBehaviour
+public class RunBehaviorTree : MonoBehaviour, IBehaviorTreeUser
 {
     [SerializeField] BehaviorTree behaviorTree;
-    private Blackboard _blackboardInstance;
+    public Blackboard blackboardInstance { get; private set; }
+
+    public Blackboard GetBlackboard() => blackboardInstance;
+    public Transform GetBehaviorUser() => transform;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         if (behaviorTree != null && behaviorTree.blackboard != null && behaviorTree.root != null)
         {
-            _blackboardInstance = ScriptableObject.CreateInstance(behaviorTree.blackboard.GetType()) as Blackboard;
-            _blackboardInstance.InitializeValues();
-            enabled = true;
-        }
-        else
-        {
-            enabled = false;
+            blackboardInstance = behaviorTree.RunBehavior(this);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        behaviorTree.root.Update();
+        if (behaviorTree != null)
+        {
+            behaviorTree.StopBehavior(this);
+        }
     }
 }

@@ -3,7 +3,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class BehaviorTreeNodeView : Node
+public class BehaviorTreeNodeView : Node, INodeView
 {
     public BehaviorTreeNode node;
     public Port parentPort;
@@ -171,4 +171,14 @@ public class BehaviorTreeNodeView : Node
             serviceContainer.Remove(embeddedView);
         }
     }
+
+    BehaviorTreeNodeBase INodeView.GetNode() => node;
+    void INodeView.Update()
+    {
+        if (title != null && node != null)
+        {
+            title = node.nodeName;
+        }
+    }
+
 }

@@ -35,11 +35,11 @@ public class BehaviorTreeEditor : EditorWindow
         editor.TreeView.editor = editor;
     }
 
-    public void SelectNode(BehaviorTreeNodeBase node)
+    public void SelectNode(INodeView nodeView)
     {
-        if (NodeDetails != null && node != null)
+        if (NodeDetails != null && nodeView != null)
         {
-            NodeDetails.SetNode(node);
+            NodeDetails.SetNode(nodeView);
         }
     }
 

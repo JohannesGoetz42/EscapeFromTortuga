@@ -1,13 +1,12 @@
 using UnityEditor;
 using UnityEngine.UIElements;
 
-public class EmbeddedBehaviorTreeNodeView : VisualElement
+public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
 {
     public EmbeddedBehaviorTreeNode embeddedNode;
 
     private BehaviorTreeNodeView _parentView;
-    private TextElement _nodeNameText;
-    private VisualElement _background;
+    private Button _button;
 
     public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node, BehaviorTreeNodeView parentView) : base()
     {
@@ -18,22 +17,36 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement
         StyleSheet style = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UI Toolkit/Editor/BehaviorTreeEditor.uss");
         styleSheets.Add(style);
 
-        if (node is DecoratorBase)
-        {
-            AddToClassList("decorator");
-        }
-        else if (node is BehaviorTreeServiceBase)
-        {
-            AddToClassList("service");
-        }
-
         _parentView = parentView;
-        _background = this.Q("background");
-        _nodeNameText = this.Q("nodeNameText") as TextElement;
+
+        _button = this.Q("button") as Button;
+        if (_button != null)
+        {
+            _button.text = embeddedNode.nodeName;
+            _button.clicked += SelectNode;
+            if (node is DecoratorBase)
+            {
+                _button.AddToClassList("decorator");
+            }
+            else if (node is BehaviorTreeServiceBase)
+            {
+                _button.AddToClassList("service");
+            }
+        }
     }
 
-    void SelectNode()
+    public void SelectNode()
     {
-        _parentView.BehaviorTreeView.editor.SelectNode(embeddedNode);
+        _parentView.BehaviorTreeView.editor.SelectNode(this);
+    }
+
+    BehaviorTreeNodeBase INodeView.GetNode() => embeddedNode;
+
+    void INodeView.Update()
+    {
+        if (_button != null && embeddedNode != null)
+        {
+            _button.text = embeddedNode.nodeName;
+        }
     }
 }

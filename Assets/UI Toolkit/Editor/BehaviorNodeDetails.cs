@@ -23,7 +23,7 @@ public partial class BehaviorNodeDetails : VisualElement
 
     public BehaviorTreeEditor editor;
 
-    private BehaviorTreeNodeBase _node;
+    private INodeView _nodeView;
     private VisualElement _propertyContainer;
     private TextField _nodeName;
     private string[] refreshProperties = new string[0];
@@ -41,8 +41,9 @@ public partial class BehaviorNodeDetails : VisualElement
     {
         // clear previous properties
         _propertyContainer.Clear();
+        _nodeName.Unbind();
 
-        SerializedObject serializedObject = new SerializedObject(_node);
+        SerializedObject serializedObject = new SerializedObject(_nodeView.GetNode());
         SerializedProperty property = serializedObject.GetIterator();
         bool bHasAdditionalProperty = property.NextVisible(true);
         while (bHasAdditionalProperty)
@@ -58,6 +59,7 @@ public partial class BehaviorNodeDetails : VisualElement
             {
                 if (_nodeName != null)
                 {
+                    _nodeName.TrackPropertyValue(property, x => _nodeView.Update());
                     _nodeName.BindProperty(property);
                 }
             }
@@ -70,14 +72,14 @@ public partial class BehaviorNodeDetails : VisualElement
         }
     }
 
-    public void SetNode(BehaviorTreeNodeBase node)
+    public void SetNode(INodeView nodeView)
     {
-        if (node == null || node == _node)
+        if (nodeView == null || nodeView.GetNode() == null || nodeView == _nodeView)
         {
             return;
         }
 
-        EmbeddedBehaviorTreeNode embeddedNode = node as EmbeddedBehaviorTreeNode;
+        EmbeddedBehaviorTreeNode embeddedNode = nodeView.GetNode() as EmbeddedBehaviorTreeNode;
         if (embeddedNode == null)
         {
             refreshProperties = new string[0];
@@ -87,7 +89,7 @@ public partial class BehaviorNodeDetails : VisualElement
             refreshProperties = embeddedNode.GetRefreshProperties();
         }
 
-        _node = node;
+        _nodeView = nodeView;
         UpdateContent();
     }
 
@@ -139,7 +141,7 @@ public partial class BehaviorNodeDetails : VisualElement
 
     void OnPropertyUpdated(SerializedProperty property)
     {
-        EmbeddedBehaviorTreeNode embeddedNode = _node as EmbeddedBehaviorTreeNode;
+        EmbeddedBehaviorTreeNode embeddedNode = _nodeView as EmbeddedBehaviorTreeNode;
         if (embeddedNode != null)
         {
             embeddedNode.OnPropertyChanged(property);

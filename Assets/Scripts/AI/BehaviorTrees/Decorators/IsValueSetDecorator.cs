@@ -14,7 +14,7 @@ public class IsValueSetDecorator : DecoratorBase
     public IsValueSetDecorator() : base()
     {
 #if UNITY_EDITOR
-        nodeName = string.Format("Is value set: {0}", comparedBlackboardValue.selectedKey);
+        nodeName = string.Format("Is value set?");
 #endif
     }
 

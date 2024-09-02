@@ -14,8 +14,52 @@ public enum BehaviorNodeResult
 
 public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 {
-    public List<DecoratorBase> decorators = new List<DecoratorBase>();
     public List<BehaviorTreeServiceBase> services = new List<BehaviorTreeServiceBase>();
+    public List<DecoratorBase> decorators = new List<DecoratorBase>();
+
+    internal override void BecomeRelevant(IBehaviorTreeUser user)
+    {
+        if (!States.ContainsKey(user))
+        {
+            States.Add(user, BehaviorNodeState.Active);
+        }
+        else if (States[user] == BehaviorNodeState.Active)
+        {
+            return;
+        }
+
+        // call parent first, so the order is correct
+        if (parent != null)
+        {
+            parent.BecomeRelevant(user);
+        }
+
+        foreach (BehaviorTreeServiceBase service in services)
+        {
+            service.BecomeRelevant(user);
+        }
+        foreach (DecoratorBase decorator in decorators)
+        {
+            decorator.BecomeRelevant(user);
+        }
+
+        States[user] = BehaviorNodeState.Active;
+        OnBecomeRelevant(user);
+    }
+
+    internal override void CeaseRelevant(IBehaviorTreeUser user)
+    {
+        foreach (BehaviorTreeServiceBase service in services)
+        {
+            service.CeaseRelevant(user);
+        }
+        foreach (DecoratorBase decorator in decorators)
+        {
+            decorator.CeaseRelevant(user);
+        }
+
+        base.CeaseRelevant(user);
+    }
 
     virtual public bool CanEnterNode(IBehaviorTreeUser user)
     {
@@ -43,11 +87,31 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     public virtual BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => null;
 
     /** Called by the child when it exits active state */
-    virtual public void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
+    internal virtual void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
     {
         if (parent != null)
         {
             parent.OnChildExit(user, this, result);
+        }
+
+        // if the child failed or this node can't stay active, cease to be relevant
+        if (result != BehaviorNodeResult.Success || !CanStayActive(user))
+        {
+            CeaseRelevant(user);
+        }
+    }
+
+    internal virtual void UpdateNode(IBehaviorTreeUser user)
+    {
+        // to keep the correct order, update ancestors first
+        if (parent != null)
+        {
+            parent.UpdateNode(user);
+        }
+
+        foreach (BehaviorTreeServiceBase service in services)
+        {
+            service.UpdateService(user);
         }
     }
 
@@ -73,7 +137,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         }
     }
 
-    public virtual void RemoveChild(BehaviorTreeNodeBase child) 
+    public virtual void RemoveChild(BehaviorTreeNodeBase child)
     {
         BehaviorTreeServiceBase service = child as BehaviorTreeServiceBase;
         if (service != null)

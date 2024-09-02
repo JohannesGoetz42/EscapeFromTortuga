@@ -22,7 +22,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     {
         foreach (IBehaviorTreeUser user in behaviorTree.ActiveUsers)
         {
-            // update the current  if it can stay active
+            // update the current action if it can stay active
             if (currentActions[user] != null)
             {
                 if (currentActions[user].CanStayActive(user))
@@ -38,6 +38,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
             currentActions[user] = StartNode.TryGetFirstActivateableAction(user);
             if (currentActions[user] != null)
             {
+                currentActions[user].SetActive(user);
                 currentActions[user].UpdateNode(user);
             }
         }

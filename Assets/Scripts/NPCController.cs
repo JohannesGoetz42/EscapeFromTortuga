@@ -8,7 +8,7 @@ public class NPCController : CharacterControllerBase
 
     protected void LateUpdate()
     {
-        if (!PlayerController.Instance.isGameOver)
+        if (PlayerController.Instance != null && !PlayerController.Instance.isGameOver)
         {
             HandleMovement(movementDirection);
             movementDirection = Vector3.zero;

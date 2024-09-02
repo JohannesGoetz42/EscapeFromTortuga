@@ -61,6 +61,7 @@ public class BehaviorTreeUpdater : MonoBehaviour
 public class BehaviorTree : ScriptableObject
 {
     public BehaviorTreeRoot root;
+    [SerializeField]
     private Blackboard blackboard;
 
 #if UNITY_EDITOR

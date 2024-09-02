@@ -10,7 +10,7 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
 #endif
     }
 
-    public override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
+    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
     {
         if (result == BehaviorNodeResult.Success)
         {

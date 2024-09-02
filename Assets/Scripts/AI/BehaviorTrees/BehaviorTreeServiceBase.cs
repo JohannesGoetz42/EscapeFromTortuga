@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class BehaviorTreeServiceBase : EmbeddedBehaviorTreeNode
+public abstract class BehaviorTreeServiceBase : EmbeddedBehaviorTreeNode
 {
     public BehaviorTreeServiceBase() : base()
     {
 #if UNITY_EDITOR
         nodeName = "SERVICE_BASE";
 #endif
+
     }
+
+    public abstract void UpdateService(IBehaviorTreeUser user);
 }

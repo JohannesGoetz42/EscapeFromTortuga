@@ -4,6 +4,19 @@ using UnityEngine.Animations;
 public class BehaviorTreeAction : BehaviorTreeNode
 {
     public override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => this;
-    virtual public void UpdateNode(IBehaviorTreeUser user) { }
+
+    internal void SetActive(IBehaviorTreeUser user)
+    {
+        BecomeRelevant(user);
+    }
+
+    internal override void UpdateNode(IBehaviorTreeUser user)
+    {
+        base.UpdateNode(user);
+        OnUpdate(user);
+    }
+
+    protected virtual void OnUpdate(IBehaviorTreeUser user) { }
+
     virtual public void Exit(IBehaviorTreeUser user, BehaviorNodeResult result) { parent.OnChildExit(user, this, result); }
 }

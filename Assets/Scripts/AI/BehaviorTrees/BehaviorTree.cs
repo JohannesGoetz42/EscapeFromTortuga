@@ -70,7 +70,7 @@ public class BehaviorTree : ScriptableObject
 
 
     /** The transforms currently using this behavior tree */
-    private HashSet<IBehaviorTreeUser> _activeUsers = new HashSet<IBehaviorTreeUser>();
+    public HashSet<IBehaviorTreeUser> _activeUsers = new HashSet<IBehaviorTreeUser>();
     public HashSet<IBehaviorTreeUser> ActiveUsers { get => _activeUsers; }
 
     public bool IsValidTree()
@@ -86,7 +86,9 @@ public class BehaviorTree : ScriptableObject
             return null;
         }
 
-        _activeUsers.Add(user);
+        ActiveUsers.Add(user);
+        root.currentActions.Add(user, null);
+
         Blackboard blackboardInstance = Instantiate(blackboard);
         blackboardInstance.InitializeValues();
 
@@ -97,8 +99,10 @@ public class BehaviorTree : ScriptableObject
 
     public void StopBehavior(IBehaviorTreeUser user)
     {
-        _activeUsers.Remove(user);
-        if (_activeUsers.Count == 0)
+        ActiveUsers.Remove(user);
+        root.currentActions.Remove(user);
+
+        if (ActiveUsers.Count == 0)
         {
             BehaviorTreeUpdater.UnregisterBehaviorTree(this);
         }
@@ -106,7 +110,7 @@ public class BehaviorTree : ScriptableObject
 
     public void Update()
     {
-        if (_activeUsers != null)
+        if (ActiveUsers != null)
         {
             root.UpdateBehavior();
         }

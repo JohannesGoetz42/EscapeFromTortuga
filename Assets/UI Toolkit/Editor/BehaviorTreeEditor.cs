@@ -56,7 +56,7 @@ public class BehaviorTreeEditor : EditorWindow
 
         TreeDetails = root.Q<BehaviorTreeDetails>();
         TreeDetails.editor = this;
-        TreeDetails.Update();
+        TreeDetails.UpdateDetails();
     }
 
     internal void SetTree(BehaviorTree tree)
@@ -64,7 +64,7 @@ public class BehaviorTreeEditor : EditorWindow
         CurrentTree = tree;
 
         TreeView.OnBehaviorTreeChanged();
-        TreeDetails.Update();
+        TreeDetails.UpdateDetails();
     }
 
     internal void SelectNode(INodeView nodeView)
@@ -88,7 +88,7 @@ public class BehaviorTreeEditor : EditorWindow
         {
             CurrentTree = selectedTree;
             TreeView.OnBehaviorTreeChanged();
-            TreeDetails.Update();
+            TreeDetails.UpdateDetails();
         }
     }
 
@@ -100,9 +100,9 @@ public class BehaviorTreeEditor : EditorWindow
         }
 
         TreeDetails.UpdateUsers();
-        if (debugUser == null)
+        if (TreeView != null)
         {
-            return;
+            TreeView.UpdateActiveNodes();
         }
     }
 }

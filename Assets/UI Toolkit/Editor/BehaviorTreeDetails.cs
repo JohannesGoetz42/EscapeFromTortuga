@@ -32,7 +32,7 @@ public partial class BehaviorTreeDetails : VisualElement
     }
 
     /** updates the view without changing the underlaying state */
-    public void Update()
+    public void UpdateDetails()
     {
         if (!editor || !editor.CurrentTree)
         {

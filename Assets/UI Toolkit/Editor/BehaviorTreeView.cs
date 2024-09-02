@@ -26,6 +26,8 @@ public partial class BehaviorTreeView : GraphView
     public BehaviorTree CurrentTree { get => editor != null ? editor.CurrentTree : null; }
     public BehaviorTreeEditor editor;
 
+    private List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
+
     public BehaviorTreeView()
     {
         Insert(0, new GridBackground());
@@ -194,6 +196,7 @@ public partial class BehaviorTreeView : GraphView
     {
         BehaviorTreeNodeView nodeView = new BehaviorTreeNodeView(node, this);
         AddElement(nodeView);
+        nodeViews.Add(nodeView);
         return nodeView;
     }
 
@@ -217,6 +220,37 @@ public partial class BehaviorTreeView : GraphView
         {
             evt.menu.AppendAction(leafType.Name, x => CreateNode(leafType, position));
             //evt.menu.AppendAction(string.Format("[{0}] {1}", leafType.BaseType.Name, leafType.Name), x => CreateNode(leafType));
+        }
+    }
+
+    internal void UpdateActiveNodes()
+    {
+        if(editor == null || editor.debugUser == null)
+        {
+            return;
+        }
+
+        List<BehaviorTreeNode> activeNodes = new List<BehaviorTreeNode>();
+
+        // select active nodes
+        BehaviorTreeNode currentNode = CurrentTree.root.currentActions[editor.debugUser];
+        while (currentNode != null)
+        {
+            activeNodes.Add(currentNode);
+            currentNode = currentNode.parent;
+        }
+
+        // mark nodes based on active state
+        foreach (BehaviorTreeNodeView nodeView in nodeViews)
+        {
+            if (activeNodes.Contains(nodeView.node))
+            {
+                nodeView.AddToClassList("active");
+            }
+            else
+            {
+                nodeView.RemoveFromClassList("active");
+            }
         }
     }
 }

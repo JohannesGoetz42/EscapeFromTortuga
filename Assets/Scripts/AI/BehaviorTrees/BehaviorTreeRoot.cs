@@ -1,11 +1,15 @@
 
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BehaviorTreeRoot : BehaviorTreeNode
 {
-    public Dictionary<IBehaviorTreeUser, BehaviorTreeAction> currentActions;
-    public BehaviorTreeNode StartNode { get; private set; }
+    public Dictionary<IBehaviorTreeUser, BehaviorTreeAction> currentActions = new Dictionary<IBehaviorTreeUser, BehaviorTreeAction>();
+
+    [SerializeField]
+    private BehaviorTreeNode startNode;
+    public BehaviorTreeNode StartNode { get => startNode; }
 
     public BehaviorTreeRoot() : base()
     {
@@ -16,7 +20,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 
     public void UpdateBehavior()
     {
-        foreach (IBehaviorTreeUser user in currentActions.Keys)
+        foreach (IBehaviorTreeUser user in behaviorTree.ActiveUsers)
         {
             // update the current  if it can stay active
             if (currentActions[user] != null)
@@ -54,14 +58,14 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 #if UNITY_EDITOR
     public override void AddChild(BehaviorTreeNodeBase child)
     {
-        StartNode = child as BehaviorTreeCompositeNode;
+        startNode = child as BehaviorTreeCompositeNode;
     }
 
     public override void RemoveChild(BehaviorTreeNodeBase node)
     {
         if (StartNode == node)
         {
-            StartNode = null;
+            startNode = null;
         }
     }
 #endif

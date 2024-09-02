@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public abstract class BehaviorTreeCompositeNode : BehaviorTreeNode
 {
     public List<BehaviorTreeNode> children = new List<BehaviorTreeNode>();
-    public override bool CanEnterNode()
+    public override bool CanEnterNode(IBehaviorTreeUser user)
     {
-        return children.Count > 0 && base.CanEnterNode();
+        return children.Count > 0 && base.CanEnterNode(user);
     }
 
 #if UNITY_EDITOR

@@ -17,11 +17,11 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     public List<DecoratorBase> decorators = new List<DecoratorBase>();
     public List<BehaviorTreeServiceBase> services = new List<BehaviorTreeServiceBase>();
 
-    virtual public bool CanEnterNode()
+    virtual public bool CanEnterNode(IBehaviorTreeUser user)
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (!decorator.Evaluate(behaviorTree.blackboard))
+            if (!decorator.Evaluate(user.GetBlackboard()))
             {
                 return false;
             }
@@ -30,24 +30,24 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         return true;
     }
 
-    virtual public bool CanStayActive()
+    virtual public bool CanStayActive(IBehaviorTreeUser user)
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (decorator.abortActive && !decorator.Evaluate(behaviorTree.blackboard)) { return false; }
+            if (decorator.abortActive && !decorator.Evaluate(user.GetBlackboard())) { return false; }
         }
 
-        return parent.CanStayActive();
+        return parent.CanStayActive(user);
     }
 
-    public virtual BehaviorTreeAction TryGetFirstActivateableAction() => null;
+    public virtual BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => null;
 
     /** Called by the child when it exits active state */
-    virtual public void OnChildExit(BehaviorTreeNode child, BehaviorNodeResult result)
+    virtual public void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
     {
         if (parent != null)
         {
-            parent.OnChildExit(this, result);
+            parent.OnChildExit(user, this, result);
         }
     }
 

@@ -11,7 +11,7 @@ public class RunBehaviorTree : MonoBehaviour, IBehaviorTreeUser
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (behaviorTree != null && behaviorTree.blackboard != null && behaviorTree.root != null)
+        if (behaviorTree != null && behaviorTree.root != null)
         {
             blackboardInstance = behaviorTree.RunBehavior(this);
         }

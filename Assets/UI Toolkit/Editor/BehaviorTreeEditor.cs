@@ -77,7 +77,7 @@ public class BehaviorTreeEditor : EditorWindow
 
     internal void SetBlackboard(Blackboard blackboard)
     {
-        CurrentTree.blackboard = blackboard;
+        CurrentTree.Blackboard = blackboard;
         NodeDetails.UpdateContent();
     }
 

@@ -154,7 +154,7 @@ public partial class BehaviorNodeDetails : VisualElement
         if (property.type == nameof(BlackboardKeySelector))
         {
             BlackboardKeySelector keySelector = (BlackboardKeySelector)property.boxedValue;
-            Blackboard blackboard = editor.TreeView.CurrentTree.blackboard;
+            Blackboard blackboard = editor.TreeView.CurrentTree.Blackboard;
 
             DropdownField keyDropdown = new DropdownField(property.name, keySelector.GetBlackboardKeys(blackboard).ToList(), 0);
             keyDropdown.bindingPath = property.name + "." + nameof(BlackboardKeySelector.selectedKey);

@@ -10,18 +10,18 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
 #endif
     }
 
-    public override void OnChildExit(BehaviorTreeNode child, BehaviorNodeResult result)
+    public override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
     {
         if (result == BehaviorNodeResult.Success)
         {
             int nextChild = children.IndexOf(child) + 1;
             if (children.Count > nextChild)
             {
-                behaviorTree.root.currentAction = children[nextChild].TryGetFirstActivateableAction();
+                behaviorTree.root.currentActions[user] = children[nextChild].TryGetFirstActivateableAction(user);
                 return;
             }
         }
 
-        base.OnChildExit(child, result);
+        base.OnChildExit(user, child, result);
     }
 }

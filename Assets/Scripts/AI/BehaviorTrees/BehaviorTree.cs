@@ -61,7 +61,13 @@ public class BehaviorTreeUpdater : MonoBehaviour
 public class BehaviorTree : ScriptableObject
 {
     public BehaviorTreeRoot root;
-    public Blackboard blackboard;
+    private Blackboard blackboard;
+
+#if UNITY_EDITOR
+    // Editor only access to avoid accidently using the original instead of the blackboard instance created when using the behavior tree
+    public Blackboard Blackboard { get => blackboard; set => blackboard = value; }
+#endif
+
 
     /** The transforms currently using this behavior tree */
     private HashSet<IBehaviorTreeUser> _activeUsers = new HashSet<IBehaviorTreeUser>();
@@ -92,7 +98,7 @@ public class BehaviorTree : ScriptableObject
     public void StopBehavior(IBehaviorTreeUser user)
     {
         _activeUsers.Remove(user);
-        if(_activeUsers.Count == 0)
+        if (_activeUsers.Count == 0)
         {
             BehaviorTreeUpdater.UnregisterBehaviorTree(this);
         }
@@ -100,9 +106,9 @@ public class BehaviorTree : ScriptableObject
 
     public void Update()
     {
-        foreach(IBehaviorTreeUser user in _activeUsers)
+        if (_activeUsers != null)
         {
-            root.UpdateBehavior(user);
+            root.UpdateBehavior();
         }
     }
 

@@ -1,8 +1,10 @@
 
 
+using System.Collections.Generic;
+
 public class BehaviorTreeRoot : BehaviorTreeNode
 {
-    public BehaviorTreeAction currentAction;
+    public Dictionary<IBehaviorTreeUser, BehaviorTreeAction> currentActions;
     public BehaviorTreeNode StartNode { get; private set; }
 
     public BehaviorTreeRoot() : base()
@@ -12,39 +14,42 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 #endif
     }
 
-    public void UpdateBehavior(IBehaviorTreeUser user)
+    public void UpdateBehavior()
     {
-        // update the current  if it can stay active
-        if (currentAction != null)
+        foreach (IBehaviorTreeUser user in currentActions.Keys)
         {
-            if (currentAction.CanStayActive())
+            // update the current  if it can stay active
+            if (currentActions[user] != null)
             {
-                currentAction.UpdateNode(user);
-                return;
+                if (currentActions[user].CanStayActive(user))
+                {
+                    currentActions[user].UpdateNode(user);
+                    return;
+                }
+
+                currentActions[user].Exit(user, BehaviorNodeResult.Abort);
             }
 
-            currentAction.Exit(BehaviorNodeResult.Abort);
-        }
-
-        // ... otherwise find the next activateable 
-        currentAction = StartNode.TryGetFirstActivateableAction();
-        if (currentAction != null)
-        {
-            currentAction.UpdateNode(user);
+            // ... otherwise find the next activateable 
+            currentActions[user] = StartNode.TryGetFirstActivateableAction(user);
+            if (currentActions[user] != null)
+            {
+                currentActions[user].UpdateNode(user);
+            }
         }
     }
 
-    public override BehaviorTreeAction TryGetFirstActivateableAction()
+    public override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
     {
-        if (StartNode == null || !StartNode.CanEnterNode())
+        if (StartNode == null || !StartNode.CanEnterNode(user))
         {
-            return StartNode.TryGetFirstActivateableAction();
+            return StartNode.TryGetFirstActivateableAction(user);
         }
 
         return null;
     }
 
-    public override bool CanStayActive() => true;
+    public override bool CanStayActive(IBehaviorTreeUser user) => true;
 
 #if UNITY_EDITOR
     public override void AddChild(BehaviorTreeNodeBase child)

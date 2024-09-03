@@ -42,6 +42,12 @@ public class BehaviorTreeNodeView : Node, INodeView
         }
     }
 
+    public override void OnSelected()
+    {
+        base.OnSelected();
+        BehaviorTreeView.editor.SelectNode(this);
+    }
+
     public override void SetPosition(Rect newPos)
     {
         base.SetPosition(newPos);

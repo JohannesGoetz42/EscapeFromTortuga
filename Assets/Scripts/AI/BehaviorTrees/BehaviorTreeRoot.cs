@@ -31,7 +31,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
                     return;
                 }
 
-                currentActions[user].Exit(user, BehaviorNodeResult.Abort);
+                currentActions[user].Exit(user, BehaviorNodeState.Aborted);
             }
 
             // ... otherwise find the next activateable 
@@ -44,7 +44,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
         }
     }
 
-    public override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
+    internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
     {
         if (StartNode == null || !StartNode.CanEnterNode(user))
         {

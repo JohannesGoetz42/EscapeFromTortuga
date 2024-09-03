@@ -9,7 +9,10 @@ using UnityEditor;
 public enum BehaviorNodeState
 {
     Inactive,
-    Active
+    Active,
+    Success,
+    Aborted,
+    Failed
 }
 
 public abstract class BehaviorTreeNodeBase : ScriptableObject

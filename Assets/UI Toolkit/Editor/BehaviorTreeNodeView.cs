@@ -13,6 +13,8 @@ public class BehaviorTreeNodeView : Node, INodeView
 
     public BehaviorTreeView BehaviorTreeView { get; private set; }
 
+    private BehaviorNodeState nodeState = BehaviorNodeState.Inactive;
+
     public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
         this.node = node;
@@ -187,4 +189,42 @@ public class BehaviorTreeNodeView : Node, INodeView
         }
     }
 
+    internal void UpdateNodeState()
+    {
+        if (!node.States.ContainsKey(BehaviorTreeView.editor.debugUser))
+        {
+            return;
+        }
+
+        BehaviorNodeState newState = node.States[BehaviorTreeView.editor.debugUser];
+        if (nodeState == newState)
+        {
+            return;
+        }
+
+        nodeState = newState;
+
+        RemoveFromClassList("active");
+        RemoveFromClassList("success");
+        RemoveFromClassList("aborted");
+        RemoveFromClassList("failed");
+
+        switch (newState)
+        {
+            case BehaviorNodeState.Inactive:
+                return;
+            case BehaviorNodeState.Active:
+                AddToClassList("active");
+                return;
+            case BehaviorNodeState.Success:
+                AddToClassList("success");
+                return;
+            case BehaviorNodeState.Aborted:
+                AddToClassList("aborted");
+                return;
+            case BehaviorNodeState.Failed:
+                AddToClassList("failed");
+                return;
+        }
+    }
 }

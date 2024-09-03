@@ -3,7 +3,7 @@ using UnityEngine.Animations;
 
 public class BehaviorTreeAction : BehaviorTreeNode
 {
-    public override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => this;
+    internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => this;
 
     internal void SetActive(IBehaviorTreeUser user)
     {
@@ -18,5 +18,9 @@ public class BehaviorTreeAction : BehaviorTreeNode
 
     protected virtual void OnUpdate(IBehaviorTreeUser user) { }
 
-    virtual public void Exit(IBehaviorTreeUser user, BehaviorNodeResult result) { parent.OnChildExit(user, this, result); }
+    virtual public void Exit(IBehaviorTreeUser user, BehaviorNodeState result)
+    {
+        States[user] = result;
+        parent.OnChildExit(user, this, result);
+    }
 }

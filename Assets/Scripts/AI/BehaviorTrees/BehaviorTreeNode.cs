@@ -5,13 +5,6 @@ using System.Collections.Generic;
 using UnityEditor;
 #endif
 
-public enum BehaviorNodeResult
-{
-    Success,
-    Abort,
-    Error
-}
-
 public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 {
     public List<BehaviorTreeServiceBase> services = new List<BehaviorTreeServiceBase>();
@@ -84,10 +77,10 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         return parent.CanStayActive(user);
     }
 
-    public virtual BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => null;
+    internal virtual BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => null;
 
     /** Called by the child when it exits active state */
-    internal virtual void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
+    internal virtual void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
         if (parent != null)
         {
@@ -95,7 +88,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         }
 
         // if the child failed or this node can't stay active, cease to be relevant
-        if (result != BehaviorNodeResult.Success || !CanStayActive(user))
+        if (result != BehaviorNodeState.Success || !CanStayActive(user))
         {
             CeaseRelevant(user);
         }

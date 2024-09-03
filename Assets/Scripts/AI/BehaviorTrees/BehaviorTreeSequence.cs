@@ -10,9 +10,9 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
 #endif
     }
 
-    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeResult result)
+    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
-        if (result == BehaviorNodeResult.Success)
+        if (result == BehaviorNodeState.Success)
         {
             int nextChild = children.IndexOf(child) + 1;
             if (children.Count > nextChild)

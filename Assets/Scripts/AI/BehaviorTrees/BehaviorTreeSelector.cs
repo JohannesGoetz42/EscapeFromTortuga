@@ -8,7 +8,7 @@ public class BehaviorTreeSelector : BehaviorTreeCompositeNode
 #endif
     }
 
-    public override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
+    internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
     {
         foreach (BehaviorTreeNode descendant in children)
         {

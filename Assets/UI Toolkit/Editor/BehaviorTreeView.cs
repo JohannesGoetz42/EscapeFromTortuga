@@ -230,27 +230,9 @@ public partial class BehaviorTreeView : GraphView
             return;
         }
 
-        List<BehaviorTreeNode> activeNodes = new List<BehaviorTreeNode>();
-
-        // select active nodes
-        BehaviorTreeNode currentNode = CurrentTree.root.currentActions[editor.debugUser];
-        while (currentNode != null)
-        {
-            activeNodes.Add(currentNode);
-            currentNode = currentNode.parent;
-        }
-
-        // mark nodes based on active state
         foreach (BehaviorTreeNodeView nodeView in nodeViews)
         {
-            if (activeNodes.Contains(nodeView.node))
-            {
-                nodeView.AddToClassList("active");
-            }
-            else
-            {
-                nodeView.RemoveFromClassList("active");
-            }
+            nodeView.UpdateNodeState();
         }
     }
 }

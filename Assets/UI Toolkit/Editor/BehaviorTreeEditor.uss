@@ -128,3 +128,24 @@ GridBackground {
 .detailHeadline {
     -unity-text-align: upper-center;
 }
+
+.failed {
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
+}
+
+.aborted {
+    border-left-color: rgb(255, 133, 0);
+    border-right-color: rgb(255, 133, 0);
+    border-top-color: rgb(255, 133, 0);
+    border-bottom-color: rgb(255, 133, 0);
+}
+
+.success {
+    border-left-color: rgb(0, 255, 0);
+    border-right-color: rgb(0, 255, 0);
+    border-top-color: rgb(0, 255, 0);
+    border-bottom-color: rgb(0, 255, 0);
+}

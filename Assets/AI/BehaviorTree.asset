@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7136608569023959748
+--- !u!114 &-7419173078369491675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,58 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
-  m_Name: IsValueSetDecorator
+  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
+  m_Name: MoveToAction
   m_EditorClassIdentifier: 
-  parent: {fileID: -3260635414320085235}
+  parent: {fileID: -5315458631872639289}
   behaviorTree: {fileID: 11400000}
-  nodeName: Is value set?
-  abortActive: 0
-  valueType: 0
-  comparedBlackboardValue:
-    selectedKey: 
-    type: 0
-  bInvertResult: 0
---- !u!114 &-3260635414320085235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  behaviorTree: {fileID: 11400000}
-  nodeName: Selector
+  nodeName: Move to
   decorators:
-  - {fileID: -7136608569023959748}
+  - {fileID: -4422718517156860017}
   services: []
-  position: {x: 314, y: 461}
-  children: []
---- !u!114 &-2683403621759252756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: 2302691016552574935}
-  behaviorTree: {fileID: 11400000}
-  nodeName: Selector
-  decorators: []
-  services: []
-  position: {x: 75, y: 538}
-  children: []
---- !u!114 &-1862484991312637063
+  position: {x: -75, y: 278}
+--- !u!114 &-6827709514431490716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,15 +31,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
   m_Name: VisionService
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  parent: {fileID: -5315458631872639289}
   behaviorTree: {fileID: 11400000}
   nodeName: Vision
   canSeePlayer:
-    selectedKey: 
+    selectedKey: hasTarget
     type: 1
   target:
-    selectedKey: 
+    selectedKey: Target
     type: 2
+--- !u!114 &-6017367339787845951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
+  m_Name: IsValueSetDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: -5060474933312908645}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Has no target
+  abortActive: 0
+  valueType: 1
+  comparedBlackboardValue:
+    selectedKey: Target
+    type: 0
+  bInvertResult: 1
+--- !u!114 &-5315458631872639289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
+  m_Name: BehaviorTreeSelector
+  m_EditorClassIdentifier: 
+  parent: {fileID: 8714367723732102502}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Selector
+  decorators: []
+  services:
+  - {fileID: -6827709514431490716}
+  position: {x: 30, y: 117}
+  children:
+  - {fileID: -7419173078369491675}
+  - {fileID: -5060474933312908645}
+--- !u!114 &-5060474933312908645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
+  m_Name: MoveToAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: -5315458631872639289}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Move to
+  decorators:
+  - {fileID: -6017367339787845951}
+  services: []
+  position: {x: 150, y: 287}
+--- !u!114 &-4422718517156860017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
+  m_Name: IsValueSetDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: -7419173078369491675}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Has target?
+  abortActive: 0
+  valueType: 1
+  comparedBlackboardValue:
+    selectedKey: hasTarget
+    type: 0
+  bInvertResult: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,17 +135,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86333f16ebe309546a640baa82c7e15e, type: 3}
   m_Name: BehaviorTree
   m_EditorClassIdentifier: 
-  root: {fileID: 2302691016552574935}
-  blackboard: {fileID: 11400000, guid: 8313b694ec786874fbf5e97ec80c9220, type: 2}
+  root: {fileID: 8714367723732102502}
   nodes:
-  - {fileID: -3260635414320085235}
-  - {fileID: -2683403621759252756}
-  - {fileID: 2845357644150595989}
+  - {fileID: -5315458631872639289}
+  - {fileID: -7419173078369491675}
+  - {fileID: -5060474933312908645}
   embeddedNodes:
-  - {fileID: -1862484991312637063}
-  - {fileID: -7136608569023959748}
-  - {fileID: 8127280959990106562}
---- !u!114 &2302691016552574935
+  - {fileID: -6827709514431490716}
+  - {fileID: -4422718517156860017}
+  - {fileID: -6017367339787845951}
+--- !u!114 &8714367723732102502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,48 +157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  behaviorTree: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
   nodeName: Root
   decorators: []
   services: []
-  position: {x: 58.190002, y: 424.5225}
-  currentAction: {fileID: 0}
---- !u!114 &2845357644150595989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
-  m_Name: MoveToAction
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  behaviorTree: {fileID: 11400000}
-  nodeName: Move to
-  decorators: []
-  services: []
   position: {x: 0, y: 0}
---- !u!114 &8127280959990106562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e52eb789d1d3a740835a9f038facf74, type: 3}
-  m_Name: VisionService
-  m_EditorClassIdentifier: 
-  parent: {fileID: 0}
-  behaviorTree: {fileID: 11400000}
-  nodeName: Vision
-  canSeePlayer:
-    selectedKey: 
-    type: 1
-  target:
-    selectedKey: 
-    type: 2
+  startNode: {fileID: -5315458631872639289}

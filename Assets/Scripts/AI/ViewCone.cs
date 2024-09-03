@@ -1,6 +1,7 @@
-using System.Linq;
 using UnityEngine;
+using System;
 using UnityEngine.Profiling;
+using System.Linq;
 
 public enum ViewConeMode
 {
@@ -9,26 +10,15 @@ public enum ViewConeMode
     Hidden // while the player is seen, hide the view cone
 }
 
-[System.Serializable]
+[Serializable]
 struct ViewConeModeData
 {
     public ViewConeMode coneMode;
     public Material coneMaterial;
 }
 
-public class Vision : MonoBehaviour
+public class ViewCone : MonoBehaviour
 {
-    /** 
-    * The view angle to each side of the character.
-    * viewAngle 90deg results in a 180deg field of view
-    */
-    public float viewAngle = 90.0f;
-    public float viewRange = 10.0f;
-    public bool canSeePlayer { get; private set; }
-    public float secondsSinceLastSeen { get; private set; }
-    public Vector3 lastSeenPosition { get; private set; }
-
-
     [SerializeField]
     private int visualizationSubdivisions = 10;
     [SerializeField]
@@ -37,6 +27,11 @@ public class Vision : MonoBehaviour
     private ViewConeModeData[] viewConeModeData;
     [SerializeField]
     private MeshFilter viewConeFilter;
+    [SerializeField]
+    private MeshRenderer viewConeRenderer;
+
+    public float viewAngle { get; set; }
+    public float viewRange { get; set; }
 
     private Mesh viewConeVisualization;
     private NPCController npcController;
@@ -44,20 +39,24 @@ public class Vision : MonoBehaviour
 
     public void SetViewConeMode(ViewConeMode newMode)
     {
-        MeshRenderer renderer = viewConeFilter.gameObject.GetComponent<MeshRenderer>();
-        if (newMode == ViewConeMode.Hidden)
+        if (viewConeRenderer == null)
         {
-            renderer.enabled = false;
             return;
         }
 
-        renderer.enabled = true;
+        if (newMode == ViewConeMode.Hidden)
+        {
+            viewConeRenderer.enabled = false;
+            return;
+        }
+
+        viewConeRenderer.enabled = true;
         ViewConeModeData modeData = viewConeModeData.FirstOrDefault(x => x.coneMode == newMode);
         if (modeData.coneMaterial != null)
         {
-            if (renderer != null)
+            if (viewConeRenderer != null)
             {
-                renderer.material = modeData.coneMaterial;
+                viewConeRenderer.material = modeData.coneMaterial;
             }
         }
     }
@@ -65,15 +64,21 @@ public class Vision : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        secondsSinceLastSeen = float.MaxValue;
-
-        npcController = GetComponent<NPCController>();
         if (viewConeFilter != null)
         {
             viewConeVisualization = new Mesh();
             viewConeVisualization.name = "View cone visualization";
 
             viewConeFilter.mesh = viewConeVisualization;
+        }
+        if (viewConeFilter == null || viewConeVisualization == null)
+        {
+            SetViewConeMode(ViewConeMode.Hidden);
+            enabled = false;
+        }
+        else
+        {
+            SetViewConeMode(ViewConeMode.Idle);
             UpdateVisualization();
         }
     }
@@ -81,54 +86,12 @@ public class Vision : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (PlayerController.Instance != null)
-        {
-            if (IsVisible(PlayerController.Instance.transform))
-            {
-                canSeePlayer = true;
-                secondsSinceLastSeen = 0.0f;
-                lastSeenPosition = PlayerController.Instance.transform.position;
-            }
-            else
-            {
-                canSeePlayer = false;
-                secondsSinceLastSeen += Time.deltaTime;
-            }
-        }
-
         UpdateVisualization();
-    }
-
-    bool IsVisible(Transform target)
-    {
-        Vector3 direction = target.position - transform.position;
-        // target is out of view range
-        if (direction.sqrMagnitude > System.Math.Pow(viewRange, 2))
-        {
-            return false;
-        }
-
-        float dotProduct = Vector3.Dot(transform.forward, direction.normalized);
-        float angle = Mathf.Acos(dotProduct) * Mathf.Rad2Deg;
-        if (angle > viewAngle)
-        {
-            return false;
-        }
-
-        RaycastHit hit;
-        Vector3 rayDirection = target.position - transform.position;
-        if (Physics.Raycast(transform.position, rayDirection, out hit, viewRange))
-        {
-            return hit.collider.gameObject.CompareTag("Player");
-        }
-
-        return false;
     }
 
     void UpdateVisualization()
     {
         Profiler.BeginSample("Update vision cone");
-
         // initialize polygon data arrays
         int requiredVectorCount = visualizationSubdivisions + 2;
         Vector3[] vertices = new Vector3[requiredVectorCount];
@@ -181,3 +144,4 @@ public class Vision : MonoBehaviour
         }
     }
 }
+

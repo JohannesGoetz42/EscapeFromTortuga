@@ -111,7 +111,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
 
         foreach (BehaviorTreeServiceBase service in services)
         {
-            service.UpdateService(user);
+            service.TryUpdateService(user);
         }
     }
 

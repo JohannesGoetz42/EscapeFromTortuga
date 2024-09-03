@@ -10,5 +10,15 @@ public abstract class BehaviorTreeServiceBase : EmbeddedBehaviorTreeNode
 
     }
 
-    public abstract void UpdateService(IBehaviorTreeUser user);
+    internal bool shouldUpdate = true;
+
+    internal void TryUpdateService(IBehaviorTreeUser user)
+    {
+        if (shouldUpdate)
+        {
+            UpdateService(user);
+        }
+    }
+
+    protected abstract void UpdateService(IBehaviorTreeUser user);
 }

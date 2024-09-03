@@ -66,17 +66,13 @@ public partial class BehaviorTreeDetails : VisualElement
             }
         }
 
+        string blackboardName = editor.CurrentTree.Blackboard != null ? editor.CurrentTree.Blackboard.name : "";
         _blackboardSelection.SetValueWithoutNotify(editor.CurrentTree.Blackboard.name);
     }
 
     internal void UpdateUsers()
     {
         // TODO: implement a cleaner solution to user updates
-        // if the child count is the same, assume thi user count is the same
-        if (editor.CurrentTree.ActiveUsers.Count == _debugInstanceSelection.childCount)
-        {
-            return;
-        }
 
         _behaviorUsers = editor.CurrentTree.ActiveUsers.ToList();
         _debugInstanceSelection.choices.Clear();

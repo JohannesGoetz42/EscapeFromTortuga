@@ -21,7 +21,11 @@ public partial class BehaviorNodeDetails : VisualElement
         "m_Script",
         nameof(BehaviorTreeNode.id),
         nameof(BehaviorTreeNode.parent),
-        nameof(BehaviorTreeNode.behaviorTree)
+        nameof(BehaviorTreeNode.behaviorTree),
+        nameof(BehaviorTreeNode.position),
+        nameof(BehaviorTreeNode.decorators),
+        nameof(BehaviorTreeNode.services),
+        nameof(BehaviorTreeCompositeNode.children)
     };
 
     public BehaviorTreeEditor editor;

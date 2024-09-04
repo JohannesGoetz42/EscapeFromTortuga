@@ -11,7 +11,7 @@ public class SetViewConeModeAction : BehaviorTreeAction
     [SerializeField]
     ViewConeMode viewConeMode;
 
-    private Dictionary<IBehaviorTreeUser, SetViewConeModeMemory> _memory;
+    private Dictionary<IBehaviorTreeUser, SetViewConeModeMemory> _memory = new Dictionary<IBehaviorTreeUser, SetViewConeModeMemory>();
 
     public SetViewConeModeAction() : base()
     {
@@ -23,7 +23,7 @@ public class SetViewConeModeAction : BehaviorTreeAction
     protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
         SetViewConeModeMemory myMemory;
-        if (_memory.ContainsKey(user))
+        if (!_memory.ContainsKey(user))
         {
             ViewCone viewCone = user.GetBehaviorUser().GetComponentInChildren<ViewCone>();
             if (viewCone == null)

@@ -87,8 +87,14 @@ public class BehaviorTreeEditor : EditorWindow
         if (selectedTree != null)
         {
             CurrentTree = selectedTree;
-            TreeView.OnBehaviorTreeChanged();
-            TreeDetails.UpdateDetails();
+            if (TreeView != null)
+            {
+                TreeView.OnBehaviorTreeChanged();
+            }
+            if (TreeDetails != null)
+            {
+                TreeDetails.UpdateDetails();
+            }
         }
     }
 

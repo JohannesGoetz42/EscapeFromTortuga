@@ -171,12 +171,15 @@ public partial class BehaviorTreeView : GraphView
         }
 
         // add parents of moved nodes to nodesToOrder
-        foreach (BehaviorTreeNodeView movedNode in graphViewChange.movedElements.Select(x => x as BehaviorTreeNodeView).Where(x => x != null))
+        if (graphViewChange.movedElements != null)
         {
-            BehaviorTreeNodeView parentNode = movedNode.GetParentNode();
-            if (parentNode != null)
+            foreach (BehaviorTreeNodeView movedNode in graphViewChange.movedElements.Select(x => x as BehaviorTreeNodeView).Where(x => x != null))
             {
-                nodesToOrder.Add(parentNode);
+                BehaviorTreeNodeView parentNode = movedNode.GetParentNode();
+                if (parentNode != null)
+                {
+                    nodesToOrder.Add(parentNode);
+                }
             }
         }
 

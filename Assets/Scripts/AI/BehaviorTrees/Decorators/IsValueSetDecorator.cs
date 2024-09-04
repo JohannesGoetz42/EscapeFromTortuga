@@ -22,6 +22,7 @@ public class IsValueSetDecorator : DecoratorBase
     [SerializeField]
     ValueType valueType = ValueType.Bool;
 #endif
+
     [SerializeField]
     BlackboardKeySelector comparedBlackboardValue;
     [SerializeField]

@@ -106,22 +106,26 @@ public partial class BehaviorNodeDetails : VisualElement
         switch (property.propertyType)
         {
             case SerializedPropertyType.Boolean:
-                Toggle toggle = new Toggle(property.name);
+                Toggle toggle = new Toggle(property.displayName);
                 propertyElement = toggle;
                 break;
             case SerializedPropertyType.Float:
-                FloatField floatField = new FloatField(property.name);
+                FloatField floatField = new FloatField(property.displayName);
                 floatField.value = property.floatValue;
                 propertyElement = floatField;
                 break;
             case SerializedPropertyType.Integer:
-                IntegerField intField = new IntegerField(property.name);
+                IntegerField intField = new IntegerField(property.displayName);
                 intField.value = property.intValue;
                 propertyElement = intField;
                 break;
             case SerializedPropertyType.Enum:
                 EnumField enumField = new EnumField(property.displayName);
                 propertyElement = enumField;
+                break;
+            case SerializedPropertyType.LayerMask:
+                LayerMaskField layerMaskField = new LayerMaskField(property.displayName);
+                propertyElement = layerMaskField;
                 break;
             case SerializedPropertyType.Generic:
                 if (!TryAddGenericProperty(serializedObject, property))

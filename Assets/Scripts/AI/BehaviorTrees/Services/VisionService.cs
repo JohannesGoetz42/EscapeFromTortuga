@@ -4,6 +4,7 @@ using UnityEngine;
 struct VisionMemory
 {
     internal ViewCone viewCone;
+    internal Collider[] ownColliders; 
 }
 
 public class VisionService : BehaviorTreeServiceBase
@@ -12,6 +13,8 @@ public class VisionService : BehaviorTreeServiceBase
     public BlackboardKeySelector canSeePlayer { get; set; }
     [field: SerializeField]
     public BlackboardKeySelector target { get; set; }
+
+    public LayerMask ignoreLayer;
 
     /** 
     * The view angle to each side of the character.
@@ -104,7 +107,7 @@ public class VisionService : BehaviorTreeServiceBase
 
         RaycastHit hit;
         Vector3 rayDirection = target.position - userTransform.position;
-        if (Physics.Raycast(userTransform.position, rayDirection, out hit, viewRange))
+        if (Physics.Raycast(userTransform.position + new Vector3(0.0f, 1.0f, 0.0f), rayDirection, out hit, viewRange, ~ignoreLayer))
         {
             return hit.collider.gameObject.CompareTag("Player");
         }

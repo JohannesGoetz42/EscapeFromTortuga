@@ -16,15 +16,13 @@ public class IsValueSetDecorator : DecoratorBase
 #if UNITY_EDITOR
         nodeName = string.Format("Is value set?");
 #endif
+
+        comparedBlackboardValue = new BlackboardKeySelector(BlackboardValueType.Bool, new BlackboardValueType[] { BlackboardValueType.Bool, BlackboardValueType.Object });
     }
 
-#if UNITY_EDITOR
-    [SerializeField]
-    ValueType valueType = ValueType.Bool;
-#endif
+    [field: SerializeField]
+    public BlackboardKeySelector comparedBlackboardValue { get; set; }
 
-    [SerializeField]
-    BlackboardKeySelector comparedBlackboardValue;
     [SerializeField]
     /** 
      * if set the evaluated result is inverted
@@ -46,37 +44,4 @@ public class IsValueSetDecorator : DecoratorBase
 
         return bInvertResult ? !result : result;
     }
-
-#if UNITY_EDITOR
-    public override string[] GetRefreshProperties()
-    {
-        return new string[] { nameof(valueType) };
-    }
-
-    public override void OnPropertyChanged(SerializedProperty property)
-    {
-        if (property == null)
-        {
-            return;
-        }
-
-        if (property.name == nameof(valueType))
-        {
-            switch (valueType)
-            {
-                case ValueType.Bool:
-                    comparedBlackboardValue.type = BlackboardValueType.Bool;
-                    break;
-                case ValueType.Object:
-                    comparedBlackboardValue.type = BlackboardValueType.Object;
-                    break;
-                default:
-                    Debug.LogError("Selected unsupported blackboard type for IsValueSetDecorator!");
-                    return;
-
-            }
-        }
-    }
-
-#endif
 }

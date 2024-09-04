@@ -1,8 +1,11 @@
 using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
+using System.Reflection;
+using Unity.VisualScripting;
 
 
 struct PropertyDetailData
@@ -153,20 +156,9 @@ public partial class BehaviorNodeDetails : VisualElement
     {
         if (property.type == nameof(BlackboardKeySelector))
         {
-            BlackboardKeySelector keySelector = (BlackboardKeySelector)property.boxedValue;
-            Blackboard blackboard = editor.TreeView.CurrentTree.Blackboard;
-
-            DropdownField keyDropdown = new DropdownField(property.name, keySelector.GetBlackboardKeys(blackboard).ToList(), 0);
-            keyDropdown.bindingPath = property.name + "." + nameof(BlackboardKeySelector.selectedKey);
-
-            if (refreshProperties.Contains(property.name))
-            {
-                keyDropdown.TrackPropertyValue(property, x => UpdateContent());
-            }
-
-            keyDropdown.Bind(serializedObject);
-
-            _propertyContainer.Add(keyDropdown);
+            BlackboardKeySelectorField propertyDetails = new BlackboardKeySelectorField();
+            propertyDetails.SetProperty(property, _nodeView.GetNode().behaviorTree.Blackboard);
+            _propertyContainer.Add(propertyDetails);
             return true;
 
         }

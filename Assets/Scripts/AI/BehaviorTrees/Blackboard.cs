@@ -10,15 +10,37 @@ public enum BlackboardValueType
 }
 
 [System.Serializable]
+/**
+ * Blackboard key selector for behavior tree nodes
+ * IMPORTANT: to enable the editor to set the property correctly (using reflection), nodes need to add an auto property for BlackboardKeySelector variables
+ */
 public struct BlackboardKeySelector
 {
-    public BlackboardKeySelector(BlackboardValueType type) : this()
+    public BlackboardKeySelector(BlackboardValueType type, BlackboardValueType[] supportedTypes) : this()
     {
         this.type = type;
+
+#if UNITY_EDITOR
+        this.supportedTypes = supportedTypes;
+#endif
     }
 
     public string selectedKey;
     public BlackboardValueType type;
+
+#if UNITY_EDITOR
+    /** 
+     * the supported value types for this selector 
+     * set this in your node's constructor to limit user selection to supported types in your node
+     * i.e. to avoid selecting a blackboard key for a bool value when your node expects an object
+     */
+    public readonly BlackboardValueType[] supportedTypes;
+
+    public bool IsSupportedValueType(BlackboardValueType keyType)
+    {
+        return supportedTypes == null || supportedTypes.Contains(BlackboardValueType.Any) || supportedTypes.Contains(keyType);
+    }
+#endif
 
     public string[] GetBlackboardKeys(Blackboard blackboard)
     {

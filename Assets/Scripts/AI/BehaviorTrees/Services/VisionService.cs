@@ -8,8 +8,10 @@ struct VisionMemory
 
 public class VisionService : BehaviorTreeServiceBase
 {
-    [SerializeField] BlackboardKeySelector canSeePlayer = new BlackboardKeySelector(BlackboardValueType.Bool);
-    [SerializeField] BlackboardKeySelector target = new BlackboardKeySelector(BlackboardValueType.Object);
+    [field: SerializeField]
+    public BlackboardKeySelector canSeePlayer { get; set; }
+    [field: SerializeField]
+    public BlackboardKeySelector target { get; set; }
 
     /** 
     * The view angle to each side of the character.
@@ -27,6 +29,9 @@ public class VisionService : BehaviorTreeServiceBase
 #if UNITY_EDITOR
         nodeName = "Vision";
 #endif
+
+        canSeePlayer = new BlackboardKeySelector(BlackboardValueType.Bool, new BlackboardValueType[] { BlackboardValueType.Bool });
+        target = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object });
     }
 
     internal override void BecomeRelevant(IBehaviorTreeUser user)

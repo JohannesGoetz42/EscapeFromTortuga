@@ -2,6 +2,8 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Linq;
+using System.Collections.Generic;
 
 public class BehaviorTreeNodeView : Node, INodeView
 {
@@ -10,6 +12,7 @@ public class BehaviorTreeNodeView : Node, INodeView
     public Port childrenPort;
     public VisualElement serviceContainer;
     public VisualElement decoratorContainer;
+    public Label orderIndex;
 
     public BehaviorTreeView BehaviorTreeView { get; private set; }
 
@@ -29,6 +32,7 @@ public class BehaviorTreeNodeView : Node, INodeView
 
         serviceContainer = this.Q("services");
         decoratorContainer = this.Q("decorators");
+        orderIndex = this.Q("orderIndex") as Label;
 
         if (node is BehaviorTreeRoot)
         {
@@ -48,6 +52,26 @@ public class BehaviorTreeNodeView : Node, INodeView
     {
         base.OnSelected();
         BehaviorTreeView.editor.SelectNode(this);
+    }
+
+    public BehaviorTreeNodeView GetParentNode()
+    {
+        if (parentPort == null)
+        {
+            return null;
+        }
+
+        return parentPort.connections.Select(x => x.output.node as BehaviorTreeNodeView).First();
+    }
+
+    public IEnumerable<BehaviorTreeNodeView> GetChildNodes()
+    {
+        if (childrenPort == null)
+        {
+            return new BehaviorTreeNodeView[0];
+        }
+
+        return childrenPort.connections.Select(x => x.input.node as BehaviorTreeNodeView).Where(x => x != null);
     }
 
     public override void SetPosition(Rect newPos)
@@ -225,6 +249,48 @@ public class BehaviorTreeNodeView : Node, INodeView
             case BehaviorNodeState.Failed:
                 AddToClassList("failed");
                 return;
+        }
+    }
+
+    /** 
+     * Order the child nodes based on their position in x direction
+     * since the added or removed nodes are still there when grap is updated (I could not find post update event for that),
+     * add newChild and skip removedElements when sorting
+     */
+    internal void OrderChildren(BehaviorTreeNodeView newChild = null, List<GraphElement> removedElements = null)
+    {
+        // order is only relevant for composite nodes
+        BehaviorTreeCompositeNode compositeNode = node as BehaviorTreeCompositeNode;
+        if (compositeNode == null)
+        {
+            return;
+        }
+
+        // get all child nodes that are not removed
+        List<BehaviorTreeNodeView> childNodes = GetChildNodes().Where(x => removedElements == null || !removedElements.Contains(x)).ToList();
+
+        // if a new child is added, add it before ordering
+        if (newChild != null)
+        {
+            childNodes.Add(newChild);
+        }
+
+        // get all child nodes ordered by x position
+        childNodes = childNodes.OrderBy(x => x.node.position.x).ToList();
+
+        for (int i = 0; i < childNodes.Count; i++)
+        {
+            childNodes[i].SetOrderIndex(i);
+        }
+
+        compositeNode.children = childNodes.Select(x => x.node).ToList();
+    }
+
+    internal void SetOrderIndex(int index)
+    {
+        if (orderIndex != null)
+        {
+            orderIndex.text = index.ToString();
         }
     }
 }

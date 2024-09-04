@@ -25,12 +25,12 @@ public abstract class BehaviorTreeNodeBase : ScriptableObject
 #if UNITY_EDITOR
     public string nodeName;
     public GUID id;
-#endif
 
     public void SetParent(BehaviorTreeNode newParent)
     {
         parent = newParent;
     }
+#endif
 
     internal virtual void BecomeRelevant(IBehaviorTreeUser user)
     {

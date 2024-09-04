@@ -95,13 +95,20 @@ public partial class BehaviorTreeView : GraphView
             }
         }
 
-
+        HashSet<BehaviorTreeNodeView> nodesToOrder = new HashSet<BehaviorTreeNodeView>();
         // create edges after every node is created
         foreach (EdgeData edge in edges)
         {
             BehaviorTreeNodeView parentView = nodeViews.First(x => x.node == edge.parentNode);
             Edge graphEdge = parentView.childrenPort.ConnectTo(edge.childNodeView.parentPort);
             AddElement(graphEdge);
+            nodesToOrder.Add(parentView);
+        }
+
+        // order all nodes that are parent so another node
+        foreach (BehaviorTreeNodeView parent in nodesToOrder)
+        {
+            parent.OrderChildren();
         }
     }
 
@@ -128,10 +135,11 @@ public partial class BehaviorTreeView : GraphView
 
     private GraphViewChange OnGraphViewChanged(GraphViewChange graphViewChange)
     {
+        List<BehaviorTreeNodeView> nodesToOrder = new List<BehaviorTreeNodeView>();
+
         // remove removed elements from tree
         if (graphViewChange.elementsToRemove != null)
         {
-
             foreach (var item in graphViewChange.elementsToRemove)
             {
                 // remove nodes
@@ -139,6 +147,12 @@ public partial class BehaviorTreeView : GraphView
                 if (nodeView != null)
                 {
                     CurrentTree.DeleteNode(nodeView.node);
+
+                    BehaviorTreeNodeView parentNode = nodeView.GetParentNode();
+                    if (parentNode != null)
+                    {
+                        nodesToOrder.Add(parentNode);
+                    }
                     continue;
                 }
 
@@ -149,9 +163,27 @@ public partial class BehaviorTreeView : GraphView
                     BehaviorTreeNodeView parent = edge.output.node as BehaviorTreeNodeView;
                     BehaviorTreeNodeView child = edge.input.node as BehaviorTreeNodeView;
                     parent.node.RemoveChild(child.node);
+                    nodesToOrder.Add(parent);
                     child.node.SetParent(null);
                 }
             }
+
+        }
+
+        // add parents of moved nodes to nodesToOrder
+        foreach (BehaviorTreeNodeView movedNode in graphViewChange.movedElements.Select(x => x as BehaviorTreeNodeView).Where(x => x != null))
+        {
+            BehaviorTreeNodeView parentNode = movedNode.GetParentNode();
+            if (parentNode != null)
+            {
+                nodesToOrder.Add(parentNode);
+            }
+        }
+
+        // order parents of removed or moved nodes, if they aren't removed themselves
+        foreach (BehaviorTreeNodeView node in nodesToOrder.Where(x => graphViewChange.elementsToRemove == null || !graphViewChange.elementsToRemove.Contains(x)))
+        {
+            node.OrderChildren(null, graphViewChange.elementsToRemove);
         }
 
         // connect nodes
@@ -169,8 +201,8 @@ public partial class BehaviorTreeView : GraphView
 
                 child.node.SetParent(parent.node);
 
-                // TODO: order children
                 parent.node.AddChild(child.node);
+                parent.OrderChildren(child);
             }
         }
 
@@ -225,7 +257,7 @@ public partial class BehaviorTreeView : GraphView
 
     internal void UpdateActiveNodes()
     {
-        if(editor == null || editor.debugUser == null)
+        if (editor == null || editor.debugUser == null)
         {
             return;
         }

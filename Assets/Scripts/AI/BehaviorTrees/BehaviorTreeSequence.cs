@@ -24,4 +24,18 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
 
         base.OnChildExit(user, child, result);
     }
+
+    internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
+    {
+        foreach (BehaviorTreeNode child in children)
+        {
+            if (child.CanEnterNode(user))
+            {
+                return child.TryGetFirstActivateableAction(user);
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NPCController : CharacterControllerBase, INPCController
 {
+    [field: SerializeField]
+    public Transform[] patrolPoints { get; private set; }
+
     private Vector3 _movementTarget;
     private bool shouldMoveToTarget = false;
 

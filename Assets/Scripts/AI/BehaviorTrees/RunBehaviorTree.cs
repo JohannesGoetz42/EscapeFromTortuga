@@ -8,10 +8,14 @@ public class RunBehaviorTree : MonoBehaviour, IBehaviorTreeUser
     public Blackboard GetBlackboard() => blackboardInstance;
     public Transform GetBehaviorUser() => transform;
 
+    public INPCController GetNPCController() => _controller;
+    private NPCController _controller;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (behaviorTree != null && behaviorTree.root != null)
+        _controller = GetComponent<NPCController>();
+        if (_controller != null && behaviorTree != null && behaviorTree.root != null)
         {
             blackboardInstance = behaviorTree.RunBehavior(this);
         }

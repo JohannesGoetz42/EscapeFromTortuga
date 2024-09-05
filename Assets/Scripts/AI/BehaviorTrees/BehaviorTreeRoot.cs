@@ -48,10 +48,19 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     {
         if (StartNode == null || !StartNode.CanEnterNode(user))
         {
-            return StartNode.TryGetFirstActivateableAction(user);
+            return null;
         }
 
-        return null;
+        return StartNode.TryGetFirstActivateableAction(user);
+    }
+
+    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
+    {
+        if (result == BehaviorNodeState.Failed)
+        {
+            TryGetFirstActivateableAction(user);
+            return;
+        }
     }
 
     public override bool CanStayActive(IBehaviorTreeUser user) => true;

@@ -17,12 +17,21 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
             int nextChild = children.IndexOf(child) + 1;
             if (children.Count > nextChild)
             {
-                behaviorTree.root.currentActions[user] = children[nextChild].TryGetFirstActivateableAction(user);
+                BehaviorTreeAction nextAction = children[nextChild].TryGetFirstActivateableAction(user);
+                if (nextAction != null)
+                {
+                    nextAction.SetActive(user);
+                }
+                else
+                {
+                    base.OnChildExit(user, this, BehaviorNodeState.Failed);
+                }
+
                 return;
             }
         }
 
-        base.OnChildExit(user, child, result);
+        base.OnChildExit(user, this, result);
     }
 
     internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)

@@ -6,12 +6,14 @@ using System.Collections;
 
 public struct PathRequest
 {
+    public IBehaviorTreeUser user;
     public Vector3 startPosition;
     public Vector3 targetPosition;
-    public Action<Vector3[], bool> callback;
+    public Action<Vector3[], bool, IBehaviorTreeUser> callback;
 
-    public PathRequest(Vector3 _startPosition, Vector3 _targetPosition, Action<Vector3[], bool> _callback)
+    public PathRequest(IBehaviorTreeUser _user, Vector3 _startPosition, Vector3 _targetPosition, Action<Vector3[], bool, IBehaviorTreeUser> _callback)
     {
+        user = _user;
         startPosition = _startPosition;
         targetPosition = _targetPosition;
         callback = _callback;

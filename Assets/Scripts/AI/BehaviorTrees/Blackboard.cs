@@ -6,7 +6,8 @@ public enum BlackboardValueType
 {
     Any,
     Bool,
-    Object
+    Object,
+    Vector3
 }
 
 [System.Serializable]
@@ -63,6 +64,9 @@ public struct BlackboardKeySelector
             case BlackboardValueType.Object:
                 return blackboard.ObjectKeys;
 
+            case BlackboardValueType.Vector3:
+                return blackboard.Vector3Keys;
+
             default:
                 Debug.LogError(string.Format("BlackboardValueType {0} is not implemented!", type));
                 break;
@@ -77,12 +81,15 @@ public class Blackboard : ScriptableObject
 {
     public string[] BoolKeys { get => boolKeys; }
     public string[] ObjectKeys { get => objectKeys; }
+    public string[] Vector3Keys { get => vector3Keys; }
 
     [SerializeField] string[] boolKeys;
     [SerializeField] string[] objectKeys;
+    [SerializeField] string[] vector3Keys;
 
     Dictionary<string, bool> _boolValues;
     Dictionary<string, Object> _objectValues;
+    Dictionary<string, Vector3> _vector3Values;
 
     /** initializes the dictionaries with default values. Use this after CreateInstance to ensure everything is set up */
     public void InitializeValues()
@@ -97,6 +104,12 @@ public class Blackboard : ScriptableObject
         foreach (string key in objectKeys)
         {
             _objectValues.Add(key, null);
+        }
+
+        _vector3Values = new Dictionary<string, Vector3>(vector3Keys.Length);
+        foreach (string key in vector3Keys)
+        {
+            _vector3Values.Add(key, Vector3.zero);
         }
     }
 
@@ -117,4 +130,13 @@ public class Blackboard : ScriptableObject
         }
     }
     public Object GetValueAsObject(string key) => _objectValues.ContainsKey(key) ? _objectValues[key] : null;
+
+    public void SetValueAsVector3(string key, Vector3 value)
+    {
+        if (_vector3Values.ContainsKey(key))
+        {
+            _vector3Values[key] = value;
+        }
+    }
+    public Vector3 GetValueAsVector3(string key) => _vector3Values.ContainsKey(key) ? _vector3Values[key] : Vector3.zero;
 }

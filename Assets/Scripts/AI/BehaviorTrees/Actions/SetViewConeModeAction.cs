@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-struct SetViewConeModeMemory
+class SetViewConeModeMemory
 {
     internal ViewCone viewCone;
 }
@@ -28,8 +28,9 @@ public class SetViewConeModeAction : BehaviorTreeAction
             ViewCone viewCone = user.GetBehaviorUser().GetComponentInChildren<ViewCone>();
             if (viewCone == null)
             {
-                Debug.LogWarning(string.Format("{0} could not find ViewCone on {1}", 
+                Debug.LogWarning(string.Format("{0} could not find ViewCone on {1}",
                     nameof(SetViewConeModeAction), user.GetBehaviorUser().name));
+                Exit(user, BehaviorNodeState.Failed);
                 return;
             }
 
@@ -42,5 +43,6 @@ public class SetViewConeModeAction : BehaviorTreeAction
         }
 
         myMemory.viewCone.SetViewConeMode(viewConeMode);
+        Exit(user, BehaviorNodeState.Success);
     }
 }

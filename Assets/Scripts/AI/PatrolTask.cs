@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: make action
 public class PatrolTask : BehaviorTask
 {
     public bool shouldPatrolRandom = false;
@@ -24,7 +25,6 @@ public class PatrolTask : BehaviorTask
 
     public override void Deactivate()
     {
-        controller.movementTarget = null;
         base.Deactivate();
     }
 
@@ -55,6 +55,6 @@ public class PatrolTask : BehaviorTask
             selectedPatrolPoint = (selectedPatrolPoint + 1) % patrolPoints.Count;
         }
 
-        controller.movementTarget = patrolPoints[selectedPatrolPoint];
+        //controller._movementTarget = patrolPoints[selectedPatrolPoint].position;
     }
 }

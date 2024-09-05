@@ -7,6 +7,7 @@ public class BehaviorTreeAction : BehaviorTreeNode
 
     internal void SetActive(IBehaviorTreeUser user)
     {
+        behaviorTree.root.currentActions[user] = this;
         BecomeRelevant(user);
     }
 
@@ -21,6 +22,7 @@ public class BehaviorTreeAction : BehaviorTreeNode
     virtual public void Exit(IBehaviorTreeUser user, BehaviorNodeState result)
     {
         States[user] = result;
+        OnCeaseRelevant(user);
         parent.OnChildExit(user, this, result);
     }
 }

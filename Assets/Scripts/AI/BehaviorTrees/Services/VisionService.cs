@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-struct VisionMemory
+class VisionMemory
 {
     internal ViewCone viewCone;
-    internal Collider[] ownColliders; 
 }
 
 public class VisionService : BehaviorTreeServiceBase

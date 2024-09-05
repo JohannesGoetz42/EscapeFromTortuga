@@ -6,11 +6,19 @@ using UnityEditor;
 using System;
 #endif
 
+/** Abstraction for the controller of behavior tree users */
+public interface INPCController
+{
+    void SetMovementTarget(Vector3 newWovementTarget);
+    void ClearMovementTarget();
+}
+
 /** Abstraction for users of a behavior tree (most likely a monobehavior) */
 public interface IBehaviorTreeUser
 {
     public Blackboard GetBlackboard();
     public Transform GetBehaviorUser();
+    public INPCController GetNPCController();
 }
 
 public class BehaviorTreeUpdater : MonoBehaviour

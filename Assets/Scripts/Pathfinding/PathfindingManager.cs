@@ -5,16 +5,18 @@ using UnityEngine;
 
 struct PathResult
 {
-    public PathResult(Vector3[] _path, bool _success, Action<Vector3[], bool> _callback)
+    public PathResult(IBehaviorTreeUser _user, Vector3[] _path, bool _success, Action<Vector3[], bool, IBehaviorTreeUser> _callback)
     {
+        user = _user;
         path = _path;
         success = _success;
         callback = _callback;
     }
 
+    public IBehaviorTreeUser user;
     public Vector3[] path;
     public bool success;
-    public Action<Vector3[], bool> callback;
+    public Action<Vector3[], bool, IBehaviorTreeUser> callback;
 }
 
 public class PathfindingManager : MonoBehaviour
@@ -43,7 +45,7 @@ public class PathfindingManager : MonoBehaviour
             PathResult currentResult;
             while (_pathResults.TryDequeue(out currentResult))
             {
-                currentResult.callback(currentResult.path, currentResult.success);
+                currentResult.callback(currentResult.path, currentResult.success, currentResult.user);
             }
         }
     }
@@ -63,7 +65,7 @@ public class PathfindingManager : MonoBehaviour
 
     public void FinishedProcessingPath(Vector3[] path, bool success, PathRequest originalRequest)
     {
-        PathResult result = new PathResult(path, success, originalRequest.callback);
+        PathResult result = new PathResult(originalRequest.user, path, success, originalRequest.callback);
         lock (_instance._pathResults)
         {
             _instance._pathResults.Enqueue(result);

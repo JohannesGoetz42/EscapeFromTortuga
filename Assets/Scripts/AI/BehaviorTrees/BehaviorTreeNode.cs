@@ -82,15 +82,15 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     /** Called by the child when it exits active state */
     internal virtual void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
-        if (parent != null)
-        {
-            parent.OnChildExit(user, this, result);
-        }
-
         // if the child failed or this node can't stay active, cease to be relevant
         if (result != BehaviorNodeState.Success || !CanStayActive(user))
         {
             CeaseRelevant(user);
+        }
+
+        if (parent != null)
+        {
+            parent.OnChildExit(user, this, result);
         }
     }
 

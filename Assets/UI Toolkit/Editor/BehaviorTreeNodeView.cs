@@ -56,7 +56,7 @@ public class BehaviorTreeNodeView : Node, INodeView
 
     public BehaviorTreeNodeView GetParentNode()
     {
-        if (parentPort == null)
+        if (parentPort == null || parentPort.connections == null)
         {
             return null;
         }
@@ -218,6 +218,24 @@ public class BehaviorTreeNodeView : Node, INodeView
         if (!node.States.ContainsKey(BehaviorTreeView.editor.debugUser))
         {
             return;
+        }
+
+        // update decorators
+        foreach (VisualElement decorator in decoratorContainer.Children())
+        {
+            EmbeddedBehaviorTreeNodeView decoratorView = decorator as EmbeddedBehaviorTreeNodeView;
+            if (decoratorView != null)
+            {
+                if (decoratorView.embeddedNode.States[BehaviorTreeView.editor.debugUser] == BehaviorNodeState.Failed)
+                {
+                    decoratorView.AddToClassList("failed");
+
+                }
+                else
+                {
+                    decoratorView.RemoveFromClassList("failed");
+                }
+            }
         }
 
         BehaviorNodeState newState = node.States[BehaviorTreeView.editor.debugUser];

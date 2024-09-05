@@ -20,4 +20,10 @@ public class BehaviorTreeSelector : BehaviorTreeCompositeNode
 
         return null;
     }
+
+    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
+    {
+        CeaseRelevant(user);
+        parent.OnChildExit(user, this, result);
+    }
 }

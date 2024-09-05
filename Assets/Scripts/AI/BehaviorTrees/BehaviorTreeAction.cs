@@ -25,4 +25,9 @@ public class BehaviorTreeAction : BehaviorTreeNode
         OnCeaseRelevant(user);
         parent.OnChildExit(user, this, result);
     }
+
+    internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
+    {
+        Debug.LogErrorFormat("OnChildExit called on action node '{0}'. This should never happen!", name);
+    }
 }

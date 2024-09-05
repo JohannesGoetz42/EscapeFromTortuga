@@ -60,8 +60,16 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         {
             if (!decorator.Evaluate(user.GetBlackboard()))
             {
+#if UNITY_EDITOR
+                // set failed state in editor to so the editor can set the correct highlight
+                decorator.States[user] = BehaviorNodeState.Failed;
+#endif
                 return false;
             }
+#if UNITY_EDITOR
+            // set success state in editor to so the editor can set the correct highlight
+            decorator.States[user] = BehaviorNodeState.Success;
+#endif
         }
 
         return true;
@@ -80,19 +88,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     internal virtual BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user) => null;
 
     /** Called by the child when it exits active state */
-    internal virtual void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
-    {
-        // if the child failed or this node can't stay active, cease to be relevant
-        if (result != BehaviorNodeState.Success || !CanStayActive(user))
-        {
-            CeaseRelevant(user);
-        }
-
-        if (parent != null)
-        {
-            parent.OnChildExit(user, this, result);
-        }
-    }
+    internal abstract void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result);
 
     internal virtual void UpdateNode(IBehaviorTreeUser user)
     {

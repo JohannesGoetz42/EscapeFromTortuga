@@ -21,17 +21,14 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
                 if (nextAction != null)
                 {
                     nextAction.SetActive(user);
-                }
-                else
-                {
-                    base.OnChildExit(user, this, BehaviorNodeState.Failed);
+                    return;
                 }
 
-                return;
             }
         }
 
-        base.OnChildExit(user, this, result);
+        CeaseRelevant(user);
+        parent.OnChildExit(user, this, result);
     }
 
     internal override BehaviorTreeAction TryGetFirstActivateableAction(IBehaviorTreeUser user)
@@ -46,5 +43,4 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
 
         return null;
     }
-
 }

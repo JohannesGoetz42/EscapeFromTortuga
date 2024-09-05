@@ -56,11 +56,9 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 
     internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
-        if (result == BehaviorNodeState.Failed)
-        {
-            TryGetFirstActivateableAction(user);
-            return;
-        }
+        currentActions[user] = TryGetFirstActivateableAction(user);
+        currentActions[user].SetActive(user);
+
     }
 
     public override bool CanStayActive(IBehaviorTreeUser user) => true;

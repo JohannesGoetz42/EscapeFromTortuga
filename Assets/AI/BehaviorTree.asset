@@ -26,6 +26,28 @@ MonoBehaviour:
     m_Bits: 64
   viewAngle: 90
   viewRange: 20
+--- !u!114 &-6366416849676947711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64a39e8589418941a60f30b4be12206, type: 3}
+  m_Name: SelectPatrolPointAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: -4610323979991488771}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Select patrol point
+  services: []
+  decorators: []
+  position: {x: -194, y: 638}
+  <patrolPoint>k__BackingField:
+    selectedKey: Target
+    type: 2
+  selectionMode: 1
 --- !u!114 &-5315458631872639289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +88,11 @@ MonoBehaviour:
   services: []
   decorators:
   - {fileID: -3652237727474907941}
-  position: {x: -79, y: 231}
+  position: {x: -90, y: 231}
   children:
   - {fileID: 4999353109755840140}
+  - {fileID: -6366416849676947711}
+  - {fileID: 4099561623729398183}
 --- !u!114 &-3652237727474907941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +156,8 @@ MonoBehaviour:
   - {fileID: -4610323979991488771}
   - {fileID: 4999353109755840140}
   - {fileID: 1508308407998736536}
+  - {fileID: -6366416849676947711}
+  - {fileID: 4099561623729398183}
   embeddedNodes:
   - {fileID: -6827709514431490716}
   - {fileID: -3652237727474907941}
@@ -200,6 +226,31 @@ MonoBehaviour:
     selectedKey: hasTarget
     type: 1
   bInvertResult: 0
+--- !u!114 &4099561623729398183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
+  m_Name: MoveToAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: -4610323979991488771}
+  behaviorTree: {fileID: 11400000}
+  nodeName: Move to
+  services: []
+  decorators: []
+  position: {x: -14, y: 638}
+  <movementTarget>k__BackingField:
+    selectedKey: Target
+    type: 2
+  acceptedDistance: 0.5
+  updatePathInterval: 0.5
+  updateIntervalRange: 0.3
+  trackTargetMovement: 0
 --- !u!114 &4999353109755840140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +268,7 @@ MonoBehaviour:
   nodeName: Set view cone mode
   services: []
   decorators: []
-  position: {x: -79, y: 440}
+  position: {x: -369, y: 638}
   viewConeMode: 0
 --- !u!114 &8714367723732102502
 MonoBehaviour:

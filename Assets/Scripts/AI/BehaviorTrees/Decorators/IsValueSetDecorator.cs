@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -30,16 +29,16 @@ public class IsValueSetDecorator : DecoratorBase
      */
     bool bInvertResult;
 
-    public override bool Evaluate(Blackboard blackboard)
+    public override bool Evaluate(IBehaviorTreeUser user)
     {
         bool result = false;
         if (comparedBlackboardValue.type == BlackboardValueType.Bool)
         {
-            result = blackboard.GetValueAsBool(comparedBlackboardValue.selectedKey);
+            result = user.GetBlackboard().GetValueAsBool(comparedBlackboardValue.selectedKey);
         }
         else if (comparedBlackboardValue.type == BlackboardValueType.Object)
         {
-            result = blackboard.GetValueAsObject(comparedBlackboardValue.selectedKey) != null;
+            result = user.GetBlackboard().GetValueAsObject(comparedBlackboardValue.selectedKey) != null;
         }
 
         return bInvertResult ? !result : result;

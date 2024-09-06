@@ -61,7 +61,7 @@ public class BehaviorTreeNodeView : Node, INodeView
             return null;
         }
 
-        return parentPort.connections.Select(x => x.output.node as BehaviorTreeNodeView).First();
+        return parentPort.connections.Select(x => x.output.node as BehaviorTreeNodeView).FirstOrDefault();
     }
 
     public IEnumerable<BehaviorTreeNodeView> GetChildNodes()

@@ -58,7 +58,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (!decorator.Evaluate(user.GetBlackboard()))
+            if (!decorator.Evaluate(user))
             {
 #if UNITY_EDITOR
                 // set failed state in editor to so the editor can set the correct highlight
@@ -79,7 +79,7 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (decorator.abortActive && !decorator.Evaluate(user.GetBlackboard())) { return false; }
+            if (decorator.abortActive && !decorator.Evaluate(user)) { return false; }
         }
 
         return parent.CanStayActive(user);

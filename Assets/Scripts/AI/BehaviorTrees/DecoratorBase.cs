@@ -12,5 +12,5 @@ public abstract class DecoratorBase : EmbeddedBehaviorTreeNode
 
     public bool abortActive = false;
 
-    public virtual bool Evaluate(Blackboard blackboard) => false;
+    public virtual bool Evaluate(IBehaviorTreeUser user) => false;
 }

@@ -6,8 +6,9 @@ public enum BlackboardValueType
 {
     Any,
     Bool,
-    Object,
-    Vector3
+    Float,
+    Vector3,
+    Object
 }
 
 [System.Serializable]
@@ -61,6 +62,9 @@ public struct BlackboardKeySelector
             case BlackboardValueType.Bool:
                 return blackboard.BoolKeys;
 
+            case BlackboardValueType.Float:
+                return blackboard.FloatKeys;
+
             case BlackboardValueType.Object:
                 return blackboard.ObjectKeys;
 
@@ -79,35 +83,39 @@ public struct BlackboardKeySelector
 [CreateAssetMenu(fileName = "Blackboard", menuName = "Scriptable Objects/Behavior/Blackboard")]
 public class Blackboard : ScriptableObject
 {
-    public string[] BoolKeys { get => boolKeys; }
-    public string[] ObjectKeys { get => objectKeys; }
-    public string[] Vector3Keys { get => vector3Keys; }
-
-    [SerializeField] string[] boolKeys;
-    [SerializeField] string[] objectKeys;
-    [SerializeField] string[] vector3Keys;
+    [field: SerializeField] public string[] BoolKeys { get; private set; }
+    [field:SerializeField] public string[] FloatKeys { get; private set; }
+    [field: SerializeField] public string[] ObjectKeys { get; private set; }
+    [field: SerializeField] public string[] Vector3Keys { get; private set; }
 
     Dictionary<string, bool> _boolValues;
+    Dictionary<string, float> _floatValues;
     Dictionary<string, Object> _objectValues;
     Dictionary<string, Vector3> _vector3Values;
 
     /** initializes the dictionaries with default values. Use this after CreateInstance to ensure everything is set up */
     public void InitializeValues()
     {
-        _boolValues = new Dictionary<string, bool>(boolKeys.Length);
-        foreach (string key in boolKeys)
+        _boolValues = new Dictionary<string, bool>(BoolKeys.Length);
+        foreach (string key in BoolKeys)
         {
             _boolValues.Add(key, false);
         }
 
-        _objectValues = new Dictionary<string, Object>(objectKeys.Length);
-        foreach (string key in objectKeys)
+        _floatValues = new Dictionary<string, float>(FloatKeys.Length);
+        foreach (string key in FloatKeys)
+        {
+            _floatValues.Add(key, 0.0f);
+        }
+
+        _objectValues = new Dictionary<string, Object>(ObjectKeys.Length);
+        foreach (string key in ObjectKeys)
         {
             _objectValues.Add(key, null);
         }
 
-        _vector3Values = new Dictionary<string, Vector3>(vector3Keys.Length);
-        foreach (string key in vector3Keys)
+        _vector3Values = new Dictionary<string, Vector3>(Vector3Keys.Length);
+        foreach (string key in Vector3Keys)
         {
             _vector3Values.Add(key, Vector3.zero);
         }
@@ -121,6 +129,15 @@ public class Blackboard : ScriptableObject
         }
     }
     public bool GetValueAsBool(string key) => _boolValues.ContainsKey(key) ? _boolValues[key] : false;
+
+    public void SetValueAsFloat(string key, float value)
+    {
+        if (_floatValues.ContainsKey(key))
+        {
+            _floatValues[key] = value;
+        }
+    }
+    public float GetValueAsFloat(string key) => _floatValues.ContainsKey(key) ? _floatValues[key] : 0.0f;
 
     public void SetValueAsObject(string key, Object value)
     {

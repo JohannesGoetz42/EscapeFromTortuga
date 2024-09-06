@@ -10,23 +10,8 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     public List<BehaviorTreeServiceBase> services = new List<BehaviorTreeServiceBase>();
     public List<DecoratorBase> decorators = new List<DecoratorBase>();
 
-    internal override void BecomeRelevant(IBehaviorTreeUser user)
+    protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
-        if (!States.ContainsKey(user))
-        {
-            States.Add(user, BehaviorNodeState.Active);
-        }
-        else if (States[user] == BehaviorNodeState.Active)
-        {
-            return;
-        }
-
-        // call parent first, so the order is correct
-        if (parent != null)
-        {
-            parent.BecomeRelevant(user);
-        }
-
         foreach (BehaviorTreeServiceBase service in services)
         {
             service.BecomeRelevant(user);
@@ -35,12 +20,9 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         {
             decorator.BecomeRelevant(user);
         }
-
-        States[user] = BehaviorNodeState.Active;
-        OnBecomeRelevant(user);
     }
 
-    internal override void CeaseRelevant(IBehaviorTreeUser user)
+    protected override void OnCeaseRelevant(IBehaviorTreeUser user)
     {
         foreach (BehaviorTreeServiceBase service in services)
         {
@@ -50,8 +32,6 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
         {
             decorator.CeaseRelevant(user);
         }
-
-        base.CeaseRelevant(user);
     }
 
     virtual public bool CanEnterNode(IBehaviorTreeUser user)

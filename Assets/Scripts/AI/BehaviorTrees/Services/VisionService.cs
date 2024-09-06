@@ -36,12 +36,8 @@ public class VisionService : BehaviorTreeServiceBase
         target = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object });
     }
 
-    internal override void BecomeRelevant(IBehaviorTreeUser user)
+    protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
-        if (user == null)
-        {
-            return;
-        }
         VisionMemory myMemory;
         if (!_memories.ContainsKey(user))
         {
@@ -66,7 +62,6 @@ public class VisionService : BehaviorTreeServiceBase
             myMemory.viewCone.viewAngle = viewAngle;
             myMemory.viewCone.viewRange = viewRange;
             myMemory.viewCone.enabled = true;
-            myMemory.viewCone.SetViewConeMode(ViewConeMode.Idle);
         }
     }
 

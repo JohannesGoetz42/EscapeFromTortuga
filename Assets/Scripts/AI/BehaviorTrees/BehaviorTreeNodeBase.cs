@@ -32,8 +32,19 @@ public abstract class BehaviorTreeNodeBase : ScriptableObject
     }
 #endif
 
-    internal virtual void BecomeRelevant(IBehaviorTreeUser user)
+    internal void BecomeRelevant(IBehaviorTreeUser user)
     {
+        if (user == null || _states.ContainsKey(user) && _states[user] == BehaviorNodeState.Active)
+        {
+            return;
+        }
+
+        // call parent first, so the order is correct
+        if (parent != null)
+        {
+            parent.BecomeRelevant(user);
+        }
+
         if (!States.ContainsKey(user))
         {
             States.Add(user, BehaviorNodeState.Active);
@@ -47,9 +58,13 @@ public abstract class BehaviorTreeNodeBase : ScriptableObject
         OnBecomeRelevant(user);
     }
 
-    internal virtual void CeaseRelevant(IBehaviorTreeUser user)
+    internal void CeaseRelevant(IBehaviorTreeUser user)
     {
-        States[user] = BehaviorNodeState.Inactive;
+        if (States[user] == BehaviorNodeState.Active)
+        {
+            States[user] = BehaviorNodeState.Inactive;
+        }
+
         OnCeaseRelevant(user);
     }
 

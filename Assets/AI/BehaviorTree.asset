@@ -12,18 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
   m_Name: LoopNode
   m_EditorClassIdentifier: 
-  parent: {fileID: 1049352613834721484}
+  parent: {fileID: 3532050044719809332}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Loop
   nodeName: Loop
   services: []
   decorators: []
-  position: {x: 14, y: 460}
+  position: {x: 1597.8569, y: 790.24695}
   children:
   - {fileID: 166630074555804748}
   - {fileID: -2273342693439811837}
   LoopCount: 0
   LoopDuration: 0
+--- !u!114 &-7467656315156984978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
+  m_Name: BehaviorTreeSequence
+  m_EditorClassIdentifier: 
+  parent: {fileID: 4700887518297563214}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Sequence
+  nodeName: Search player
+  services: []
+  decorators:
+  - {fileID: 6394525350376022183}
+  position: {x: 681, y: 523.9999}
+  children:
+  - {fileID: -1151053956894853808}
+  - {fileID: 8008531817478948629}
+  - {fileID: 167956663471014790}
 --- !u!114 &-5315458631872639289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41,56 +65,13 @@ MonoBehaviour:
   nodeTypeName: Selector
   nodeName: 
   services:
-  - {fileID: -3049250650348484655}
+  - {fileID: -2901380624455586381}
   decorators: []
-  position: {x: 408.00003, y: -186.18748}
-  children:
-  - {fileID: 1049352613834721484}
-  - {fileID: -4610323979991488771}
---- !u!114 &-4610323979991488771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
-  m_Name: BehaviorTreeSequence
-  m_EditorClassIdentifier: 
-  parent: {fileID: -5315458631872639289}
-  behaviorTree: {fileID: 11400000}
-  nodeTypeName: Sequence
-  nodeName: 
-  services: []
-  decorators:
-  - {fileID: -3652237727474907941}
-  position: {x: 823, y: 169}
+  position: {x: 509.9999, y: -210.48607}
   children:
   - {fileID: 6476223571963708632}
---- !u!114 &-3652237727474907941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
-  m_Name: IsValueSetDecorator
-  m_EditorClassIdentifier: 
-  parent: {fileID: -4610323979991488771}
-  behaviorTree: {fileID: 11400000}
-  nodeTypeName: Is value set?
-  nodeName: aaaa
-  abortActive: 0
-  <comparedBlackboardValue>k__BackingField:
-    selectedKey: hasTarget
-    type: 1
-  invertResult: 0
---- !u!114 &-3049250650348484655
+  - {fileID: 4700887518297563214}
+--- !u!114 &-2901380624455586381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,9 +86,9 @@ MonoBehaviour:
   parent: {fileID: -5315458631872639289}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Vision
-  nodeName: 
+  nodeName: Vision
   <canSeePlayer>k__BackingField:
-    selectedKey: hasTarget
+    selectedKey: CanSeeTarget
     type: 1
   <target>k__BackingField:
     selectedKey: Target
@@ -121,6 +102,27 @@ MonoBehaviour:
   rememberLastSeenLocation: 1
   viewAngle: 75
   viewRange: 20
+--- !u!114 &-2697049424890349424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
+  m_Name: IsValueSetDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: 4700887518297563214}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Is value set?
+  nodeName: Player not visible
+  abortActive: 1
+  <comparedBlackboardValue>k__BackingField:
+    selectedKey: CanSeeTarget
+    type: 1
+  invertResult: 1
 --- !u!114 &-2617511937863948257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,8 +141,29 @@ MonoBehaviour:
   nodeName: Hide view cone
   services: []
   decorators: []
-  position: {x: 732, y: 714}
-  viewConeMode: 0
+  position: {x: -77.85001, y: 408.6001}
+  viewConeMode: 2
+--- !u!114 &-2547951779013621756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
+  m_Name: IsValueSetDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: 6476223571963708632}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Is value set?
+  nodeName: Player visible?
+  abortActive: 1
+  <comparedBlackboardValue>k__BackingField:
+    selectedKey: CanSeeTarget
+    type: 1
+  invertResult: 0
 --- !u!114 &-2273342693439811837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,15 +182,15 @@ MonoBehaviour:
   nodeName: Move to patrol point
   services: []
   decorators: []
-  position: {x: 78, y: 687}
+  position: {x: 1661.8569, y: 1017.247}
   <movementTarget>k__BackingField:
-    selectedKey: Target
+    selectedKey: PatrolPoint
     type: 4
   acceptedDistance: 0.5
   updatePathInterval: 0.5
   updateIntervalRange: 0.3
   trackTargetMovement: 0
---- !u!114 &-2060088661740452371
+--- !u!114 &-1151053956894853808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,18 +199,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
-  m_Name: IsValueSetDecorator
+  m_Script: {fileID: 11500000, guid: 937ea6fc64d3b01489a4e813abafdd79, type: 3}
+  m_Name: SetViewConeModeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: 1049352613834721484}
+  parent: {fileID: -7467656315156984978}
   behaviorTree: {fileID: 11400000}
-  nodeTypeName: Is value set?
-  nodeName: Has no target?
-  abortActive: 1
-  <comparedBlackboardValue>k__BackingField:
-    selectedKey: hasTarget
-    type: 1
-  invertResult: 0
+  nodeTypeName: Set view cone mode
+  nodeName: Set view cone mode
+  services: []
+  decorators: []
+  position: {x: 367.99994, y: 882}
+  viewConeMode: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +226,6 @@ MonoBehaviour:
   blackboard: {fileID: 11400000, guid: 8313b694ec786874fbf5e97ec80c9220, type: 2}
   nodes:
   - {fileID: -5315458631872639289}
-  - {fileID: -4610323979991488771}
   - {fileID: 4099561623729398183}
   - {fileID: 6476223571963708632}
   - {fileID: -2617511937863948257}
@@ -213,11 +234,17 @@ MonoBehaviour:
   - {fileID: -2273342693439811837}
   - {fileID: 2368505969385621392}
   - {fileID: -8993377760581976001}
-  - {fileID: 1049352613834721484}
+  - {fileID: 4700887518297563214}
+  - {fileID: 3532050044719809332}
+  - {fileID: 8008531817478948629}
+  - {fileID: -7467656315156984978}
+  - {fileID: 167956663471014790}
+  - {fileID: -1151053956894853808}
   embeddedNodes:
-  - {fileID: -3652237727474907941}
-  - {fileID: -3049250650348484655}
-  - {fileID: -2060088661740452371}
+  - {fileID: -2547951779013621756}
+  - {fileID: 6394525350376022183}
+  - {fileID: -2697049424890349424}
+  - {fileID: -2901380624455586381}
 --- !u!114 &166630074555804748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,12 +263,12 @@ MonoBehaviour:
   nodeName: Select patrol point
   services: []
   decorators: []
-  position: {x: -119, y: 687}
+  position: {x: 1464.8568, y: 1017.247}
   <patrolPoint>k__BackingField:
-    selectedKey: Target
+    selectedKey: PatrolPoint
     type: 4
   selectionMode: 0
---- !u!114 &1049352613834721484
+--- !u!114 &167956663471014790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,21 +277,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d6569069fe0c347850930e5411ef9d, type: 3}
-  m_Name: BehaviorTreeSequence
+  m_Script: {fileID: 11500000, guid: 4bcd19565777e364887886a13c249358, type: 3}
+  m_Name: WaitTimeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: -5315458631872639289}
+  parent: {fileID: -7467656315156984978}
   behaviorTree: {fileID: 11400000}
-  nodeTypeName: Sequence
-  nodeName: Sequence
+  nodeTypeName: Wait time
+  nodeName: Wait time
   services: []
-  decorators:
-  - {fileID: -2060088661740452371}
-  position: {x: 13.999941, y: 158.15001}
-  children:
-  - {fileID: 2419113144546293216}
-  - {fileID: -8993377760581976001}
-  - {fileID: 2368505969385621392}
+  decorators: []
+  position: {x: 883.99994, y: 882}
+  <blackboardTime>k__BackingField:
+    selectedKey: 
+    type: 2
+  useBlackboardTime: 0
+  WaitForSeconds: 5
 --- !u!114 &2368505969385621392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,13 +304,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcd19565777e364887886a13c249358, type: 3}
   m_Name: WaitTimeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: 1049352613834721484}
+  parent: {fileID: 3532050044719809332}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Wait time
   nodeName: Wait time
   services: []
   decorators: []
-  position: {x: 225, y: 471}
+  position: {x: 1804.8568, y: 801.247}
   <blackboardTime>k__BackingField:
     selectedKey: 
     type: 2
@@ -301,14 +328,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937ea6fc64d3b01489a4e813abafdd79, type: 3}
   m_Name: SetViewConeModeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: 1049352613834721484}
+  parent: {fileID: 3532050044719809332}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Set view cone mode
   nodeName: Set view cone idle
   services: []
   decorators: []
-  position: {x: -237, y: 460}
+  position: {x: 1355.8568, y: 801.247}
   viewConeMode: 0
+--- !u!114 &3532050044719809332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
+  m_Name: LoopNode
+  m_EditorClassIdentifier: 
+  parent: {fileID: 4700887518297563214}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Loop
+  nodeName: Patrol
+  services: []
+  decorators: []
+  position: {x: 1597.8569, y: 543.247}
+  children:
+  - {fileID: 2419113144546293216}
+  - {fileID: -8993377760581976001}
+  - {fileID: 2368505969385621392}
+  LoopCount: 0
+  LoopDuration: 0
 --- !u!114 &4099561623729398183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,14 +379,58 @@ MonoBehaviour:
   nodeName: Move to target
   services: []
   decorators: []
-  position: {x: 955, y: 714}
+  position: {x: 145.14998, y: 408.6001}
   <movementTarget>k__BackingField:
     selectedKey: Target
     type: 4
   acceptedDistance: 0.5
   updatePathInterval: 0.5
   updateIntervalRange: 0.3
-  trackTargetMovement: 0
+  trackTargetMovement: 1
+--- !u!114 &4700887518297563214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
+  m_Name: BehaviorTreeSelector
+  m_EditorClassIdentifier: 
+  parent: {fileID: -5315458631872639289}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Selector
+  nodeName: Can't see player
+  services: []
+  decorators:
+  - {fileID: -2697049424890349424}
+  position: {x: 936, y: 107}
+  children:
+  - {fileID: -7467656315156984978}
+  - {fileID: 3532050044719809332}
+--- !u!114 &6394525350376022183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 999fa3c5c92e1d94dade9cd2dd5f44da, type: 3}
+  m_Name: IsValueSetDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: -7467656315156984978}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Is value set?
+  nodeName: Has target?
+  abortActive: 0
+  <comparedBlackboardValue>k__BackingField:
+    selectedKey: Target
+    type: 4
+  invertResult: 0
 --- !u!114 &6476223571963708632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,18 +443,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
   m_Name: LoopNode
   m_EditorClassIdentifier: 
-  parent: {fileID: -4610323979991488771}
+  parent: {fileID: -5315458631872639289}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Loop
-  nodeName: 
+  nodeName: Chase player
   services: []
-  decorators: []
-  position: {x: 845, y: 480}
+  decorators:
+  - {fileID: -2547951779013621756}
+  position: {x: 29.349977, y: 106.60009}
   children:
   - {fileID: -2617511937863948257}
   - {fileID: 4099561623729398183}
   LoopCount: 0
   LoopDuration: 0
+--- !u!114 &8008531817478948629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c17c2e262c58b048b59ef7c83c9a028, type: 3}
+  m_Name: MoveToAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: -7467656315156984978}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Move to
+  nodeName: Move to last seen location
+  services: []
+  decorators: []
+  position: {x: 600.6775, y: 882.00006}
+  <movementTarget>k__BackingField:
+    selectedKey: LastSeenPlayerLocation
+    type: 3
+  acceptedDistance: 0.5
+  updatePathInterval: 0.5
+  updateIntervalRange: 0.3
+  trackTargetMovement: 0
 --- !u!114 &8714367723732102502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,5 +500,5 @@ MonoBehaviour:
   nodeName: 
   services: []
   decorators: []
-  position: {x: 407.99997, y: -335.5188}
+  position: {x: 525.9999, y: -416.48608}
   startNode: {fileID: -5315458631872639289}

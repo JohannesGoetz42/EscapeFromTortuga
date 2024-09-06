@@ -87,6 +87,10 @@ public class MoveToAction : BehaviorTreeAction
             myMemory.targetTransform = transform;
             myMemory.targetPosition = transform.position;
         }
+        else
+        {
+            myMemory.targetPosition = user.GetBlackboard().GetValueAsVector3(movementTarget.selectedKey);
+        }
 
         UpdatePath(user, myMemory);
     }
@@ -109,26 +113,28 @@ public class MoveToAction : BehaviorTreeAction
 
         if (myMemory.hasFoundPath)
         {
-            // handle path segment target reached
-            if ((myMemory.path.Peek() - user.GetBehaviorUser().transform.position).sqrMagnitude < acceptedDistance * acceptedDistance)
+            // target is reached
+            if (myMemory.path.Count == 0)
             {
-                // target is reached
-                if (myMemory.path.Count == 1)
+                if ((user.GetNPCController().GetMovementTarget() - user.GetBehaviorUser().transform.position).sqrMagnitude < acceptedDistance * acceptedDistance)
                 {
                     myMemory.hasFoundPath = false;
-                    myMemory.path.Clear();
-
                     user.GetNPCController().ClearMovementTarget();
-
                     Exit(user, BehaviorNodeState.Success);
-                    return;
                 }
 
+                return;
+            }
+
+            Vector3 movementTarget = myMemory.path.Peek();
+
+            // handle path segment target reached
+            if ((movementTarget - user.GetBehaviorUser().transform.position).sqrMagnitude < acceptedDistance * acceptedDistance)
+            {
                 // start next path segment
                 myMemory.path.Dequeue();
             }
 
-            Vector3 movementTarget = myMemory.path.Peek();
             user.GetNPCController().SetMovementTarget(movementTarget);
         }
     }

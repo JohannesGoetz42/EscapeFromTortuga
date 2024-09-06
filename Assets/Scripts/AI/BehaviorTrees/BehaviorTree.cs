@@ -11,6 +11,7 @@ public interface INPCController
 {
     void SetMovementTarget(Vector3 newWovementTarget);
     void ClearMovementTarget();
+    Vector3 GetMovementTarget();
 }
 
 /** Abstraction for users of a behavior tree (most likely a monobehavior) */

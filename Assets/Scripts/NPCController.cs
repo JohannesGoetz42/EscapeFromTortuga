@@ -20,6 +20,7 @@ public class NPCController : CharacterControllerBase, INPCController
     {
         shouldMoveToTarget = false;
     }
+    public Vector3 GetMovementTarget() => _movementTarget;
 
     protected void LateUpdate()
     {

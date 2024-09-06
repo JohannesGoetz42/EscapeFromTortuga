@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: SoldierBlackboard
   m_EditorClassIdentifier: 
   <BoolKeys>k__BackingField:
-  - hasTarget
+  - CanSeeTarget
   <FloatKeys>k__BackingField: []
   <ObjectKeys>k__BackingField:
   - Target
-  <Vector3Keys>k__BackingField: []
+  - PatrolPoint
+  <Vector3Keys>k__BackingField:
+  - LastSeenPlayerLocation

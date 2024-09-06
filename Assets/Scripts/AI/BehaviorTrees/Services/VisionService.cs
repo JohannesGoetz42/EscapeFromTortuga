@@ -12,8 +12,11 @@ public class VisionService : BehaviorTreeServiceBase
     public BlackboardKeySelector canSeePlayer { get; set; }
     [field: SerializeField]
     public BlackboardKeySelector target { get; set; }
+    [field: SerializeField]
+    public BlackboardKeySelector lastSeenLocation { get; set; }
 
-    public LayerMask ignoreLayer;
+    [SerializeField] LayerMask ignoreLayer;
+    [SerializeField] bool rememberLastSeenLocation = true;
 
     /** 
     * The view angle to each side of the character.
@@ -35,6 +38,7 @@ public class VisionService : BehaviorTreeServiceBase
 
         canSeePlayer = new BlackboardKeySelector(BlackboardValueType.Bool, new BlackboardValueType[] { BlackboardValueType.Bool });
         target = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object });
+        lastSeenLocation = new BlackboardKeySelector(BlackboardValueType.Vector3, new BlackboardValueType[] { BlackboardValueType.Vector3 });
     }
 
     protected override void OnBecomeRelevant(IBehaviorTreeUser user)
@@ -74,11 +78,14 @@ public class VisionService : BehaviorTreeServiceBase
             {
                 user.GetBlackboard().SetValueAsBool(canSeePlayer.selectedKey, true);
                 user.GetBlackboard().SetValueAsObject(target.selectedKey, PlayerController.Instance.transform);
+                if (rememberLastSeenLocation)
+                {
+                    user.GetBlackboard().SetValueAsVector3(lastSeenLocation.selectedKey, PlayerController.Instance.transform.position);
+                }
             }
             else
             {
                 user.GetBlackboard().SetValueAsBool(canSeePlayer.selectedKey, false);
-                user.GetBlackboard().SetValueAsObject(target.selectedKey, null);
             }
         }
     }

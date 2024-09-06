@@ -3,7 +3,7 @@ using UnityEngine;
 
 class LoopDecoratorMemory
 {
-    public int RemainingLoops = 0;
+    public int CurrentLoop = 0;
     public float LoopStartTime = 0.0f;
 }
 
@@ -33,6 +33,8 @@ public class LoopNode : BehaviorTreeSequence
 
     }
 
+    bool IsLoopTimeExceeded(IBehaviorTreeUser user) => LoopDuration > 0.0f && Time.time - _memory[user].LoopStartTime > LoopDuration;
+
     protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
         LoopDecoratorMemory myMemory;
@@ -46,7 +48,7 @@ public class LoopNode : BehaviorTreeSequence
             _memory.Add(user, myMemory);
         }
 
-        myMemory.RemainingLoops = LoopCount;
+        myMemory.CurrentLoop = 0;
         myMemory.LoopStartTime = Time.time;
 
         base.OnBecomeRelevant(user);
@@ -67,9 +69,9 @@ public class LoopNode : BehaviorTreeSequence
                 }
             }
 
-            _memory[user].RemainingLoops--;
-            // try start new loop
-            if (_memory[user].RemainingLoops > 0)
+            _memory[user].CurrentLoop++;
+            // start a new loop if loop count is irrelevant, or not exceeded yet
+            if (LoopCount == 0 || _memory[user].CurrentLoop < LoopCount)
             {
                 BehaviorTreeAction nextAction = children[0].TryGetFirstActivateableAction(user);
                 if (nextAction != null)
@@ -81,13 +83,19 @@ public class LoopNode : BehaviorTreeSequence
         }
 
         CeaseRelevant(user);
+
+        // if the child was aborted because loop time is over, exit with success
+        if (result == BehaviorNodeState.Aborted && IsLoopTimeExceeded(user))
+        {
+            result = BehaviorNodeState.Success;
+        }
+
         parent.OnChildExit(user, this, result);
     }
 
     public override bool CanStayActive(IBehaviorTreeUser user)
     {
-        if (LoopDuration > 0.0f &&
-            Time.time - _memory[user].LoopStartTime > LoopDuration)
+        if (IsLoopTimeExceeded(user))
         {
             return false;
         }

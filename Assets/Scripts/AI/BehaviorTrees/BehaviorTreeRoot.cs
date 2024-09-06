@@ -31,7 +31,15 @@ public class BehaviorTreeRoot : BehaviorTreeNode
                     return;
                 }
 
+                BehaviorTreeNode abortedNode = currentActions[user];
                 currentActions[user].Exit(user, BehaviorNodeState.Aborted);
+
+                // if the aborted node is not the same as the current node (node switch was handled by exit), update the new current node
+                if (abortedNode != currentActions[user])
+                {
+                    currentActions[user].UpdateNode(user);
+                    return;
+                }
             }
 
             // ... otherwise find the next activateable 

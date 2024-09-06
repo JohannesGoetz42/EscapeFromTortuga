@@ -98,7 +98,7 @@ public class MoveToAction : BehaviorTreeAction
         if (myMemory.targetTransform != null)
         {
             myMemory.timeSincePathUpdate += Time.deltaTime;
-            if (myMemory.timeSincePathUpdate > myMemory.nextUpdateInterval)
+            if (trackTargetMovement && myMemory.timeSincePathUpdate > myMemory.nextUpdateInterval)
             {
                 myMemory.targetPosition = myMemory.targetTransform.position;
                 UpdatePath(user, myMemory);

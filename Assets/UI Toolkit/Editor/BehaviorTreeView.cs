@@ -27,6 +27,7 @@ public partial class BehaviorTreeView : GraphView
     public BehaviorTreeEditor editor;
 
     private List<BehaviorTreeNodeView> nodeViews = new List<BehaviorTreeNodeView>();
+    internal HashSet<EmbeddedBehaviorTreeNodeView> embeddedNodeViews = new HashSet<EmbeddedBehaviorTreeNodeView>();
 
     public BehaviorTreeView()
     {
@@ -84,6 +85,7 @@ public partial class BehaviorTreeView : GraphView
             foreach (DecoratorBase decorator in node.decorators)
             {
                 EmbeddedBehaviorTreeNodeView decoratorView = new EmbeddedBehaviorTreeNodeView(decorator, createdNode);
+                embeddedNodeViews.Add(decoratorView);
                 createdNode.decoratorContainer.Add(decoratorView);
             }
 
@@ -91,6 +93,7 @@ public partial class BehaviorTreeView : GraphView
             foreach (BehaviorTreeServiceBase service in node.services)
             {
                 EmbeddedBehaviorTreeNodeView serviceView = new EmbeddedBehaviorTreeNodeView(service, createdNode);
+                embeddedNodeViews.Add(serviceView);
                 createdNode.serviceContainer.Add(serviceView);
             }
         }
@@ -268,6 +271,11 @@ public partial class BehaviorTreeView : GraphView
         foreach (BehaviorTreeNodeView nodeView in nodeViews)
         {
             nodeView.UpdateNodeState();
+        }
+
+        foreach(EmbeddedBehaviorTreeNodeView embeddedNode in embeddedNodeViews)
+        {
+            embeddedNode.UpdateNodeState();
         }
     }
 }

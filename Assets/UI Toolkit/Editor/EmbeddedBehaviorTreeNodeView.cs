@@ -1,4 +1,6 @@
+using System;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
@@ -8,6 +10,7 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
     private BehaviorTreeNodeView _parentView;
     private Button _button;
     private Label _nodeTypeLabel;
+    private float _lastStateChange;
 
     public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node, BehaviorTreeNodeView parentView) : base()
     {
@@ -41,6 +44,17 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
                 _button.AddToClassList("service");
             }
         }
+
+        node.evaluated += SetEvaluatedState;
+    }
+
+    private void SetEvaluatedState(BehaviorNodeState evaluationResult)
+    {
+        _lastStateChange = Time.time;
+        if (evaluationResult == BehaviorNodeState.Failed)
+        {
+            _button.AddToClassList("failed");
+        }
     }
 
     public void SelectNode()
@@ -55,6 +69,15 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
         if (_button != null && embeddedNode != null)
         {
             _button.text = embeddedNode.nodeName;
+        }
+    }
+
+    internal void UpdateNodeState()
+    {
+        if (Time.time - _lastStateChange > 3.0f)
+        {
+            _button.RemoveFromClassList("failed");
+            _lastStateChange = float.MaxValue;
         }
     }
 }

@@ -42,14 +42,11 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
             {
 #if UNITY_EDITOR
                 // set failed state in editor to so the editor can set the correct highlight
-                decorator.States[user] = BehaviorNodeState.Failed;
+                if (decorator.evaluated != null)
+                    decorator.evaluated(BehaviorNodeState.Failed);
 #endif
                 return false;
             }
-#if UNITY_EDITOR
-            // set success state in editor to so the editor can set the correct highlight
-            decorator.States[user] = BehaviorNodeState.Success;
-#endif
         }
 
         return true;
@@ -59,7 +56,15 @@ public abstract class BehaviorTreeNode : BehaviorTreeNodeBase
     {
         foreach (DecoratorBase decorator in decorators)
         {
-            if (decorator.abortActive && !decorator.Evaluate(user)) { return false; }
+            if (decorator.abortActive && !decorator.Evaluate(user))
+            {
+#if UNITY_EDITOR
+                // set failed state in editor to so the editor can set the correct highlight
+                if (decorator.evaluated != null)
+                    decorator.evaluated(BehaviorNodeState.Failed);
+#endif
+                return false;
+            }
         }
 
         return parent.CanStayActive(user);

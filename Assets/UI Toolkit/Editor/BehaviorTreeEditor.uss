@@ -130,13 +130,6 @@ GridBackground {
     -unity-text-align: upper-center;
 }
 
-.failed {
-    border-left-color: rgb(255, 0, 0);
-    border-right-color: rgb(255, 0, 0);
-    border-top-color: rgb(255, 0, 0);
-    border-bottom-color: rgb(255, 0, 0);
-}
-
 .aborted {
     border-left-color: rgb(255, 133, 0);
     border-right-color: rgb(255, 133, 0);
@@ -155,4 +148,15 @@ GridBackground {
     font-size: 14px;
     color: rgb(164, 164, 164);
     -unity-text-align: upper-center;
+}
+
+.failed {
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
 }

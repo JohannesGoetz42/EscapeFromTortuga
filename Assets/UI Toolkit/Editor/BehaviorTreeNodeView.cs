@@ -195,6 +195,7 @@ public class BehaviorTreeNodeView : Node, INodeView
     EmbeddedBehaviorTreeNodeView CreateEmbeddedNodeView(EmbeddedBehaviorTreeNode node)
     {
         EmbeddedBehaviorTreeNodeView nodeView = new EmbeddedBehaviorTreeNodeView(node, this);
+        BehaviorTreeView.embeddedNodeViews.Add(nodeView);
         return nodeView;
     }
 
@@ -225,24 +226,6 @@ public class BehaviorTreeNodeView : Node, INodeView
         if (!node.States.ContainsKey(BehaviorTreeView.editor.debugUser))
         {
             return;
-        }
-
-        // update decorators
-        foreach (VisualElement decorator in decoratorContainer.Children())
-        {
-            EmbeddedBehaviorTreeNodeView decoratorView = decorator as EmbeddedBehaviorTreeNodeView;
-            if (decoratorView != null)
-            {
-                if (decoratorView.embeddedNode.States[BehaviorTreeView.editor.debugUser] == BehaviorNodeState.Failed)
-                {
-                    decoratorView.AddToClassList("failed");
-
-                }
-                else
-                {
-                    decoratorView.RemoveFromClassList("failed");
-                }
-            }
         }
 
         BehaviorNodeState newState = node.States[BehaviorTreeView.editor.debugUser];

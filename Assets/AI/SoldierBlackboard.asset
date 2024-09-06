@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1a550442ab9294bbc4656e399e232e, type: 3}
   m_Name: SoldierBlackboard
   m_EditorClassIdentifier: 
-  boolKeys:
+  <BoolKeys>k__BackingField:
   - hasTarget
-  objectKeys:
+  <FloatKeys>k__BackingField: []
+  <ObjectKeys>k__BackingField:
   - Target
+  <Vector3Keys>k__BackingField: []

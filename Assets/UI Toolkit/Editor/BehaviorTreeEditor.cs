@@ -51,12 +51,19 @@ public class BehaviorTreeEditor : EditorWindow
         root.styleSheets.Add(style);
 
         TreeView = root.Q<BehaviorTreeView>();
+        TreeView.editor = this;
+
         NodeDetails = root.Q<BehaviorNodeDetails>();
         NodeDetails.editor = this;
 
         TreeDetails = root.Q<BehaviorTreeDetails>();
         TreeDetails.editor = this;
         TreeDetails.UpdateDetails();
+
+        if(CurrentTree != null)
+        {
+            SetTree(CurrentTree);
+        }
     }
 
     internal void SetTree(BehaviorTree tree)

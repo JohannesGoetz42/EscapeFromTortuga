@@ -13,6 +13,7 @@ public class BehaviorTreeNodeView : Node, INodeView
     public VisualElement serviceContainer;
     public VisualElement decoratorContainer;
     public Label orderIndex;
+    public Label nodeTypeLabel;
 
     public BehaviorTreeView BehaviorTreeView { get; private set; }
 
@@ -21,7 +22,7 @@ public class BehaviorTreeNodeView : Node, INodeView
     public BehaviorTreeNodeView(BehaviorTreeNode node, BehaviorTreeView behaviorTreeView) : base("Assets/UI Toolkit/Editor/BehaviorNodeView.uxml")
     {
         this.node = node;
-        title = node.nodeName;
+        title = node.nodeName == "" ? node.nodeTypeName : node.nodeName;
         BehaviorTreeView = behaviorTreeView;
 
         style.left = node.position.x;
@@ -33,6 +34,12 @@ public class BehaviorTreeNodeView : Node, INodeView
         serviceContainer = this.Q("services");
         decoratorContainer = this.Q("decorators");
         orderIndex = this.Q("orderIndex") as Label;
+
+        nodeTypeLabel = this.Q("nodeTypeLabel") as Label;
+        if (nodeTypeLabel != null)
+        {
+            nodeTypeLabel.text = node.nodeTypeName;
+        }
 
         if (node is BehaviorTreeRoot)
         {

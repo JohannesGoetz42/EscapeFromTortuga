@@ -13,7 +13,8 @@ public class IsValueSetDecorator : DecoratorBase
     public IsValueSetDecorator() : base()
     {
 #if UNITY_EDITOR
-        nodeName = string.Format("Is value set?");
+        nodeTypeName = string.Format("Is value set?");
+        nodeName = nodeTypeName;
 #endif
 
         comparedBlackboardValue = new BlackboardKeySelector(BlackboardValueType.Bool, new BlackboardValueType[] { BlackboardValueType.Bool, BlackboardValueType.Object });
@@ -27,7 +28,7 @@ public class IsValueSetDecorator : DecoratorBase
      * if set the evaluated result is inverted
      * It will be evaluated to true if the values are not equal
      */
-    bool bInvertResult;
+    bool invertResult;
 
     public override bool Evaluate(IBehaviorTreeUser user)
     {
@@ -41,6 +42,6 @@ public class IsValueSetDecorator : DecoratorBase
             result = user.GetBlackboard().GetValueAsObject(comparedBlackboardValue.selectedKey) != null;
         }
 
-        return bInvertResult ? !result : result;
+        return invertResult ? !result : result;
     }
 }

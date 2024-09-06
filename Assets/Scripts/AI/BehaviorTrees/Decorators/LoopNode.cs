@@ -28,7 +28,8 @@ public class LoopNode : BehaviorTreeSequence
     {
 
 #if UNITY_EDITOR
-        nodeName = "Loop";
+        nodeTypeName = "Loop";
+        nodeName = nodeTypeName;
 #endif
 
     }

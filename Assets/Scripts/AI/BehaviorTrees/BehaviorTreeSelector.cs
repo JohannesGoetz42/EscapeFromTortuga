@@ -4,7 +4,8 @@ public class BehaviorTreeSelector : BehaviorTreeCompositeNode
     public BehaviorTreeSelector() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Selector";
+        nodeTypeName = "Selector";
+        nodeName = nodeTypeName;
 #endif
     }
 

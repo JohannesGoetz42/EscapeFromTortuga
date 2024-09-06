@@ -15,7 +15,8 @@ public class WaitTimeAction : BehaviorTreeAction
     public WaitTimeAction() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Wait time";
+        nodeTypeName = "Wait time";
+        nodeName = nodeTypeName;
 #endif
 
         blackboardTime = new BlackboardKeySelector(BlackboardValueType.Float, new BlackboardValueType[] { BlackboardValueType.Float });

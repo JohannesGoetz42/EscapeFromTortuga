@@ -7,6 +7,7 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
 
     private BehaviorTreeNodeView _parentView;
     private Button _button;
+    private Label _nodeTypeLabel;
 
     public EmbeddedBehaviorTreeNodeView(EmbeddedBehaviorTreeNode node, BehaviorTreeNodeView parentView) : base()
     {
@@ -20,6 +21,13 @@ public class EmbeddedBehaviorTreeNodeView : VisualElement, INodeView
         _parentView = parentView;
 
         _button = this.Q("button") as Button;
+
+        _nodeTypeLabel = this.Q("nodeTypeLabel") as Label;
+        if (_nodeTypeLabel != null)
+        {
+            _nodeTypeLabel.text = node.nodeTypeName;
+        }
+
         if (_button != null)
         {
             _button.text = embeddedNode.nodeName;

@@ -5,7 +5,8 @@ public abstract class BehaviorTreeServiceBase : EmbeddedBehaviorTreeNode
     public BehaviorTreeServiceBase() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "SERVICE_BASE";
+        nodeTypeName = "SERVICE_BASE";
+        nodeName = nodeTypeName;
 #endif
 
     }

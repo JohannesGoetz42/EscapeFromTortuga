@@ -5,12 +5,13 @@
             <ui:VisualElement name="divider" class="horizontal" />
             <ui:VisualElement name="top">
                 <ui:VisualElement name="input" class="port" />
-                <ui:Label text="0&#10;" name="orderIndex" style="color: rgb(164, 164, 164); -unity-text-align: upper-center; -unity-font-style: bold; margin-bottom: 4px; margin-left: 4px; padding-left: 4px;" />
+                <ui:Label text="0&#10;" name="orderIndex" style="color: rgb(164, 164, 164); -unity-text-align: upper-center; -unity-font-style: bold; margin-bottom: 4px; margin-left: 4px; padding-left: 4px; padding-top: 0;" />
                 <ui:VisualElement name="divider" class="vertical" />
                 <ui:VisualElement name="services" style="flex-grow: 1; background-color: rgb(91, 91, 91);" />
                 <ui:VisualElement name="decorators" style="flex-grow: 1; background-color: rgb(91, 91, 91);" />
                 <ui:VisualElement name="title">
-                    <ui:Label name="title-label" text="Sequence" class="unity-text-element unity-label" style="-unity-text-align: upper-center;" />
+                    <ui:Label name="title-label" text="Sequence" class="unity-text-element unity-label" style="-unity-text-align: upper-center; padding-top: 10px; padding-bottom: 0;" />
+                    <ui:Label name="nodeTypeLabel" text="Sequence" class="unity-text-element unity-label node-type-label" style="padding-top: 5px; padding-bottom: 10px; font-size: 14px; color: rgb(164, 164, 164);" />
                     <ui:VisualElement name="title-button-container">
                         <ui:VisualElement name="collapse-button">
                             <ui:VisualElement name="icon" />

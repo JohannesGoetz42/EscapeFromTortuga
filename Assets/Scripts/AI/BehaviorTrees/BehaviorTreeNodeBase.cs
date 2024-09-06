@@ -23,6 +23,7 @@ public abstract class BehaviorTreeNodeBase : ScriptableObject
     public Dictionary<IBehaviorTreeUser, BehaviorNodeState> States { get => _states; }
 
 #if UNITY_EDITOR
+    public string nodeTypeName;
     public string nodeName;
     public GUID id;
 

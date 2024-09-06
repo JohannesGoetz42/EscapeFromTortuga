@@ -37,7 +37,8 @@ public class MoveToAction : BehaviorTreeAction
     public MoveToAction() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Move to";
+        nodeTypeName = "Move to";
+        nodeName = nodeTypeName;
 #endif
 
         movementTarget = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object, BlackboardValueType.Vector3 });

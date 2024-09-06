@@ -16,7 +16,8 @@ public class SetViewConeModeAction : BehaviorTreeAction
     public SetViewConeModeAction() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Set view cone mode";
+        nodeTypeName = "Set view cone mode";
+        nodeName = nodeTypeName;
 #endif
     }
 

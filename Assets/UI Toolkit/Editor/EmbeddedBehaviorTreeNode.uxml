@@ -1,4 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Editor/BehaviorTreeEditor.uss?fileID=7433441132597879392&amp;guid=c0af06e2d7598a24ba367a32372ece19&amp;type=3#BehaviorTreeEditor" />
-    <engine:Button text="Button" name="button" />
+    <engine:Button text="Button" name="button" class="node" style="margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 15px; padding-bottom: 15px; padding-right: 12px; height: 40px; justify-content: flex-start; -unity-text-align: lower-center;">
+        <engine:Label text="Label" name="nodeTypeLabel" class="node-type-label" style="padding-top: 2px;" />
+    </engine:Button>
 </engine:UXML>

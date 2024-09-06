@@ -25,7 +25,8 @@ public class SelectPatrolPointAction : BehaviorTreeAction
     public SelectPatrolPointAction() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Select patrol point";
+        nodeTypeName = "Select patrol point";
+        nodeName = nodeTypeName;
 #endif
 
         patrolPoint = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object, BlackboardValueType.Vector3 });

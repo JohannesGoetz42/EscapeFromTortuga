@@ -6,7 +6,8 @@ public class BehaviorTreeSequence : BehaviorTreeCompositeNode
     public BehaviorTreeSequence() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Sequence";
+        nodeTypeName = "Sequence";
+        nodeName = nodeTypeName;
 #endif
     }
 

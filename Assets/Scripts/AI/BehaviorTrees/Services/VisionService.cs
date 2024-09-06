@@ -29,7 +29,8 @@ public class VisionService : BehaviorTreeServiceBase
     public VisionService() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Vision";
+        nodeTypeName = "Vision";
+        nodeName = nodeTypeName;
 #endif
 
         canSeePlayer = new BlackboardKeySelector(BlackboardValueType.Bool, new BlackboardValueType[] { BlackboardValueType.Bool });

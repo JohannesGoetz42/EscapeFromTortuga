@@ -75,6 +75,7 @@ GridBackground {
     margin-right: 0;
     margin-bottom: 0;
     margin-left: 0;
+    font-size: 20px;
 }
 
 .action {
@@ -148,4 +149,10 @@ GridBackground {
     border-right-color: rgb(0, 255, 0);
     border-top-color: rgb(0, 255, 0);
     border-bottom-color: rgb(0, 255, 0);
+}
+
+.node-type-label {
+    font-size: 14px;
+    color: rgb(164, 164, 164);
+    -unity-text-align: upper-center;
 }

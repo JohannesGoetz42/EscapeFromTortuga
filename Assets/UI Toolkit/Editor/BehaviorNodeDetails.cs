@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
-using System.Reflection;
 using Unity.VisualScripting;
 
 
@@ -25,6 +24,7 @@ public partial class BehaviorNodeDetails : VisualElement
         nameof(BehaviorTreeNode.position),
         nameof(BehaviorTreeNode.decorators),
         nameof(BehaviorTreeNode.services),
+        nameof(BehaviorTreeNode.nodeTypeName),
         nameof(BehaviorTreeCompositeNode.children)
     };
 

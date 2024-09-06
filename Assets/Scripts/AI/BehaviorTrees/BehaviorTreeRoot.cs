@@ -14,7 +14,8 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     public BehaviorTreeRoot() : base()
     {
 #if UNITY_EDITOR
-        nodeName = "Root";
+        nodeTypeName = "Root";
+        nodeName = nodeTypeName;
 #endif
     }
 
@@ -65,8 +66,11 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
         currentActions[user] = TryGetFirstActivateableAction(user);
-        currentActions[user].SetActive(user);
 
+        if (currentActions[user] != null)
+        {
+            currentActions[user].SetActive(user);
+        }
     }
 
     public override bool CanStayActive(IBehaviorTreeUser user) => true;

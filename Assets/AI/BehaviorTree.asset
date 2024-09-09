@@ -42,7 +42,7 @@ MonoBehaviour:
   nodeName: Find random location in area
   services: []
   decorators: []
-  position: {x: 731.837, y: 1314.4861}
+  position: {x: 672.1961, y: 1336}
   <searchLocationInput>k__BackingField:
     selectedKey: LastSeenPlayerLocation
     type: 3
@@ -72,11 +72,12 @@ MonoBehaviour:
   services: []
   decorators:
   - {fileID: 6394525350376022183}
-  position: {x: 701.98804, y: 665.66943}
+  position: {x: 642.196, y: 687.99994}
   children:
   - {fileID: -1151053956894853808}
   - {fileID: 8008531817478948629}
   - {fileID: -1532567720328710397}
+  - {fileID: 321356715720816724}
 --- !u!114 &-5315458631872639289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +150,7 @@ MonoBehaviour:
   nodeName: Move to
   services: []
   decorators: []
-  position: {x: 1042.8369, y: 1314.4861}
+  position: {x: 983.196, y: 1336}
   <movementTarget>k__BackingField:
     selectedKey: SearchLocation
     type: 3
@@ -263,7 +264,7 @@ MonoBehaviour:
   nodeName: Search nearby
   services: []
   decorators: []
-  position: {x: 887.837, y: 1063.4861}
+  position: {x: 828.196, y: 1085}
   children:
   - {fileID: -8030764109053243779}
   - {fileID: -2890554137865395020}
@@ -287,7 +288,7 @@ MonoBehaviour:
   nodeName: Set view cone mode
   services: []
   decorators: []
-  position: {x: 231.83699, y: 1063.4861}
+  position: {x: 172.196, y: 1085}
   viewConeMode: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -321,6 +322,7 @@ MonoBehaviour:
   - {fileID: -8030764109053243779}
   - {fileID: -2890554137865395020}
   - {fileID: -1532567720328710397}
+  - {fileID: 321356715720816724}
   embeddedNodes:
   - {fileID: -2547951779013621756}
   - {fileID: 6394525350376022183}
@@ -349,6 +351,29 @@ MonoBehaviour:
     selectedKey: PatrolPoint
     type: 4
   selectionMode: 0
+--- !u!114 &321356715720816724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69117c59fa57074f9f4fd0dee8d6ba6, type: 3}
+  m_Name: ClearBlackboardValue
+  m_EditorClassIdentifier: 
+  parent: {fileID: -7467656315156984978}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Clear blackboard value
+  nodeName: Forget player seen
+  services: []
+  decorators: []
+  position: {x: 1046.196, y: 1085}
+  <valueToClear>k__BackingField:
+    selectedKey: Target
+    type: 4
+  setBoolTrue: 0
 --- !u!114 &2368505969385621392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +556,7 @@ MonoBehaviour:
   nodeName: Move to last seen location
   services: []
   decorators: []
-  position: {x: 464.837, y: 1063.4861}
+  position: {x: 405.19604, y: 1085}
   <movementTarget>k__BackingField:
     selectedKey: LastSeenPlayerLocation
     type: 3

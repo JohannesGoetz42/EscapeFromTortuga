@@ -68,6 +68,8 @@ public class VisionService : BehaviorTreeServiceBase
             myMemory.viewCone.viewRange = viewRange;
             myMemory.viewCone.enabled = true;
         }
+
+        UpdateService(user);
     }
 
     protected override void UpdateService(IBehaviorTreeUser user)

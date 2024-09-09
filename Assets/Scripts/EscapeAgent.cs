@@ -1,10 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class PickUpBase : MonoBehaviour
+public class EscapeHelper : MonoBehaviour
 {
     [SerializeField]
-    float pickUpRange = 1.0f;
+    EscapeArea escapeArea;
+    [SerializeField]
+    KeyItem requiredItem;
+    [SerializeField]
+    float interactionRange = 4.0f;
 
     SphereCollider _trigger;
 
@@ -12,18 +16,15 @@ public abstract class PickUpBase : MonoBehaviour
     void Start()
     {
         _trigger = transform.AddComponent<SphereCollider>();
+        _trigger.radius = interactionRange;
         _trigger.isTrigger = true;
-        _trigger.radius = pickUpRange;
     }
-
-    protected abstract void OnPickedUp(GameObject player);
 
     private void OnTriggerEnter(Collider other)
     {
-        // if player walks in, apply effect
         if (other.gameObject.CompareTag("Player"))
         {
-            OnPickedUp(other.gameObject);
+            KeyItemPickUp.CreateKeyItemPickup(requiredItem, new Vector3(0, 1, 0));
         }
     }
 }

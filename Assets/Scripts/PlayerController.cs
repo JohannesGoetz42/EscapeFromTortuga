@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : CharacterControllerBase
@@ -7,6 +8,8 @@ public class PlayerController : CharacterControllerBase
     public bool isGameOver { get; private set; }
     public Camera MainCamera { get; private set; }
 
+    public List<KeyItem> KeyRing { get; private set; }
+
     private bool canEscape = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,6 +18,7 @@ public class PlayerController : CharacterControllerBase
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        KeyRing = new List<KeyItem>();
 
         base.Start();
     }

@@ -22,6 +22,11 @@ public class CharacterControllerBase : MonoBehaviour
     public float CurrentStamina { get; private set; }
     public float MaxStamina { get => maxStamina; }
 
+    public void RestoreStamina(float restoredAmount)
+    {
+        CurrentStamina = Mathf.Clamp(CurrentStamina + restoredAmount, 0.0f, MaxStamina);
+    }
+
     protected virtual void Start()
     {
         animator = gameObject.GetComponent<Animator>();

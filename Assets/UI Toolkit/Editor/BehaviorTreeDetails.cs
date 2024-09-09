@@ -88,6 +88,7 @@ public partial class BehaviorTreeDetails : VisualElement
         if (_behaviorUsers.Count > selectedIndex)
         {
             editor.debugUser = _behaviorUsers[selectedIndex];
+            editor.TreeView.ResetNodeStates();
         }
     }
 

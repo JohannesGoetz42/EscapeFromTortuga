@@ -278,5 +278,23 @@ public partial class BehaviorTreeView : GraphView
             embeddedNode.UpdateNodeState();
         }
     }
+
+    public void ResetNodeStates()
+    {
+        foreach(BehaviorTreeNodeView nodeView in nodeViews)
+        {
+            nodeView.RemoveFromClassList("active");
+            nodeView.RemoveFromClassList("failed");
+            nodeView.RemoveFromClassList("success");
+            nodeView.RemoveFromClassList("aborted");
+        }
+        foreach(EmbeddedBehaviorTreeNodeView embeddedNodeView in embeddedNodeViews)
+        {
+            embeddedNodeView.RemoveFromClassList("active");
+            embeddedNodeView.RemoveFromClassList("failed");
+            embeddedNodeView.RemoveFromClassList("success");
+            embeddedNodeView.RemoveFromClassList("aborted");
+        }
+    }
 }
 #endif

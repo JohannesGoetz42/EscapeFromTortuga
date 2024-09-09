@@ -21,5 +21,5 @@ public abstract class BehaviorTreeServiceBase : EmbeddedBehaviorTreeNode
         }
     }
 
-    protected abstract void UpdateService(IBehaviorTreeUser user);
+    virtual protected void UpdateService(IBehaviorTreeUser user) { }
 }

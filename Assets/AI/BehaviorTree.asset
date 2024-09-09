@@ -72,7 +72,7 @@ MonoBehaviour:
   services: []
   decorators:
   - {fileID: 6394525350376022183}
-  position: {x: 642.196, y: 687.99994}
+  position: {x: 746.99994, y: 441}
   children:
   - {fileID: -1151053956894853808}
   - {fileID: 8008531817478948629}
@@ -328,6 +328,8 @@ MonoBehaviour:
   - {fileID: 6394525350376022183}
   - {fileID: -2697049424890349424}
   - {fileID: -2901380624455586381}
+  - {fileID: 2298444687496153170}
+  - {fileID: 5648073426161108363}
 --- !u!114 &166630074555804748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,11 +371,28 @@ MonoBehaviour:
   nodeName: Forget player seen
   services: []
   decorators: []
-  position: {x: 1046.196, y: 1085}
+  position: {x: 1038.5, y: 1099}
   <valueToClear>k__BackingField:
     selectedKey: Target
     type: 4
   setBoolTrue: 0
+--- !u!114 &2298444687496153170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964b8997f4fbfbf4bb7862cf01f72c57, type: 3}
+  m_Name: EnableSprintService
+  m_EditorClassIdentifier: 
+  parent: {fileID: 6476223571963708632}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Enable sprint
+  nodeName: Enable sprint
+  wantsToSprint: 1
 --- !u!114 &2368505969385621392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +511,23 @@ MonoBehaviour:
   children:
   - {fileID: -7467656315156984978}
   - {fileID: 3532050044719809332}
+--- !u!114 &5648073426161108363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964b8997f4fbfbf4bb7862cf01f72c57, type: 3}
+  m_Name: EnableSprintService
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Enable sprint
+  nodeName: Enable sprint
+  wantsToSprint: 1
 --- !u!114 &6394525350376022183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,7 +565,8 @@ MonoBehaviour:
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Loop
   nodeName: Chase player
-  services: []
+  services:
+  - {fileID: 2298444687496153170}
   decorators:
   - {fileID: -2547951779013621756}
   position: {x: 283.2002, y: 94.35001}

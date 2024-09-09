@@ -101,7 +101,7 @@ public class FindRandomLocationInArea : BehaviorTreeAction
     {
         float selectedDistance = Random.Range(minimumDistance, maximumDistance);
         Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.up);
-        return randomRotation * (Vector3.one * selectedDistance);
+        return randomRotation * (Vector3.one * selectedDistance) + searchLocation;
     }
 
     void OnPathRequestFinished(Vector3[] path, bool success, IBehaviorTreeUser user)

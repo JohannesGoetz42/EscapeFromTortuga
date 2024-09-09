@@ -29,7 +29,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
                 if (currentActions[user].CanStayActive(user))
                 {
                     currentActions[user].UpdateNode(user);
-                    return;
+                    continue;
                 }
 
                 BehaviorTreeNode abortedNode = currentActions[user];
@@ -39,7 +39,7 @@ public class BehaviorTreeRoot : BehaviorTreeNode
                 if (abortedNode != currentActions[user])
                 {
                     currentActions[user].UpdateNode(user);
-                    return;
+                    continue;
                 }
             }
 

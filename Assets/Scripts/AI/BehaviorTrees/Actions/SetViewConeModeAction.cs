@@ -37,6 +37,7 @@ public class SetViewConeModeAction : BehaviorTreeAction
 
             myMemory = new SetViewConeModeMemory();
             myMemory.viewCone = viewCone;
+            _memory.Add(user, myMemory);
         }
         else
         {

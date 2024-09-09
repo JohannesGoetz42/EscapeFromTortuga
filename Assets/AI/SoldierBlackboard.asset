@@ -20,3 +20,4 @@ MonoBehaviour:
   - PatrolPoint
   <Vector3Keys>k__BackingField:
   - LastSeenPlayerLocation
+  - SearchLocation

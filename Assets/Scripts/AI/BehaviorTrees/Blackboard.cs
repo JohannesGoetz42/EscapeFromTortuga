@@ -84,7 +84,7 @@ public struct BlackboardKeySelector
 public class Blackboard : ScriptableObject
 {
     [field: SerializeField] public string[] BoolKeys { get; private set; }
-    [field:SerializeField] public string[] FloatKeys { get; private set; }
+    [field: SerializeField] public string[] FloatKeys { get; private set; }
     [field: SerializeField] public string[] ObjectKeys { get; private set; }
     [field: SerializeField] public string[] Vector3Keys { get; private set; }
 
@@ -92,6 +92,29 @@ public class Blackboard : ScriptableObject
     Dictionary<string, float> _floatValues;
     Dictionary<string, Object> _objectValues;
     Dictionary<string, Vector3> _vector3Values;
+
+    public Transform TryGetTransformFromObject(string key)
+    {
+        Object blackboardObject = GetValueAsObject(key);
+        if (blackboardObject == null)
+        {
+            return null;
+        }
+
+        Transform transform = blackboardObject as Transform;
+        if (transform != null)
+        {
+            return transform;
+        }
+
+        GameObject gameObect = blackboardObject as GameObject;
+        if (gameObect == null)
+        {
+            return gameObect.transform;
+        }
+
+        return null;
+    }
 
     /** initializes the dictionaries with default values. Use this after CreateInstance to ensure everything is set up */
     public void InitializeValues()

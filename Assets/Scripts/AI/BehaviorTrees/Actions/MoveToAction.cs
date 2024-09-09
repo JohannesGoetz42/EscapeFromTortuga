@@ -63,29 +63,15 @@ public class MoveToAction : BehaviorTreeAction
 
         if (movementTarget.type == BlackboardValueType.Object)
         {
-            Object blackboardObject = user.GetBlackboard().GetValueAsObject(movementTarget.selectedKey);
-            if (blackboardObject == null)
-            {
-                Exit(user, BehaviorNodeState.Failed);
-                return;
-            }
-
-            Transform transform = blackboardObject as Transform;
-            if (transform == null)
-            {
-                GameObject gameObect = blackboardObject as GameObject;
-                transform = gameObect.transform;
-            }
-
+            myMemory.targetTransform = user.GetBlackboard().TryGetTransformFromObject(movementTarget.selectedKey);
             // if no avlid object is assigned, exit as failed
-            if (transform == null)
+            if (myMemory.targetTransform == null)
             {
                 Exit(user, BehaviorNodeState.Failed);
                 return;
             }
 
-            myMemory.targetTransform = transform;
-            myMemory.targetPosition = transform.position;
+            myMemory.targetPosition = myMemory.targetTransform.position;
         }
         else
         {

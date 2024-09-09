@@ -32,7 +32,6 @@ public class SelectPatrolPointAction : BehaviorTreeAction
         patrolPoint = new BlackboardKeySelector(BlackboardValueType.Object, new BlackboardValueType[] { BlackboardValueType.Object, BlackboardValueType.Vector3 });
     }
 
-
     protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
         // initialize memory

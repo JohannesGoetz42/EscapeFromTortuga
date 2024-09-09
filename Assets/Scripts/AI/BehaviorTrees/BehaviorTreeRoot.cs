@@ -23,20 +23,21 @@ public class BehaviorTreeRoot : BehaviorTreeNode
     {
         foreach (IBehaviorTreeUser user in behaviorTree.ActiveUsers)
         {
+            BehaviorTreeAction currentAction = currentActions[user];
             // update the current action if it can stay active
-            if (currentActions[user] != null)
+            if (currentAction != null)
             {
-                if (currentActions[user].CanStayActive(user))
+                if (currentAction.CanStayActive(user))
                 {
-                    currentActions[user].UpdateNode(user);
+                    currentAction.UpdateNode(user);
                     continue;
                 }
 
                 BehaviorTreeNode abortedNode = currentActions[user];
-                currentActions[user].Exit(user, BehaviorNodeState.Aborted);
+                currentAction.Exit(user, BehaviorNodeState.Aborted);
 
                 // if the aborted node is not the same as the current node (node switch was handled by exit), update the new current node
-                if (abortedNode != currentActions[user])
+                if (currentAction != null && abortedNode != currentAction)
                 {
                     currentActions[user].UpdateNode(user);
                     continue;
@@ -48,7 +49,6 @@ public class BehaviorTreeRoot : BehaviorTreeNode
             if (currentActions[user] != null)
             {
                 currentActions[user].SetActive(user);
-                currentActions[user].UpdateNode(user);
             }
         }
     }
@@ -65,12 +65,8 @@ public class BehaviorTreeRoot : BehaviorTreeNode
 
     internal override void OnChildExit(IBehaviorTreeUser user, BehaviorTreeNode child, BehaviorNodeState result)
     {
-        currentActions[user] = TryGetFirstActivateableAction(user);
-
-        if (currentActions[user] != null)
-        {
-            currentActions[user].SetActive(user);
-        }
+        // to avoid stack overflow, just clear the child and wait for the next update to handle selection of next action
+        currentActions[user] = null;
     }
 
     public override bool CanStayActive(IBehaviorTreeUser user) => true;

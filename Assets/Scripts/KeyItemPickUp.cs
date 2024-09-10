@@ -24,7 +24,16 @@ public class KeyItemPickUp : PickUpBase
             return;
         }
 
-        PlayerController.Instance.KeyRing.Add(item);
+        PlayerInventory inventory = PlayerController.Instance.GetComponent<PlayerInventory>();
+        if (inventory == null)
+        {
+            Debug.LogWarning("Player has no inventory!");
+        }
+        else
+        {
+            inventory.StoreItem(item);
+        }
+
         Destroy(gameObject);
     }
 }

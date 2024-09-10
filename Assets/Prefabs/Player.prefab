@@ -1130,6 +1130,7 @@ GameObject:
   - component: {fileID: 8919068220602445499}
   - component: {fileID: 5692433922761412574}
   - component: {fileID: 4733879381319427361}
+  - component: {fileID: 6499872950639519688}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1199,7 +1200,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2944e83a5a99d4ba7169f3b924c960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wantsToSprint: 0
   movementSpeed: 10
+  sprintSpeed: 10
+  maxStamina: 20
+  staminaRecoveryRate: 2
 --- !u!54 &8940165893656762262
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1270,6 +1275,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ab37a58c5911e448ed660295fb94ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6499872950639519688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252637909196985662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03c3873ffaea46468f9d48b96216099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2271145786958596323

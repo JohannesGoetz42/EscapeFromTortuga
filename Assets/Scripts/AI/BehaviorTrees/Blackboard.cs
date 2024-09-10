@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 public enum BlackboardValueType
 {
@@ -8,7 +9,8 @@ public enum BlackboardValueType
     Bool,
     Float,
     Vector3,
-    Object
+    Object,
+    Enum
 }
 
 [System.Serializable]
@@ -71,6 +73,9 @@ public struct BlackboardKeySelector
             case BlackboardValueType.Vector3:
                 return blackboard.Vector3Keys;
 
+            case BlackboardValueType.Enum:
+                return blackboard.EnumKeys.Select(x => x.key).ToArray();
+
             default:
                 Debug.LogError(string.Format("BlackboardValueType {0} is not implemented!", type));
                 break;
@@ -80,6 +85,13 @@ public struct BlackboardKeySelector
     }
 }
 
+[System.Serializable]
+public struct BlackboardKey
+{
+    public string key;
+    public string typeName;
+}
+
 [CreateAssetMenu(fileName = "Blackboard", menuName = "Scriptable Objects/Behavior/Blackboard")]
 public class Blackboard : ScriptableObject
 {
@@ -87,11 +99,13 @@ public class Blackboard : ScriptableObject
     [field: SerializeField] public string[] FloatKeys { get; private set; }
     [field: SerializeField] public string[] ObjectKeys { get; private set; }
     [field: SerializeField] public string[] Vector3Keys { get; private set; }
+    [field: SerializeField] public BlackboardKey[] EnumKeys { get; private set; }
 
     Dictionary<string, bool> _boolValues;
     Dictionary<string, float> _floatValues;
     Dictionary<string, Object> _objectValues;
     Dictionary<string, Vector3> _vector3Values;
+    Dictionary<string, int> _enumValues;
 
     public Transform TryGetTransformFromObject(string key)
     {
@@ -142,6 +156,12 @@ public class Blackboard : ScriptableObject
         {
             _vector3Values.Add(key, Vector3.zero);
         }
+
+        _enumValues = new Dictionary<string, int>(EnumKeys.Length);
+        foreach (BlackboardKey key in EnumKeys)
+        {
+            _enumValues.Add(key.key, 0);
+        }
     }
 
     public void SetValueAsBool(string key, bool value)
@@ -179,4 +199,17 @@ public class Blackboard : ScriptableObject
         }
     }
     public Vector3 GetValueAsVector3(string key) => _vector3Values.ContainsKey(key) ? _vector3Values[key] : Vector3.zero;
+
+    public void SetValueAsEnum<T>(string key, T value) where T : System.Enum
+    {
+        if (_enumValues.ContainsKey(key))
+        {
+            _enumValues[key] = System.Convert.ToInt32(value);
+        }
+    }
+    public T GetValueAsEnum<T>(string key) where T : System.Enum
+    {
+        return (T)System.Enum.ToObject(typeof(T), GetValueAsEnum(key));
+    }
+    public int GetValueAsEnum(string key) => _enumValues.ContainsKey(key) ? _enumValues[key] : 0;
 }

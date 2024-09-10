@@ -17,7 +17,15 @@ public class ModelSwitch : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
-            SelectModel(GameManager.Instance.SelectedCharacter);
+            if (gameObject.CompareTag("Player"))
+            {
+                SelectModel(GameManager.Instance.SelectedCharacter);
+            }
+            else
+            {
+                int selectedModel = Random.Range(0, _availableModels.Count);
+                SelectModel(selectedModel);
+            }
         }
     }
 
@@ -34,7 +42,7 @@ public class ModelSwitch : MonoBehaviour
     {
         if (modelIndex < 0)
         {
-            modelIndex = GameManager.Instance.AvailableMaterials.Length + modelIndex;
+            modelIndex = _availableModels.Count + modelIndex;
         }
 
         modelIndex %= _availableModels.Count;

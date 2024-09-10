@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class MaterialSwitch : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (GameManager.Instance != null)
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
+        if (gameObject.CompareTag("Player"))
         {
             SelectMaterial(GameManager.Instance.SelectedMaterial);
+        }
+        else
+        {
+            int selectedModel = Random.Range(0, GameManager.Instance.AvailableMaterials.Length);
+            SelectMaterial(selectedModel);
         }
     }
 

@@ -8,7 +8,7 @@ public class PlayerInventory : MonoBehaviour
     public KeyItemDelegate keyItemStored;
     public KeyItemDelegate keyItemRemoved;
 
-    List<KeyItem> _keyRing;
+    List<KeyItem> _keyRing = new List<KeyItem>();
 
     public void StoreItem(KeyItem item)
     {

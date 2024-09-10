@@ -12,7 +12,7 @@ public class RunBehaviorTree : MonoBehaviour, IBehaviorTreeUser
     private NPCController _controller;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         _controller = GetComponent<NPCController>();
         if (_controller != null && behaviorTree != null && behaviorTree.root != null)

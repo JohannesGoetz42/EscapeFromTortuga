@@ -1130,6 +1130,7 @@ GameObject:
   - component: {fileID: 5692433922761412574}
   - component: {fileID: 4733879381319427361}
   - component: {fileID: -2068860042315241907}
+  - component: {fileID: 5786429781497387287}
   m_Layer: 0
   m_Name: EscapeAgent
   m_TagString: Untagged
@@ -1272,9 +1273,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c2e1a4618257d448d315d4c3daa817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviorTree: {fileID: 11400000, guid: f52de4edae980c14f858fe580c30d1af, type: 2}
   escapeArea: {fileID: 0}
   requiredItem: {fileID: 11400000, guid: 14042b541251e084ea47d394eb4de4f9, type: 2}
   interactionRange: 4
+--- !u!114 &5786429781497387287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2252637909196985662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c79f950fe9dd243a172d984f29f97f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wantsToSprint: 0
+  movementSpeed: 5
+  sprintSpeed: 10
+  maxStamina: 20
+  staminaRecoveryRate: 2
+  <patrolPoints>k__BackingField: []
 --- !u!1 &2271145786958596323
 GameObject:
   m_ObjectHideFlags: 0

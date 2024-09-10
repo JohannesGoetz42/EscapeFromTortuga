@@ -57,6 +57,7 @@ public partial class BehaviorTreeView : GraphView
         if (CurrentTree.root == null)
         {
             CurrentTree.root = ScriptableObject.CreateInstance<BehaviorTreeRoot>();
+            CurrentTree.root.behaviorTree = CurrentTree;
             AssetDatabase.AddObjectToAsset(CurrentTree.root, CurrentTree);
             AssetDatabase.SaveAssets();
         }

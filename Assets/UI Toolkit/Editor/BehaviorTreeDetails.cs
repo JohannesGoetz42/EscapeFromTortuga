@@ -67,7 +67,7 @@ public partial class BehaviorTreeDetails : VisualElement
         }
 
         string blackboardName = editor.CurrentTree.Blackboard != null ? editor.CurrentTree.Blackboard.name : "";
-        _blackboardSelection.SetValueWithoutNotify(editor.CurrentTree.Blackboard.name);
+        _blackboardSelection.SetValueWithoutNotify(blackboardName);
     }
 
     internal void UpdateUsers()

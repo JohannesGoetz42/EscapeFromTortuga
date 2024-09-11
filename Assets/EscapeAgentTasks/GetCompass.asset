@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <taskText>k__BackingField: Find a compass
   <returnText>k__BackingField: Return the compass to your escape agent
-  <dialogueText>k__BackingField: I can smuggle you out of town on my ship. But first
-    bring, me a compass. My old one broke and we will have a hard time navigation
-    without one.
+  <dialogueText>k__BackingField: 'I can smuggle you out of town on my ship.
+
+    But
+    first bring, me a compass.
+
+    My old one broke and we will have a hard time
+    navigation without one.'
   itemToCollect: {fileID: 11400000, guid: 14042b541251e084ea47d394eb4de4f9, type: 2}

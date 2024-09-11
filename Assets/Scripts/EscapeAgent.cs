@@ -20,6 +20,8 @@ public class EscapeAgent : RunBehaviorTree
     EscapeAgentTask[] tasks;
     [SerializeField]
     float interactionRange = 4.0f;
+    [SerializeField]
+    DialogueText dialogueText;
 
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
@@ -70,7 +72,7 @@ public class EscapeAgent : RunBehaviorTree
             if (_currentTask.SetUp(this))
             {
                 GameTaskText.Instance.SetText(_currentTask.taskText);
-                DialogueText.AddDialogueTextToObject(transform, _currentTask.dialogueText);
+                dialogueText.SetText(_currentTask.dialogueText);
 
                 blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForTaskCompletion);
                 return;

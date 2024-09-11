@@ -8,7 +8,7 @@ public class EscapeAgentTask : ScriptableObject
     public string taskText { get; private set; }
     [field: SerializeField]
     public string returnText { get; private set; }
-    [field: SerializeField]
+    [field: SerializeField, TextArea(10, 100)]
     public string dialogueText { get; private set; }
     [SerializeField]
     KeyItem itemToCollect;

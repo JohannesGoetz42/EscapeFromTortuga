@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BoolKeys>k__BackingField: []
   <FloatKeys>k__BackingField: []
-  <ObjectKeys>k__BackingField: []
+  <ObjectKeys>k__BackingField:
+  - EscapeArea
   <Vector3Keys>k__BackingField: []
   <EnumKeys>k__BackingField:
   - key: EscapeAgentState

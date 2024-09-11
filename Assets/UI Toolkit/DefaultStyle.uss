@@ -139,3 +139,11 @@
 .unity-progress-bar__background {
     background-color: rgb(60, 60, 60);
 }
+
+.taskNote {
+    -unity-text-align: upper-center;
+    font-size: 40px;
+    color: rgb(0, 113, 140);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 206, 255);
+}

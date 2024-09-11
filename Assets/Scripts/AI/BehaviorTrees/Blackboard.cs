@@ -122,9 +122,15 @@ public class Blackboard : ScriptableObject
         }
 
         GameObject gameObect = blackboardObject as GameObject;
-        if (gameObect == null)
+        if (gameObect != null)
         {
             return gameObect.transform;
+        }
+
+        MonoBehaviour monoBehaviour = blackboardObject as MonoBehaviour;
+        if(monoBehaviour != null)
+        {
+            return monoBehaviour.transform;
         }
 
         return null;

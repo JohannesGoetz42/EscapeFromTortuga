@@ -3,12 +3,40 @@ using UnityEngine;
 
 public class PlayerController : CharacterControllerBase
 {
+    public delegate void PlayerSearchedChanged();
+
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
     public bool isGameOver { get; private set; }
     public Camera MainCamera { get; private set; }
 
-    private bool canEscape = true;
+    public PlayerSearchedChanged playerSearchedChanged;
+
+    private HashSet<NPCController> _searchingCharacters;
+    public bool IsSearched() => _searchingCharacters.Count > 0;
+
+    public void AddSearchingCharacter(NPCController controller)
+    {
+        _searchingCharacters.Add(controller);
+        playerSearchedChanged.Invoke();
+    }
+
+    public void RemoveSearchingCharacter(NPCController controller)
+    {
+        _searchingCharacters.Remove(controller);
+        playerSearchedChanged.Invoke();
+    }
+
+    public void TryEscape()
+    {
+        if (IsSearched())
+        {
+            return;
+        }
+
+        Time.timeScale = 0.0f;
+        GUIManager.Instance.SetGuiMode(GUIMode.Escaped);
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -16,19 +44,9 @@ public class PlayerController : CharacterControllerBase
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        _searchingCharacters = new HashSet<NPCController>();
 
         base.Start();
-    }
-
-    public void TryEscape()
-    {
-        if (!canEscape)
-        {
-            return;
-        }
-
-        Time.timeScale = 0.0f;
-        GUIManager.Instance.SetGuiMode(GUIMode.Escaped);
     }
 
     private void Awake()

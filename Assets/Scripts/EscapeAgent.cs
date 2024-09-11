@@ -22,6 +22,8 @@ public class EscapeAgent : RunBehaviorTree
     float interactionRange = 4.0f;
     [SerializeField]
     DialogueText dialogueText;
+    [SerializeField, TextArea(10, 100)]
+    string readyToDepartText;
 
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
@@ -41,7 +43,7 @@ public class EscapeAgent : RunBehaviorTree
     {
         if (task == _currentTask)
         {
-            GameTaskText.Instance.SetText(_currentTask.returnText);
+            GameTaskText.Instance.SetText(FormatText(_currentTask.returnText));
             blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForTaskReturn);
         }
     }
@@ -71,8 +73,8 @@ public class EscapeAgent : RunBehaviorTree
             _currentTask = Instantiate(tasks[_currentTaskIndex]);
             if (_currentTask.SetUp(this))
             {
-                GameTaskText.Instance.SetText(_currentTask.taskText);
-                dialogueText.SetText(_currentTask.dialogueText);
+                GameTaskText.Instance.SetText(FormatText(_currentTask.taskText));
+                dialogueText.SetText(FormatText(_currentTask.dialogueText));
 
                 blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForTaskCompletion);
                 return;
@@ -86,7 +88,14 @@ public class EscapeAgent : RunBehaviorTree
         }
 
         // go to escape area and wait for depart
+        dialogueText.SetText(FormatText(readyToDepartText));
         blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
         blackboardInstance.SetValueAsObject(EscapeAreaKey, escapeArea);
+    }
+
+    string FormatText(string format)
+    {
+        format = format.Replace("[" + nameof(escapeArea) + "]", escapeArea.displayName);
+        return format;
     }
 }

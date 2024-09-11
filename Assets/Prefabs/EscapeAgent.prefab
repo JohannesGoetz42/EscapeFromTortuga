@@ -1279,6 +1279,10 @@ MonoBehaviour:
   tasks: []
   interactionRange: 4
   dialogueText: {fileID: 6521934074229634562}
+  readyToDepartText: 'We have everything we need to depart.
+
+    I''ll wait for you
+    at my [escapeArea].'
 --- !u!114 &5786429781497387287
 MonoBehaviour:
   m_ObjectHideFlags: 0

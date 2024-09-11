@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <taskText>k__BackingField: Find a compass
   <returnText>k__BackingField: Return the compass to your escape agent
-  <dialogueText>k__BackingField: 'I can smuggle you out of town on my ship.
+  <dialogueText>k__BackingField: 'I can smuggle you out of town on my [escapeArea].
 
     But
     first bring, me a compass.

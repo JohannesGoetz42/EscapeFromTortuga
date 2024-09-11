@@ -3,5 +3,6 @@
     <engine:VisualElement style="flex-grow: 1;">
         <engine:Label text="Current time: {0}:{1}:{2}" name="GameTimeText" class="primary" />
         <engine:ProgressBar value="20" title="Stamina" name="StaminaBar" class="stamina-bar" style="-unity-background-image-tint-color: rgb(0, 113, 140); color: rgb(255, 255, 255); width: 400px; height: 50px; -unity-text-align: upper-left; align-self: center;" />
+        <engine:Label text="Find someone willing to help you escape" name="taskText" class="secondary primary" />
     </engine:VisualElement>
 </engine:UXML>

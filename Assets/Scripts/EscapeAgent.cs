@@ -4,22 +4,25 @@ using UnityEngine;
 enum EscapeAgentState
 {
     Initial,
-    RequirementMissing,
-    WaitingForRequirementDelivery,
+    WaitingForTaskCompletion,
+    WaitingForTaskReturn,
     ReadyToDepart
 }
 
 public class EscapeAgent : RunBehaviorTree
 {
     const string EscapeAgentStateKey = "EscapeAgentState";
+    const string EscapeAreaKey = "EscapeArea";
 
     [SerializeField]
     EscapeArea escapeArea;
     [SerializeField]
-    KeyItem requiredItem;
+    EscapeAgentTask[] tasks;
     [SerializeField]
     float interactionRange = 4.0f;
 
+    EscapeAgentTask _currentTask;
+    int _currentTaskIndex = -1;
     SphereCollider _trigger;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +35,15 @@ public class EscapeAgent : RunBehaviorTree
         _trigger.isTrigger = true;
     }
 
+    public void OnTaskCompleted(EscapeAgentTask task)
+    {
+        if (task == _currentTask)
+        {
+            GameTaskText.Instance.SetText(_currentTask.returnText);
+            blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForTaskReturn);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Player"))
@@ -39,36 +51,40 @@ public class EscapeAgent : RunBehaviorTree
             return;
         }
 
+        // if in initial state or the current task is complete, advance progree
         EscapeAgentState currentState = blackboardInstance.GetValueAsEnum<EscapeAgentState>(EscapeAgentStateKey);
-        switch (currentState)
+        if (currentState == EscapeAgentState.Initial || currentState == EscapeAgentState.WaitingForTaskReturn)
         {
-            case EscapeAgentState.Initial:
-                WaitForRequirement();
-                break;
-            case EscapeAgentState.WaitingForRequirementDelivery:
-                blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
-                break;
+            AdvanceProgress();
         }
-
     }
 
-    private void WaitForRequirement()
+    void AdvanceProgress()
     {
-        KeyItemPickUp.CreateKeyItemPickup(requiredItem, new Vector3(0, 1, 0));
+        _currentTaskIndex++;
 
-        PlayerInventory inventory = PlayerController.Instance.GetComponent<PlayerInventory>();
-        inventory.keyItemStored += OnPlayerItemStored;
-
-        blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForRequirementDelivery);
-    }
-
-    private void OnPlayerItemStored(KeyItem item)
-    {
-        if (item == requiredItem && blackboardInstance.GetValueAsEnum<EscapeAgentState>(EscapeAgentStateKey) == EscapeAgentState.RequirementMissing)
+        // start new task if there is another one that can be activated
+        while (tasks.Length > _currentTaskIndex)
         {
-            PlayerInventory inventory = PlayerController.Instance.GetComponent<PlayerInventory>();
-            inventory.keyItemStored -= OnPlayerItemStored;
-            blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForRequirementDelivery);
+            _currentTask = Instantiate(tasks[_currentTaskIndex]);
+            if (_currentTask.SetUp(this))
+            {
+                GameTaskText.Instance.SetText(_currentTask.taskText);
+                DialogueText.AddDialogueTextToObject(transform, _currentTask.dialogueText);
+
+                blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.WaitingForTaskCompletion);
+                return;
+            }
+            else
+            {
+                Debug.LogWarningFormat("Escape agent task {0} could not be set up and will be skipped!", _currentTask.name);
+            }
+
+            _currentTaskIndex++;
         }
+
+        // go to escape area and wait for depart
+        blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
+        blackboardInstance.SetValueAsObject(EscapeAreaKey, escapeArea);
     }
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class KeyItemPickUp : PickUpBase
@@ -11,7 +12,13 @@ public class KeyItemPickUp : PickUpBase
             return;
         }
 
-        GameObject createdPickUp = Instantiate(item.Mesh, spawnLocation, Quaternion.identity);
+        GameObject createdPickUp = Instantiate(item.pickUpPrefab, spawnLocation, Quaternion.identity);
+        WorldMarker worldMarker = createdPickUp.GetComponentInChildren<WorldMarker>();
+        if (worldMarker != null)
+        {
+            worldMarker.AddMarkerSource(createdPickUp, WorldMarkerVisibility.OverheadAndScreenBorder);
+        }
+
         KeyItemPickUp pickUp = createdPickUp.AddComponent<KeyItemPickUp>();
         pickUp.item = item;
     }

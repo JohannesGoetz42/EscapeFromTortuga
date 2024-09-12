@@ -12,8 +12,14 @@ public class PlayerInventory : MonoBehaviour
 
     public void StoreItem(KeyItem item)
     {
-        _keyRing.Add(item);
-        keyItemStored.Invoke(item);
+        if (item != null)
+        {
+            _keyRing.Add(item);
+            if (keyItemStored != null)
+            {
+                keyItemStored.Invoke(item);
+            }
+        }
     }
 
     public void RemoveItem(KeyItem item)

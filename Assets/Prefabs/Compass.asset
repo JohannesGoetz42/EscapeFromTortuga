@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5aa40611a49d1043847f0b63d50afed, type: 3}
   m_Name: Compass
   m_EditorClassIdentifier: 
-  Mesh: {fileID: 187964, guid: 6d6269edd55ce0e48ba037de57852c02, type: 3}
+  pickUpPrefab: {fileID: 131654, guid: c910aa194784c444da7add57f7a5a8d5, type: 3}
+  mesh: {fileID: 0}

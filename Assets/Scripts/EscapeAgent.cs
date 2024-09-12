@@ -24,6 +24,8 @@ public class EscapeAgent : RunBehaviorTree
     DialogueText dialogueText;
     [SerializeField, TextArea(10, 100)]
     string readyToDepartText;
+    [SerializeField, TextArea(10, 100)]
+    string searchedDialogueText;
 
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
@@ -57,9 +59,21 @@ public class EscapeAgent : RunBehaviorTree
 
         // if in initial state or the current task is complete, advance progree
         EscapeAgentState currentState = blackboardInstance.GetValueAsEnum<EscapeAgentState>(EscapeAgentStateKey);
+
+        if (PlayerController.Instance.IsSearched())
+        {
+            dialogueText.SetText(FormatText(searchedDialogueText));
+            return;
+        }
+
         if (currentState == EscapeAgentState.Initial || currentState == EscapeAgentState.WaitingForTaskReturn)
         {
             AdvanceProgress();
+        }
+
+        if (currentState == EscapeAgentState.ReadyToDepart)
+        {
+            PlayerController.Instance.TryEscape();
         }
     }
 

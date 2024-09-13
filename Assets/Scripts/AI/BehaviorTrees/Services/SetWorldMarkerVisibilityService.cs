@@ -4,6 +4,8 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
 {
     [SerializeField]
     WorldMarkerVisibility visibility;
+    [SerializeField]
+    Sprite thumbnail;
 
     SetWorldMarkerVisibilityService() : base()
     {
@@ -22,7 +24,7 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
             return;
         }
 
-        worldMarker.AddMarkerSource(this, visibility);
+        worldMarker.AddMarkerSource(this, visibility, thumbnail);
     }
 
     protected override void OnCeaseRelevant(IBehaviorTreeUser user)

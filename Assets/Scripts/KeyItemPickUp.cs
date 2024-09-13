@@ -16,7 +16,7 @@ public class KeyItemPickUp : PickUpBase
         WorldMarker worldMarker = createdPickUp.GetComponentInChildren<WorldMarker>();
         if (worldMarker != null)
         {
-            worldMarker.AddMarkerSource(createdPickUp, WorldMarkerVisibility.OverheadAndScreenBorder);
+            worldMarker.AddMarkerSource(createdPickUp, WorldMarkerVisibility.OverheadAndScreenBorder, item.thumbnail);
         }
 
         KeyItemPickUp pickUp = createdPickUp.AddComponent<KeyItemPickUp>();

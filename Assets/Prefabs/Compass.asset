@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Compass
   m_EditorClassIdentifier: 
   pickUpPrefab: {fileID: 131654, guid: c910aa194784c444da7add57f7a5a8d5, type: 3}
-  mesh: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: 4a96d2a117c45ce439868593ab7df93e, type: 3}

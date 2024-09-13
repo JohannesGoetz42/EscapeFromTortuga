@@ -109,7 +109,8 @@ MonoBehaviour:
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Marker visibility
   nodeName: Marker visibility
-  visibility: 2
+  visibility: 1
+  thumbnail: {fileID: 0}
 --- !u!114 &-6543468853226851141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +218,7 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Marker visibility
   visibility: 1
+  thumbnail: {fileID: 0}
 --- !u!114 &-2207118342680029862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +317,7 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Display marker
   visibility: 2
+  thumbnail: {fileID: 0}
 --- !u!114 &734370808545015600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +335,7 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Overhead marker
   visibility: 1
+  thumbnail: {fileID: 0}
 --- !u!114 &858522357350931916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +425,7 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Hide marker
   visibility: 0
+  thumbnail: {fileID: 0}
 --- !u!114 &7638336613989677340
 MonoBehaviour:
   m_ObjectHideFlags: 0

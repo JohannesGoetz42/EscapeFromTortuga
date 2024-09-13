@@ -1,12 +1,17 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScreenEdgeMarker : MonoBehaviour
 {
+    [SerializeField]
+    Image thumbnailImage;
+
     MeshRenderer _targetMesh;
     RectTransform _screenBorderMarker;
+    RectTransform _thumbnail;
 
-    public static ScreenEdgeMarker AddToGameObject(MeshRenderer targetMesh, ScreenEdgeMarker markerPrefab)
+    public static ScreenEdgeMarker AddToGameObject(MeshRenderer targetMesh, ScreenEdgeMarker markerPrefab, Sprite thumbnailSprite)
     {
         GameObject gameObject = Instantiate(markerPrefab.gameObject);
         ScreenEdgeMarker createdInstance = gameObject.GetComponent<ScreenEdgeMarker>();
@@ -14,6 +19,16 @@ public class ScreenEdgeMarker : MonoBehaviour
         createdInstance._screenBorderMarker = gameObject.transform as RectTransform;
         createdInstance._targetMesh = targetMesh;
         gameObject.transform.SetParent(PlayerController.Instance.OverlayCanvas.transform);
+                
+        if (createdInstance.thumbnailImage != null)
+        {
+            createdInstance.thumbnailImage.sprite = thumbnailSprite;
+            createdInstance._thumbnail = createdInstance.thumbnailImage.gameObject.GetComponent<RectTransform>();
+        }
+        else
+        {
+            Debug.LogWarningFormat("Screen edge marker {0} has no thumbnail image!", markerPrefab.name);
+        }
 
         return createdInstance;
     }
@@ -49,6 +64,11 @@ public class ScreenEdgeMarker : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, angle);
         _screenBorderMarker.transform.rotation = rotation;
+
+        if (_thumbnail != null)
+        {
+            _thumbnail.transform.rotation = Quaternion.Inverse(rotation);
+        }
 
         // update position
         Ray ray = new Ray(PlayerController.Instance.transform.position, direction);

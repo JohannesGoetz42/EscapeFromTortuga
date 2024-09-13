@@ -25,14 +25,14 @@ public class WorldMarker : MonoBehaviour
         enabled = false;
     }
 
-    public void AddMarkerSource(Object sourceObject, WorldMarkerVisibility visibility)
+    public void AddMarkerSource(Object sourceObject, WorldMarkerVisibility visibility, Sprite thumbnail)
     {
         _visibilitySources.Add(sourceObject, visibility);
         markerMesh.enabled = visibility != WorldMarkerVisibility.Hidden;
 
         if (visibility == WorldMarkerVisibility.OverheadAndScreenBorder && edgeMarkerPrefab != null && _edgeMarker == null)
         {
-            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab);
+            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab, thumbnail);
         }
     }
 

@@ -32,8 +32,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.945, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3347886882652783571}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2594357404668373382
@@ -123,106 +122,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerMesh: {fileID: 2531946906032480566}
-  screenBorderMarker: {fileID: 3347886882652783571}
---- !u!1001 &2805223652392312885
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3208456805753525133}
-    m_Modifications:
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7647269555283734005, guid: cac1df06418aca34194046630dfab00f, type: 3}
-      propertyPath: m_Name
-      value: WorldScreenBorderMarker
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: cac1df06418aca34194046630dfab00f, type: 3}
---- !u!224 &3347886882652783571 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 619312488481792998, guid: cac1df06418aca34194046630dfab00f, type: 3}
-  m_PrefabInstance: {fileID: 2805223652392312885}
-  m_PrefabAsset: {fileID: 0}
+  screenBorderPrefab: {fileID: 8562270196473407629, guid: 6057adf03b9ad4d42b59ba10491f8a52, type: 3}
+  edgeMarkerPrefab: {fileID: -180980078070500880, guid: 6057adf03b9ad4d42b59ba10491f8a52, type: 3}

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Soldier
   - ModelOption
+  - OverlayCanvas
   layers:
   - Default
   - TransparentFX

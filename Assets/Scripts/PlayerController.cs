@@ -9,6 +9,7 @@ public class PlayerController : CharacterControllerBase
     public float gameTime { get; private set; }
     public bool isGameOver { get; private set; }
     public Camera MainCamera { get; private set; }
+    public Canvas OverlayCanvas { get; private set; }
 
     public PlayerSearchedChanged playerSearchedChanged;
 
@@ -44,6 +45,8 @@ public class PlayerController : CharacterControllerBase
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        OverlayCanvas = GameObject.FindGameObjectWithTag("OverlayCanvas").GetComponent<Canvas>();
+
         _searchingCharacters = new HashSet<NPCController>();
 
         base.Start();

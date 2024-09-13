@@ -70,11 +70,6 @@ public class EscapeAgent : RunBehaviorTree
         {
             AdvanceProgress();
         }
-
-        if (currentState == EscapeAgentState.ReadyToDepart)
-        {
-            PlayerController.Instance.TryEscape();
-        }
     }
 
     void AdvanceProgress()
@@ -105,11 +100,12 @@ public class EscapeAgent : RunBehaviorTree
         dialogueText.SetText(FormatText(readyToDepartText));
         blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
         blackboardInstance.SetValueAsObject(EscapeAreaKey, escapeArea);
+        escapeArea.SetReadyToDepart();
     }
 
     string FormatText(string format)
     {
-        format = format.Replace("[" + nameof(escapeArea) + "]", escapeArea.displayName);
+        format = format.Replace("[" + nameof(escapeArea) + "]", escapeArea.DisplayName);
         return format;
     }
 }

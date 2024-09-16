@@ -32,7 +32,12 @@ public class EscapeAgentTask : ScriptableObject
         // set up item to collect
         if (itemToCollect != null)
         {
-            KeyItemPickUp initializedPickUp = KeyItemPickUp.CreateKeyItemPickup(itemToCollect, GetSpawnLocation());
+            GameObject spawnLocation = SpawnLocation.GetRandomSpawnLocation(SpawnLocationType.Item);
+            if (spawnLocation == null)
+            {
+                return false;
+            }
+            KeyItemPickUp initializedPickUp = KeyItemPickUp.CreateKeyItemPickup(itemToCollect, spawnLocation.transform.position);
             PlayerInventory Inventory = PlayerController.Instance.GetComponentInChildren<PlayerInventory>();
             if (Inventory == null)
             {
@@ -48,7 +53,12 @@ public class EscapeAgentTask : ScriptableObject
         {
             foreach (EscapeCrew crewMate in escapeCrew)
             {
-                EscapeCrew initializedCrewMate = EscapeCrew.InitializeEscapeCrew(crewMate, _escapeAgent, GetSpawnLocation());
+                GameObject spawnLocation = SpawnLocation.GetRandomSpawnLocation(SpawnLocationType.CrewMate);
+                if (spawnLocation == null)
+                {
+                    return false;
+                }
+                EscapeCrew initializedCrewMate = EscapeCrew.InitializeEscapeCrew(crewMate, _escapeAgent, spawnLocation.transform.position);
                 if (initializedCrewMate == null)
                 {
                     return false;
@@ -60,12 +70,6 @@ public class EscapeAgentTask : ScriptableObject
         }
 
         return true;
-    }
-
-    Vector3 GetSpawnLocation()
-    {
-        // TODO: generate spawn location
-        return new Vector3(0, 1, 0);
     }
 
     void OnItemStored(KeyItem item)

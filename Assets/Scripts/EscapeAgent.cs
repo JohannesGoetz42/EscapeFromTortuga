@@ -1,49 +1,17 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-enum EscapeAgentState
-{
-    Initial,
-    WaitingForTaskCompletion,
-    WaitingForTaskReturn,
-    ReadyToDepart
-}
 
-public class EscapeAgent : RunBehaviorTree, IHasThumbnail
+public class EscapeAgent : EscapeAgentBase
 {
-    const string EscapeAgentStateKey = "EscapeAgentState";
-    const string EscapeAreaKey = "EscapeArea";
-
-    [SerializeField]
-    EscapeArea escapeArea;
+    [field: SerializeField]
+    public EscapeArea escapeArea {  get; private set; }
     [SerializeField]
     EscapeAgentTask[] tasks;
-    [SerializeField]
-    float interactionRange = 4.0f;
-    [SerializeField]
-    DialogueText dialogueText;
-    [SerializeField]
-    Sprite thumbnail;
-    [SerializeField, TextArea(10, 100)]
-    string readyToDepartText;
     [SerializeField, TextArea(10, 100)]
     string searchedDialogueText;
 
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
-    SphereCollider _trigger;
-
-    public Sprite Thumbnail => thumbnail;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected override void Start()
-    {
-        base.Start();
-
-        _trigger = transform.AddComponent<SphereCollider>();
-        _trigger.radius = interactionRange;
-        _trigger.isTrigger = true;
-    }
 
     public void OnTaskCompleted(EscapeAgentTask task)
     {

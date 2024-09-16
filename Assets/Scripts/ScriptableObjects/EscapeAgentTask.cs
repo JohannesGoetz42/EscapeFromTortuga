@@ -12,29 +12,60 @@ public class EscapeAgentTask : ScriptableObject
     public string dialogueText { get; private set; }
     [SerializeField]
     KeyItem itemToCollect;
+    [SerializeField]
+    EscapeCrew[] escapeCrew;
 
     List<Object> _objectives;
     EscapeAgent _escapeAgent;
-
+    bool HasObjectives() => itemToCollect != null || (escapeCrew != null && escapeCrew.Length > 0);
     public bool SetUp(EscapeAgent escapeAgent)
     {
-        bool success = false;
         _objectives = new List<Object>();
         _escapeAgent = escapeAgent;
+
+        if (!HasObjectives())
+        {
+            Debug.LogWarningFormat("{0} '{1}' has no objectives!", nameof(EscapeAgentTask), name);
+            return false;
+        }
 
         // set up item to collect
         if (itemToCollect != null)
         {
-            KeyItemPickUp.CreateKeyItemPickup(itemToCollect, new Vector3(0, 1, 0));
+            KeyItemPickUp initializedPickUp = KeyItemPickUp.CreateKeyItemPickup(itemToCollect, GetSpawnLocation());
             PlayerInventory Inventory = PlayerController.Instance.GetComponentInChildren<PlayerInventory>();
-            if (Inventory != null)
+            if (Inventory == null)
             {
-                Inventory.keyItemStored += OnItemStored;
-                success = true;
+                return false;
+            }
+
+            Inventory.keyItemStored += OnItemStored;
+            _objectives.Add(itemToCollect);
+        }
+
+        // set up escape crew
+        if (escapeCrew != null && escapeCrew.Length > 0)
+        {
+            foreach (EscapeCrew crewMate in escapeCrew)
+            {
+                EscapeCrew initializedCrewMate = EscapeCrew.InitializeEscapeCrew(crewMate, _escapeAgent, GetSpawnLocation());
+                if (initializedCrewMate == null)
+                {
+                    return false;
+                }
+
+                _objectives.Add(initializedCrewMate);
+                initializedCrewMate.crewMateReadyToDepart += OnCrewMateReadyToDepart;
             }
         }
 
-        return success;
+        return true;
+    }
+
+    Vector3 GetSpawnLocation()
+    {
+        // TODO: generate spawn location
+        return new Vector3(0, 1, 0);
     }
 
     void OnItemStored(KeyItem item)
@@ -48,6 +79,15 @@ public class EscapeAgentTask : ScriptableObject
             }
 
             _objectives.Remove(item);
+            TryCompleteTask();
+        }
+    }
+
+    void OnCrewMateReadyToDepart(EscapeCrew crewMate)
+    {
+        if (_objectives.Remove(crewMate))
+        {
+            crewMate.crewMateReadyToDepart -= OnCrewMateReadyToDepart;
             TryCompleteTask();
         }
     }

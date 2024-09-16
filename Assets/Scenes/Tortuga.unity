@@ -132,12 +132,20 @@ PrefabInstance:
       objectReference: {fileID: 1016137633}
     - target: {fileID: -2068860042315241907, guid: 9e095d3158aacb14e8d83eb73b7a2d11, type: 3}
       propertyPath: tasks.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -2068860042315241907, guid: 9e095d3158aacb14e8d83eb73b7a2d11, type: 3}
       propertyPath: 'tasks.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 1ed202230aec39d49ae8678383ba93f1, type: 2}
+    - target: {fileID: -2068860042315241907, guid: 9e095d3158aacb14e8d83eb73b7a2d11, type: 3}
+      propertyPath: 'tasks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 489cc898a7f34ab468dd98deed2679a7, type: 2}
+    - target: {fileID: -2068860042315241907, guid: 9e095d3158aacb14e8d83eb73b7a2d11, type: 3}
+      propertyPath: <escapeArea>k__BackingField
+      value: 
+      objectReference: {fileID: 1016137633}
     - target: {fileID: 2252637909196985662, guid: 9e095d3158aacb14e8d83eb73b7a2d11, type: 3}
       propertyPath: m_Name
       value: EscapeAgent

@@ -7,7 +7,7 @@ public class BobbingEffect : MonoBehaviour
     [SerializeField]
     float bobbingSpeed = 1.0f;
     [SerializeField]
-    float bobbingDistance = 0.003f;
+    float bobbingDistance = 0.001f;
 
     private void Update()
     {

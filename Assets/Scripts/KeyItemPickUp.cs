@@ -7,11 +7,11 @@ public class KeyItemPickUp : PickUpBase, IHasThumbnail
 
     public Sprite Thumbnail => item == null ? null : item.Thumbnail;
 
-    public static void CreateKeyItemPickup(KeyItem item, in Vector3 spawnLocation)
+    public static KeyItemPickUp CreateKeyItemPickup(KeyItem item, in Vector3 spawnLocation)
     {
         if (item == null || item.pickUpPrefab == null || item.pickUpPrefab.GetComponent<KeyItemPickUp>() == null)
         {
-            return;
+            return null;
         }
 
         GameObject createdPickUp = Instantiate(item.pickUpPrefab, spawnLocation, Quaternion.identity);
@@ -23,6 +23,8 @@ public class KeyItemPickUp : PickUpBase, IHasThumbnail
         {
             worldMarker.AddMarkerSource(createdPickUp.GetComponent<KeyItemPickUp>(), WorldMarkerVisibility.OverheadAndScreenBorder);
         }
+
+        return pickUp;
     }
 
     protected override void OnPickedUp(GameObject player)

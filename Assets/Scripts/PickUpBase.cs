@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class PickUpBase : MonoBehaviour
 {
     [SerializeField]
-    float pickUpRange = 1.0f;
+    float pickUpRange = 0.3f;
 
     SphereCollider _trigger;
 

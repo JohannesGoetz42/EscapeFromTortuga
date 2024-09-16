@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8101005964544377863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
-  m_EditorClassIdentifier: 
-  parent: {fileID: -5316119650981810332}
-  behaviorTree: {fileID: 11400000}
-  nodeTypeName: Selector
-  nodeName: Initial state
-  services:
-  - {fileID: -2739752558644842108}
-  decorators:
-  - {fileID: 4966477527499853755}
-  position: {x: -608.3869, y: 512.494}
-  children:
-  - {fileID: 7638336613989677340}
---- !u!114 &-8088165606523770536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb35cf532e08e7489e2af460e99817d, type: 3}
-  m_Name: ComparisonDecorator
-  m_EditorClassIdentifier: 
-  parent: {fileID: -4943245323724490930}
-  behaviorTree: {fileID: 11400000}
-  nodeTypeName: Comparison
-  nodeName: Waiting for return?
-  abortActive: 1
-  comparisonType: 0
-  <leftValue>k__BackingField:
-    selectedKey: EscapeAgentState
-    type: 5
-  comparedValue: 2
 --- !u!114 &-7200155966653266729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,13 +36,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcd19565777e364887886a13c249358, type: 3}
   m_Name: WaitTimeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: -4943245323724490930}
+  parent: {fileID: -4693145658328749783}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Wait time
   nodeName: Wait time
   services: []
   decorators: []
-  position: {x: 166.61316, y: 848.49396}
+  position: {x: 116, y: 828}
   <blackboardTime>k__BackingField:
     selectedKey: 
     type: 2
@@ -110,8 +65,7 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Marker visibility
   visibility: 1
-  thumbnail: {fileID: 0}
---- !u!114 &-6543468853226851141
+--- !u!114 &-6389225165669511850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,20 +74,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
+  m_Script: {fileID: 11500000, guid: 0cb35cf532e08e7489e2af460e99817d, type: 3}
+  m_Name: ComparisonDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: -4693145658328749783}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Comparison
+  nodeName: Waiting for return?
+  abortActive: 1
+  comparisonType: 0
+  <leftValue>k__BackingField:
+    selectedKey: EscapeAgentState
+    type: 5
+  comparedValue: 2
+--- !u!114 &-6092919873240175373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
+  m_Name: LoopNode
   m_EditorClassIdentifier: 
   parent: {fileID: -5316119650981810332}
   behaviorTree: {fileID: 11400000}
-  nodeTypeName: Selector
+  nodeTypeName: Loop
+  nodeName: Initial state
+  services:
+  - {fileID: 3967656464701003077}
+  decorators:
+  - {fileID: 4819776042230236191}
+  position: {x: -523, y: 525}
+  children:
+  - {fileID: 7638336613989677340}
+  LoopCount: 0
+  LoopDuration: 0
+--- !u!114 &-6004491966194681093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
+  m_Name: LoopNode
+  m_EditorClassIdentifier: 
+  parent: {fileID: -5316119650981810332}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Loop
   nodeName: Waiting for task completion
   services:
-  - {fileID: 5852054376313068828}
+  - {fileID: 505665496260991519}
   decorators:
-  - {fileID: -996947194458290353}
-  position: {x: -256.3869, y: 525.494}
+  - {fileID: -685587635277940172}
+  position: {x: -264, y: 525}
   children:
   - {fileID: 858522357350931916}
+  LoopCount: 0
+  LoopDuration: 0
 --- !u!114 &-5316119650981810332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,11 +157,11 @@ MonoBehaviour:
   decorators: []
   position: {x: 92, y: 186}
   children:
-  - {fileID: -8101005964544377863}
-  - {fileID: -6543468853226851141}
-  - {fileID: -4943245323724490930}
+  - {fileID: -6092919873240175373}
+  - {fileID: -6004491966194681093}
+  - {fileID: -4693145658328749783}
   - {fileID: 8155503647800737641}
---- !u!114 &-4943245323724490930
+--- !u!114 &-4693145658328749783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,20 +170,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886866c2952dc7d479425035131455f4, type: 3}
-  m_Name: BehaviorTreeSelector
+  m_Script: {fileID: 11500000, guid: aef8955bb83801146b254a45605e0897, type: 3}
+  m_Name: LoopNode
   m_EditorClassIdentifier: 
   parent: {fileID: -5316119650981810332}
   behaviorTree: {fileID: 11400000}
-  nodeTypeName: Selector
+  nodeTypeName: Loop
   nodeName: Waiting for task return
   services:
-  - {fileID: 519094528702029952}
+  - {fileID: -2419400605139908562}
   decorators:
-  - {fileID: -8088165606523770536}
-  position: {x: 125.61316, y: 525.494}
+  - {fileID: -6389225165669511850}
+  position: {x: 79, y: 525}
   children:
   - {fileID: -7128785677395219116}
+  LoopCount: 0
+  LoopDuration: 0
 --- !u!114 &-2785385275405836127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,7 +206,7 @@ MonoBehaviour:
   decorators: []
   position: {x: 92.00002, y: -1.5208693}
   startNode: {fileID: -5316119650981810332}
---- !u!114 &-2739752558644842108
+--- !u!114 &-2419400605139908562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,12 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5796146a1f29f4ca83e75aed8e75b3, type: 3}
   m_Name: SetWorldMarkerVisibilityService
   m_EditorClassIdentifier: 
-  parent: {fileID: -8101005964544377863}
+  parent: {fileID: -4693145658328749783}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Marker visibility
-  nodeName: Marker visibility
-  visibility: 1
-  thumbnail: {fileID: 0}
+  nodeName: Display marker
+  visibility: 2
 --- !u!114 &-2207118342680029862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +247,7 @@ MonoBehaviour:
     type: 2
   useBlackboardTime: 0
   WaitForSeconds: 60
---- !u!114 &-996947194458290353
+--- !u!114 &-685587635277940172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb35cf532e08e7489e2af460e99817d, type: 3}
   m_Name: ComparisonDecorator
   m_EditorClassIdentifier: 
-  parent: {fileID: -6543468853226851141}
+  parent: {fileID: -6004491966194681093}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Comparison
   nodeName: Waiting for completion?
@@ -281,26 +285,26 @@ MonoBehaviour:
   blackboard: {fileID: 11400000, guid: dfc04214f1c70e846a40d897bf6abe11, type: 2}
   nodes:
   - {fileID: -5316119650981810332}
-  - {fileID: -8101005964544377863}
-  - {fileID: -6543468853226851141}
   - {fileID: 7638336613989677340}
   - {fileID: 858522357350931916}
   - {fileID: -7128785677395219116}
-  - {fileID: -4943245323724490930}
   - {fileID: 8155503647800737641}
   - {fileID: 3046504239033216983}
   - {fileID: -7200155966653266729}
   - {fileID: -2207118342680029862}
+  - {fileID: -6092919873240175373}
+  - {fileID: -6004491966194681093}
+  - {fileID: -4693145658328749783}
   embeddedNodes:
-  - {fileID: 4966477527499853755}
-  - {fileID: -2739752558644842108}
-  - {fileID: 5852054376313068828}
-  - {fileID: -8088165606523770536}
-  - {fileID: -996947194458290353}
-  - {fileID: 519094528702029952}
   - {fileID: 734370808545015600}
   - {fileID: -6585413456923016758}
---- !u!114 &519094528702029952
+  - {fileID: 4819776042230236191}
+  - {fileID: 3967656464701003077}
+  - {fileID: 505665496260991519}
+  - {fileID: -685587635277940172}
+  - {fileID: -2419400605139908562}
+  - {fileID: -6389225165669511850}
+--- !u!114 &505665496260991519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,12 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5796146a1f29f4ca83e75aed8e75b3, type: 3}
   m_Name: SetWorldMarkerVisibilityService
   m_EditorClassIdentifier: 
-  parent: {fileID: -4943245323724490930}
+  parent: {fileID: -6004491966194681093}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Marker visibility
-  nodeName: Display marker
-  visibility: 2
-  thumbnail: {fileID: 0}
+  nodeName: Hide marker
+  visibility: 0
 --- !u!114 &734370808545015600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +338,6 @@ MonoBehaviour:
   nodeTypeName: Marker visibility
   nodeName: Overhead marker
   visibility: 1
-  thumbnail: {fileID: 0}
 --- !u!114 &858522357350931916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,13 +350,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcd19565777e364887886a13c249358, type: 3}
   m_Name: WaitTimeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: -6543468853226851141}
+  parent: {fileID: -6004491966194681093}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Wait time
   nodeName: Wait time
   services: []
   decorators: []
-  position: {x: -187.38689, y: 828.49396}
+  position: {x: -197.09998, y: 828.00006}
   <blackboardTime>k__BackingField:
     selectedKey: 
     type: 2
@@ -386,29 +388,7 @@ MonoBehaviour:
   updatePathInterval: 0.5
   updateIntervalRange: 0.3
   trackTargetMovement: 0
---- !u!114 &4966477527499853755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb35cf532e08e7489e2af460e99817d, type: 3}
-  m_Name: ComparisonDecorator
-  m_EditorClassIdentifier: 
-  parent: {fileID: -8101005964544377863}
-  behaviorTree: {fileID: 11400000}
-  nodeTypeName: Comparison
-  nodeName: Comparison
-  abortActive: 1
-  comparisonType: 0
-  <leftValue>k__BackingField:
-    selectedKey: EscapeAgentState
-    type: 5
-  comparedValue: 0
---- !u!114 &5852054376313068828
+--- !u!114 &3967656464701003077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,12 +400,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e5796146a1f29f4ca83e75aed8e75b3, type: 3}
   m_Name: SetWorldMarkerVisibilityService
   m_EditorClassIdentifier: 
-  parent: {fileID: -6543468853226851141}
+  parent: {fileID: -6092919873240175373}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Marker visibility
-  nodeName: Hide marker
-  visibility: 0
-  thumbnail: {fileID: 0}
+  nodeName: Overhead marker
+  visibility: 1
+--- !u!114 &4819776042230236191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb35cf532e08e7489e2af460e99817d, type: 3}
+  m_Name: ComparisonDecorator
+  m_EditorClassIdentifier: 
+  parent: {fileID: -6092919873240175373}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Comparison
+  nodeName: Comparison
+  abortActive: 1
+  comparisonType: 0
+  <leftValue>k__BackingField:
+    selectedKey: EscapeAgentState
+    type: 5
+  comparedValue: 0
 --- !u!114 &7638336613989677340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,13 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bcd19565777e364887886a13c249358, type: 3}
   m_Name: WaitTimeAction
   m_EditorClassIdentifier: 
-  parent: {fileID: -8101005964544377863}
+  parent: {fileID: -6092919873240175373}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Wait time
   nodeName: Wait time
   services: []
   decorators: []
-  position: {x: -618.38684, y: 828.49396}
+  position: {x: -513, y: 828}
   <blackboardTime>k__BackingField:
     selectedKey: 
     type: 2

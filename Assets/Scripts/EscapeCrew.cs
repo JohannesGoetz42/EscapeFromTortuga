@@ -29,7 +29,7 @@ public class EscapeCrew : EscapeAgentBase
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player") || blackboardInstance == null)
+        if (!other.gameObject.CompareTag("Player") || blackboardInstance == null || dialogueText == null)
         {
             return;
         }
@@ -37,9 +37,10 @@ public class EscapeCrew : EscapeAgentBase
         blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
         blackboardInstance.SetValueAsObject(EscapeAreaKey, _escapeAgent.escapeArea);
 
+        dialogueText.SetText(FormatText(readyToDepartText));
+
         if (crewMateReadyToDepart != null)
         {
-            dialogueText.SetText(FormatText(readyToDepartText));
             crewMateReadyToDepart.Invoke(this);
         }
     }

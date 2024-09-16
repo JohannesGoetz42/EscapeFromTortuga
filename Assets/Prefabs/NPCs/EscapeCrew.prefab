@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2992dd29fc0881d44be6a0a037216595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviorTree: {fileID: 11400000, guid: f52de4edae980c14f858fe580c30d1af, type: 2}
+  behaviorTree: {fileID: 11400000, guid: fbd47bace61126449864a23743f9aad4, type: 2}
   thumbnail: {fileID: 21300000, guid: c54a17f74ef458041a9d91f0df583e07, type: 3}
   interactionRange: 4
   dialogueText: {fileID: 6521934074229634562}

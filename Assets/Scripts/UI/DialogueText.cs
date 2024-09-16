@@ -9,23 +9,14 @@ public class DialogueText : MonoBehaviour
     Text dialogueText;
     float _currentDuration = 0.0f;
 
-    void Start()
-    {
-        enabled = false;
-        if (dialogueText != null)
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
     public void SetText(string text)
     {
         if (dialogueText != null)
         {
-            dialogueText.text = text;
             gameObject.SetActive(true);
-            _currentDuration = 0.0f;
             enabled = true;
+            dialogueText.text = text;
+            _currentDuration = 0.0f;
         }
     }
 

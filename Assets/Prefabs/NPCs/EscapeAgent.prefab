@@ -1275,15 +1275,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behaviorTree: {fileID: 11400000, guid: f52de4edae980c14f858fe580c30d1af, type: 2}
-  escapeArea: {fileID: 0}
-  tasks: []
+  thumbnail: {fileID: 21300000, guid: c54a17f74ef458041a9d91f0df583e07, type: 3}
   interactionRange: 4
   dialogueText: {fileID: 6521934074229634562}
-  thumbnail: {fileID: 21300000, guid: c54a17f74ef458041a9d91f0df583e07, type: 3}
   readyToDepartText: 'We have everything we need to depart.
 
     I''ll wait for you
     at my [escapeArea].'
+  <escapeArea>k__BackingField: {fileID: 0}
+  tasks: []
   searchedDialogueText: "You are chased by soldiers.\nIf i shall smuggle you out
     of town, we can't be seen together. \nSo you should loose them before I can help
     you!"

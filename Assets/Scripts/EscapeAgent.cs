@@ -9,7 +9,7 @@ enum EscapeAgentState
     ReadyToDepart
 }
 
-public class EscapeAgent : RunBehaviorTree
+public class EscapeAgent : RunBehaviorTree, IHasThumbnail
 {
     const string EscapeAgentStateKey = "EscapeAgentState";
     const string EscapeAreaKey = "EscapeArea";
@@ -22,6 +22,8 @@ public class EscapeAgent : RunBehaviorTree
     float interactionRange = 4.0f;
     [SerializeField]
     DialogueText dialogueText;
+    [SerializeField]
+    Sprite thumbnail;
     [SerializeField, TextArea(10, 100)]
     string readyToDepartText;
     [SerializeField, TextArea(10, 100)]
@@ -30,6 +32,8 @@ public class EscapeAgent : RunBehaviorTree
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
     SphereCollider _trigger;
+
+    public Sprite Thumbnail => thumbnail;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()

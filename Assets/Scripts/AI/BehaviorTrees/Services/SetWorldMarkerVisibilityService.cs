@@ -4,8 +4,6 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
 {
     [SerializeField]
     WorldMarkerVisibility visibility;
-    [SerializeField]
-    Sprite thumbnail;
 
     SetWorldMarkerVisibilityService() : base()
     {
@@ -17,6 +15,12 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
 
     protected override void OnBecomeRelevant(IBehaviorTreeUser user)
     {
+        IHasThumbnail thumbnailOwner = (IHasThumbnail)user;
+        if (thumbnailOwner == null)
+        {
+            return;
+        }
+
         WorldMarker worldMarker = user.GetBehaviorUser().GetComponentInChildren<WorldMarker>();
         if (worldMarker == null)
         {
@@ -24,7 +28,7 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
             return;
         }
 
-        worldMarker.AddMarkerSource(this, visibility, thumbnail);
+        worldMarker.AddMarkerSource(thumbnailOwner, visibility);
     }
 
     protected override void OnCeaseRelevant(IBehaviorTreeUser user)
@@ -32,7 +36,7 @@ public class SetWorldMarkerVisibilityService : BehaviorTreeServiceBase
         WorldMarker worldMarker = user.GetBehaviorUser().GetComponentInChildren<WorldMarker>();
         if (worldMarker != null)
         {
-            worldMarker.RemoveMarkerSource(this);
+            worldMarker.RemoveMarkerSource((IHasThumbnail)user);
         }
     }
 }

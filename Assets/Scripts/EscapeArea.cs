@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class EscapeArea : MonoBehaviour
+public class EscapeArea : MonoBehaviour, IHasThumbnail
 {
     /** The display name i.E. used in dialog texts */
     [field: SerializeField]
     public string DisplayName { get; private set; }
+
+    Sprite IHasThumbnail.Thumbnail => thumbnail;
+
     [SerializeField]
     Sprite thumbnail;
     [SerializeField]
@@ -17,7 +20,7 @@ public class EscapeArea : MonoBehaviour
         isReadyToDepart = true;
         if (marker != null)
         {
-            marker.AddMarkerSource(this, WorldMarkerVisibility.OverheadAndScreenBorder, thumbnail);
+            marker.AddMarkerSource(this, WorldMarkerVisibility.OverheadAndScreenBorder);
         }
     }
 

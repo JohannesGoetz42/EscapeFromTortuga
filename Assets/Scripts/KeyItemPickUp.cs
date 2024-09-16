@@ -1,26 +1,28 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class KeyItemPickUp : PickUpBase
+public class KeyItemPickUp : PickUpBase, IHasThumbnail
 {
     KeyItem item;
 
+    public Sprite Thumbnail => item == null ? null : item.Thumbnail;
+
     public static void CreateKeyItemPickup(KeyItem item, in Vector3 spawnLocation)
     {
-        if (item == null)
+        if (item == null || item.pickUpPrefab == null || item.pickUpPrefab.GetComponent<KeyItemPickUp>() == null)
         {
             return;
         }
 
         GameObject createdPickUp = Instantiate(item.pickUpPrefab, spawnLocation, Quaternion.identity);
         WorldMarker worldMarker = createdPickUp.GetComponentInChildren<WorldMarker>();
+        KeyItemPickUp pickUp = createdPickUp.GetComponent<KeyItemPickUp>();
+        pickUp.item = item;
+
         if (worldMarker != null)
         {
-            worldMarker.AddMarkerSource(createdPickUp, WorldMarkerVisibility.OverheadAndScreenBorder, item.thumbnail);
+            worldMarker.AddMarkerSource(createdPickUp.GetComponent<KeyItemPickUp>(), WorldMarkerVisibility.OverheadAndScreenBorder);
         }
-
-        KeyItemPickUp pickUp = createdPickUp.AddComponent<KeyItemPickUp>();
-        pickUp.item = item;
     }
 
     protected override void OnPickedUp(GameObject player)

@@ -17,7 +17,7 @@ public class WorldMarker : MonoBehaviour
     [SerializeField]
     ScreenEdgeMarker edgeMarkerPrefab;
 
-    Dictionary<Object, WorldMarkerVisibility> _visibilitySources = new Dictionary<Object, WorldMarkerVisibility>();
+    Dictionary<IHasThumbnail, WorldMarkerVisibility> _visibilitySources = new Dictionary<IHasThumbnail, WorldMarkerVisibility>();
     ScreenEdgeMarker _edgeMarker;
 
     private void Awake()
@@ -25,18 +25,26 @@ public class WorldMarker : MonoBehaviour
         enabled = false;
     }
 
-    public void AddMarkerSource(Object sourceObject, WorldMarkerVisibility visibility, Sprite thumbnail)
+    public void AddMarkerSource(IHasThumbnail sourceObject, WorldMarkerVisibility visibility)
     {
-        _visibilitySources.Add(sourceObject, visibility);
+        if (_visibilitySources.ContainsKey(sourceObject))
+        {
+            _visibilitySources[sourceObject] = visibility;
+        }
+        else
+        {
+            _visibilitySources.Add(sourceObject, visibility);
+        }
+
         markerMesh.enabled = visibility != WorldMarkerVisibility.Hidden;
 
         if (visibility == WorldMarkerVisibility.OverheadAndScreenBorder && edgeMarkerPrefab != null && _edgeMarker == null)
         {
-            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab, thumbnail);
+            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab, sourceObject.Thumbnail);
         }
     }
 
-    public void RemoveMarkerSource(Object sourceObject)
+    public void RemoveMarkerSource(IHasThumbnail sourceObject)
     {
         _visibilitySources.Remove(sourceObject);
         if (_visibilitySources.Count == 0)

@@ -19,7 +19,7 @@ public class ScreenEdgeMarker : MonoBehaviour
         createdInstance._screenBorderMarker = gameObject.transform as RectTransform;
         createdInstance._targetMesh = targetMesh;
         gameObject.transform.SetParent(PlayerController.Instance.OverlayCanvas.transform);
-                
+
         if (createdInstance.thumbnailImage != null)
         {
             createdInstance.thumbnailImage.sprite = thumbnailSprite;
@@ -42,11 +42,12 @@ public class ScreenEdgeMarker : MonoBehaviour
         // disable view border marker if object is visible
         if (GeometryUtility.TestPlanesAABB(frustumPlanes, _targetMesh.bounds))
         {
-            // TODO: HIDE MARKER!!!
+            _screenBorderMarker.localScale = Vector3.zero;
         }
         // update view border marker position
         else
         {
+            _screenBorderMarker.localScale = Vector3.one;
             UpdateBorderMarker(frustumPlanes);
         }
 

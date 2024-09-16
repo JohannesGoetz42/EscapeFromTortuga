@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 20
-  bobbingSpeed: 1
-  bobbingDistance: 0.001
+  bobbingSpeed: 2
+  bobbingDistance: 0.2
 --- !u!114 &111156770959317069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 3303470865179076219}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.088, z: -0}
+  m_LocalPosition: {x: 0, y: 0.403, z: 0}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -161,7 +161,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 0.8144702, b: 0, a: 1}
-  m_Intensity: 100
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

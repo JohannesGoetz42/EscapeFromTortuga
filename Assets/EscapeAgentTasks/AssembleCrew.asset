@@ -21,3 +21,4 @@ MonoBehaviour:
   itemToCollect: {fileID: 0}
   escapeCrew:
   - {fileID: -2503967678105010838, guid: 197c1091cd773964e951cc396279ace9, type: 3}
+  - {fileID: -2503967678105010838, guid: 197c1091cd773964e951cc396279ace9, type: 3}

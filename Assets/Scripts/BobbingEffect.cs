@@ -7,7 +7,12 @@ public class BobbingEffect : MonoBehaviour
     [SerializeField]
     float bobbingSpeed = 1.0f;
     [SerializeField]
-    float bobbingDistance = 0.001f;
+    float bobbingDistance = 0.2f;
+
+    private void Awake()
+    {
+        transform.position += Vector3.up * bobbingDistance * 2;
+    }
 
     private void Update()
     {
@@ -15,7 +20,7 @@ public class BobbingEffect : MonoBehaviour
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
         // move up and down
-        float bobbingOffset = bobbingDistance * Mathf.Sin(Time.time * bobbingSpeed);
+        float bobbingOffset = bobbingDistance * Mathf.Sin(Time.time * bobbingSpeed) * Time.deltaTime;
         transform.position += Vector3.up * bobbingOffset;
     }
 }

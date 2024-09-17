@@ -83,7 +83,7 @@ public class SelectPatrolPointAction : BehaviorTreeAction
         }
         else if (patrolPoint.type != BlackboardValueType.Vector3)
         {
-            user.GetBlackboard().SetValueAsVector3(patrolPoint.selectedKey, myMemory.controller.patrolPoints[selectedPoint].position);
+            user.GetBlackboard().SetValueAsVector3(patrolPoint.selectedKey, myMemory.controller.patrolPoints[selectedPoint].transform.position);
         }
         else
         {

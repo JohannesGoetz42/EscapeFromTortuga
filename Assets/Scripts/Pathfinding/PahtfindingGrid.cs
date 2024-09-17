@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class PathfindingGrid : MonoBehaviour
 {
     [SerializeField]
@@ -11,7 +12,10 @@ public class PathfindingGrid : MonoBehaviour
     Vector3 gridWorldSize;
     [SerializeField]
     float nodeRadius;
-
+#if UNITY_EDITOR
+    [SerializeField]
+    bool drawDebug;
+#endif
     PathfindingNode[,] grid;
     float nodeDiameter;
     int gridSizeX;
@@ -67,6 +71,16 @@ public class PathfindingGrid : MonoBehaviour
         CreateGrid();
     }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (drawDebug && !Application.isPlaying)
+        {
+            CreateGrid();
+        }
+    }
+#endif
+
     void CreateGrid()
     {
         grid = new PathfindingNode[gridSizeX, gridSizeY];
@@ -108,7 +122,7 @@ public class PathfindingGrid : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, gridWorldSize);
 
-        if (grid != null)
+        if (drawDebug && grid != null)
         {
             foreach (PathfindingNode node in grid)
             {

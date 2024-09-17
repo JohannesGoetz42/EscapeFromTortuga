@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wantsToSprint: 0
-  movementSpeed: 10
+  movementSpeed: 5
   sprintSpeed: 10
   maxStamina: 20
   staminaRecoveryRate: 2

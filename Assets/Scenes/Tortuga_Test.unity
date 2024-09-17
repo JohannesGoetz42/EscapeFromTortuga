@@ -808,7 +808,10 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 8
-  gridWorldSize: {x: 86.4, y: 85.32}
+  walkableMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gridWorldSize: {x: 86.4, y: 85.32, z: 0}
   nodeRadius: 0.5
 --- !u!4 &870495614
 Transform:
@@ -1114,10 +1117,6 @@ PrefabInstance:
     - target: {fileID: 2252637909196985662, guid: 233ac4cffabdd6345888dd84c6d6d20b, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2924796368441365059, guid: 233ac4cffabdd6345888dd84c6d6d20b, type: 3}
-      propertyPath: movementSpeed
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7305239127094822474, guid: 233ac4cffabdd6345888dd84c6d6d20b, type: 3}
       propertyPath: m_LocalPosition.x

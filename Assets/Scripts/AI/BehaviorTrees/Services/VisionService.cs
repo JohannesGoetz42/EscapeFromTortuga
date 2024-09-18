@@ -15,7 +15,6 @@ public class VisionService : BehaviorTreeServiceBase
     [field: SerializeField]
     public BlackboardKeySelector lastSeenLocation { get; set; }
 
-    [SerializeField] LayerMask ignoreLayer;
     [SerializeField] bool rememberLastSeenLocation = true;
 
     /** 
@@ -111,7 +110,7 @@ public class VisionService : BehaviorTreeServiceBase
 
         RaycastHit hit;
         Vector3 rayDirection = target.position - userTransform.position;
-        if (Physics.Raycast(userTransform.position + new Vector3(0.0f, 1.0f, 0.0f), rayDirection, out hit, viewRange, ~ignoreLayer))
+        if (Physics.Raycast(userTransform.position + new Vector3(0.0f, 1.0f, 0.0f), rayDirection, out hit, viewRange, Constants.npcViewLayer))
         {
             return hit.collider.gameObject.CompareTag("Player");
         }

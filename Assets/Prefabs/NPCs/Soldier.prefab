@@ -932,7 +932,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &8919068220602445499
 BoxCollider:
@@ -968,13 +968,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wantsToSprint: 0
-  movementSpeed: 5
+  movementSpeed: 3
   sprintSpeed: 9
   maxStamina: 15
   staminaRecoveryRate: 2
-  movementDirection: {x: 0, y: 0, z: 0}
-  canSeePlayer: 0
-  movementTarget: {fileID: 0}
+  <patrolPoints>k__BackingField: []
 --- !u!65 &2107880847968426579
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4784,13 +4782,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6991663520288042901, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
+      propertyPath: TEST.m_Bits
+      value: 264
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991663520288042901, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
+      propertyPath: visualizationSubdivisions
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6991663520288042901, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
+      propertyPath: visualizationGradiendEndPos
+      value: 0.95
+      objectReference: {fileID: 0}
     - target: {fileID: 7247649567027133679, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7247649567027133679, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 7247649567027133679, guid: 7dac3ee85ba00fa4bbabe70a55d03bef, type: 3}
       propertyPath: m_LocalPosition.z

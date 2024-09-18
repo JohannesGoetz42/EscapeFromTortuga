@@ -16,8 +16,8 @@ TagManager:
   - UI
   - Soldiers
   - Walkable
-  - 
-  - 
+  - Player
+  - InvisibleWall
   - 
   - 
   - 

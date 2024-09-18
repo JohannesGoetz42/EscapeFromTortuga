@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7104417613554425872}
   - component: {fileID: 5472875802917080766}
   - component: {fileID: 6151649230053472825}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: InvisibleWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

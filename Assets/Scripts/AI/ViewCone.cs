@@ -134,7 +134,7 @@ public class ViewCone : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 rayDirection = transform.rotation * stepDirection;
-        if (Physics.Raycast(transform.position, rayDirection, out hit, viewRange) && !hit.collider.gameObject.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, rayDirection, out hit, viewRange, Constants.npcViewLayer) && !hit.collider.gameObject.CompareTag("Player"))
         {
             refConePosition = Quaternion.Inverse(transform.rotation) * (hit.point - transform.position);
         }

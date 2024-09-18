@@ -127,6 +127,8 @@ public class ViewCone : MonoBehaviour
         viewConeVisualization.vertices = vertices;
         viewConeVisualization.triangles = triangles; // triangles must be set AFTER vertices!
         viewConeVisualization.uv = uvs;
+        viewConeVisualization.RecalculateBounds();
+
         Profiler.EndSample();
     }
 

@@ -51,14 +51,10 @@ public class EscapeAgentTask : ScriptableObject
         // set up escape crew
         if (escapeCrew != null && escapeCrew.Length > 0)
         {
-            foreach (EscapeCrew crewMate in escapeCrew)
+            List<GameObject> spawnLocations = SpawnLocation.GetRandomSpawnLocations(SpawnLocationType.CrewMate, escapeCrew.Length);
+            for (int i = 0; i < spawnLocations.Count; i++)
             {
-                GameObject spawnLocation = SpawnLocation.GetRandomSpawnLocation(SpawnLocationType.CrewMate);
-                if (spawnLocation == null)
-                {
-                    return false;
-                }
-                EscapeCrew initializedCrewMate = EscapeCrew.InitializeEscapeCrew(crewMate, _escapeAgent, spawnLocation.transform.position);
+                EscapeCrew initializedCrewMate = EscapeCrew.InitializeEscapeCrew(escapeCrew[i], _escapeAgent, spawnLocations[i].transform.position);
                 if (initializedCrewMate == null)
                 {
                     return false;

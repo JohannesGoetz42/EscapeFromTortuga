@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public enum SpawnLocationType
@@ -14,6 +13,27 @@ public class SpawnLocation : MonoBehaviour
     SpawnLocationType[] locationTypes;
 
     static Dictionary<SpawnLocationType, List<GameObject>> _allSpawnLocations;
+
+    public static List<GameObject> GetRandomSpawnLocations(SpawnLocationType locationType, int amount)
+    {
+        if (_allSpawnLocations == null || _allSpawnLocations[locationType] == null)
+        {
+            return new List<GameObject>();
+        }
+
+        List<GameObject> result = new List<GameObject>();
+        List<GameObject> availableLocations = _allSpawnLocations[locationType];
+
+        while (amount > 0 && availableLocations.Count > 0)
+        {
+            int randomIndex = Random.Range(0, availableLocations.Count);
+            result.Add(availableLocations[randomIndex]);
+            availableLocations.RemoveAt(randomIndex);
+            amount--;
+        }
+
+        return result;
+    }
 
     public static GameObject GetRandomSpawnLocation(SpawnLocationType locationType)
     {

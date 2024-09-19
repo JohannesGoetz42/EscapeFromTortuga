@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Profiling;
-using System.Collections;
 
 public struct PathRequest
 {
@@ -33,14 +32,57 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+    PathfindingNode TryFindWalkableNode(in Vector3 queryLocation)
+    {
+        PathfindingNode nodeAtLocation = grid.GetNodeAtWorldPosition(queryLocation);
+        if (nodeAtLocation.isWalkable)
+        {
+            return nodeAtLocation;
+        }
+
+        // Find the closest neigbor if walkable
+        Vector3 positionDelta = queryLocation - nodeAtLocation.worldPosition;
+        int neighborX = nodeAtLocation.gridX;
+        int neighborY = nodeAtLocation.gridY;
+
+        if (Mathf.Abs(positionDelta.x) > grid.nodeRadius * 0.5f)
+        {
+            neighborX += positionDelta.x > 0 ? 1 : -1;
+        }
+        if (Mathf.Abs(positionDelta.z) > grid.nodeRadius * 0.5f)
+        {
+            neighborY += positionDelta.z > 0 ? 1 : -1;
+        }
+
+        PathfindingNode selectedNode = grid.TryGetNodeAtCoordinates(neighborX, neighborY);
+
+        if (selectedNode.isWalkable)
+        {
+            return selectedNode;
+        }
+
+        // if the closest neighbor is not walkable, try find any neighbor
+        foreach (PathfindingNode neighbor in grid.GetNeighbors(nodeAtLocation))
+        {
+            if (neighbor.isWalkable)
+            {
+                return neighbor;
+            }
+        }
+
+        return null;
+    }
+
     public void FindPath(PathRequest request, Action<Vector3[], bool, PathRequest> callback)
     {
         Profiler.BeginSample("Pathfinding");
-        PathfindingNode startNode = grid.GetNodeAtWorldPosition(request.startPosition);
-        PathfindingNode targetNode = grid.GetNodeAtWorldPosition(request.targetPosition);
 
-        if (!startNode.isWalkable || !targetNode.isWalkable)
+        PathfindingNode startNode = TryFindWalkableNode(request.startPosition);
+        PathfindingNode targetNode = TryFindWalkableNode(request.targetPosition);
+        if (startNode == null || targetNode == null)
         {
+            Debug.LogError("Tried to find a path to or from non walkable position!");
+            Debug.DrawLine(request.startPosition + Vector3.up, request.targetPosition + Vector3.up, Color.red, 15.0f);
             return;
         }
 
@@ -49,7 +91,6 @@ public class Pathfinding : MonoBehaviour
 
         Heap<PathfindingNode> openSet = new Heap<PathfindingNode>(grid.MaxGridSize);
         HashSet<PathfindingNode> closedSet = new HashSet<PathfindingNode>();
-
 
         openSet.Add(startNode);
 

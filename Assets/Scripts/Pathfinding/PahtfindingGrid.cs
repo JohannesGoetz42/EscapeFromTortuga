@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 
 [ExecuteInEditMode]
 public class PathfindingGrid : MonoBehaviour
@@ -11,8 +10,8 @@ public class PathfindingGrid : MonoBehaviour
     LayerMask walkableMask;
     [SerializeField]
     Vector3 gridWorldSize;
-    [SerializeField]
-    float nodeRadius;
+    [field: SerializeField]
+    public float nodeRadius { get; private set; } = 0.5f;
 #if UNITY_EDITOR
     [SerializeField]
     bool drawDebug;
@@ -117,6 +116,16 @@ public class PathfindingGrid : MonoBehaviour
                 grid[x, y] = new PathfindingNode(walkable, nodePosition, x, y);
             }
         }
+    }
+
+    internal PathfindingNode TryGetNodeAtCoordinates(int x, int y)
+    {
+        if (grid.GetLength(0) > x && grid.GetLength(1) > y)
+        {
+            return grid[x, y];
+        }
+
+        return null;
     }
 
 #if UNITY_EDITOR

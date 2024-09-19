@@ -50,10 +50,6 @@ public class PathfindingManager : MonoBehaviour
         }
     }
 
-    /** 
-     * Request the path with transforms
-     * Prefer transforms over Vector3, since it will be updated while waiting in the queue
-     */
     public static void RequestPath(PathRequest request)
     {
         if (_pathFinder)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 
 [ExecuteInEditMode]
 public class PathfindingGrid : MonoBehaviour
@@ -17,7 +18,6 @@ public class PathfindingGrid : MonoBehaviour
     bool drawDebug;
 #endif
     PathfindingNode[,] grid;
-    float nodeDiameter;
     int gridSizeX;
     int gridSizeY;
 
@@ -25,17 +25,18 @@ public class PathfindingGrid : MonoBehaviour
 
     public PathfindingNode GetNodeAtWorldPosition(Vector3 worldPosition)
     {
-        Vector3 relativePosition = worldPosition - transform.localPosition;
+        Vector3 relativePosition = worldPosition - transform.localPosition + gridWorldSize * 0.5f;
 
-        float coordX = (relativePosition.x + gridWorldSize.x * 0.5f) / gridWorldSize.x;
-        float coordY = (relativePosition.z + gridWorldSize.z * 0.5f) / gridWorldSize.z;
-        coordX = Mathf.Clamp(coordX, 0.0f, 1.0f);
-        coordY = Mathf.Clamp(coordY, 0.0f, 1.0f);
+        int x = Mathf.FloorToInt(relativePosition.x / (2 * nodeRadius));
+        int y = Mathf.FloorToInt(relativePosition.z / (2 * nodeRadius));
 
-        int x = Mathf.RoundToInt((gridSizeX - 1) * coordX);
-        int y = Mathf.RoundToInt((gridSizeY - 1) * coordY);
+        if (x < grid.GetLength(0) || y < grid.GetLength(1))
+        {
+            return grid[x, y];
+        }
 
-        return grid[x, y];
+        Debug.LogErrorFormat("Error finding pathfinding position at {0}", worldPosition.ToString());
+        return grid[0, 0];
     }
 
     public List<PathfindingNode> GetNeighbors(PathfindingNode node)
@@ -65,7 +66,7 @@ public class PathfindingGrid : MonoBehaviour
 
     void Start()
     {
-        nodeDiameter = nodeRadius * 2;
+        float nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
         CreateGrid();
@@ -83,6 +84,7 @@ public class PathfindingGrid : MonoBehaviour
 
     void CreateGrid()
     {
+        float nodeDiameter = nodeRadius * 2;
         grid = new PathfindingNode[gridSizeX, gridSizeY];
 
         Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.z / 2;
@@ -104,11 +106,11 @@ public class PathfindingGrid : MonoBehaviour
 
                 RaycastHit floorHit;
                 bool walkable = Physics.Raycast(rayStart, Vector3.down, out floorHit, gridWorldSize.y, walkableMask);
-                nodePosition = floorHit.point;
 
                 // check if obstructed by unwalkable object
                 if (walkable)
                 {
+                    nodePosition = floorHit.point;
                     walkable = !Physics.CheckSphere(nodePosition, nodeRadius, unwalkableMask);
                 }
 
@@ -127,8 +129,19 @@ public class PathfindingGrid : MonoBehaviour
             foreach (PathfindingNode node in grid)
             {
                 Gizmos.color = node.isWalkable ? Color.white : Color.red;
-                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                Gizmos.DrawWireCube(node.worldPosition, Vector3.one * (nodeRadius * 2.0f - 0.1f));
             }
+        }
+
+        // indicate grid index direction
+        if (grid != null)
+        {
+            Gizmos.color = Color.grey;
+            Gizmos.DrawCube(grid[0, 0].worldPosition, Vector3.one * (nodeRadius * 2.0f));
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(grid[2, 0].worldPosition, Vector3.one * (nodeRadius * 2.0f));
+            Gizmos.color = Color.blue;
+            Gizmos.DrawCube(grid[0, 2].worldPosition, Vector3.one * (nodeRadius * 2.0f));
         }
     }
 #endif

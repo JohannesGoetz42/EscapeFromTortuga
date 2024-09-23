@@ -4,7 +4,7 @@ using UnityEngine;
 public class EscapeAgent : EscapeAgentBase
 {
     [field: SerializeField]
-    public EscapeArea escapeArea {  get; private set; }
+    public EscapeArea escapeArea { get; private set; }
     [SerializeField]
     EscapeAgentTask[] tasks;
     [SerializeField, TextArea(10, 100)]
@@ -31,6 +31,10 @@ public class EscapeAgent : EscapeAgentBase
 
         // if in initial state or the current task is complete, advance progree
         EscapeAgentState currentState = blackboardInstance.GetValueAsEnum<EscapeAgentState>(EscapeAgentStateKey);
+        if (currentState == EscapeAgentState.ReadyToDepart)
+        {
+            return;
+        }
 
         if (PlayerController.Instance.IsSearched())
         {

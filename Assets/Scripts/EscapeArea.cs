@@ -12,6 +12,8 @@ public class EscapeArea : MonoBehaviour, IHasThumbnail
     Sprite thumbnail;
     [SerializeField]
     WorldMarker marker;
+    [SerializeField]
+    SphereCollider triggerSphere;
 
     bool isReadyToDepart;
 

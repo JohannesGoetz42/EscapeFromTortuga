@@ -29,7 +29,8 @@ public class EscapeCrew : EscapeAgentBase
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.gameObject.CompareTag("Player") || blackboardInstance == null || dialogueText == null)
+        if (!other.gameObject.CompareTag("Player") || blackboardInstance == null || dialogueText == null ||
+            blackboardInstance.GetValueAsEnum(EscapeAgentStateKey) == (int)EscapeAgentState.ReadyToDepart)
         {
             return;
         }

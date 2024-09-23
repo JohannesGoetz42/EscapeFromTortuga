@@ -26,6 +26,12 @@ public class PathfindingManager : MonoBehaviour
 
     private Queue<PathResult> _pathResults = new Queue<PathResult>();
 
+#if UNITY_EDITOR
+    [SerializeField]
+    CharacterControllerBase debugUser;
+    Vector3[] debugPath;
+#endif
+
     private void Awake()
     {
         if (_instance != null)
@@ -64,7 +70,31 @@ public class PathfindingManager : MonoBehaviour
         PathResult result = new PathResult(originalRequest.user, path, success, originalRequest.callback);
         lock (_instance._pathResults)
         {
+#if UNITY_EDITOR
+            if (debugUser != null && result.user.GetBehaviorUser() == debugUser.transform)
+            {
+                debugPath = path;
+            }
+#endif
             _instance._pathResults.Enqueue(result);
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        if (debugPath != null && debugUser != null)
+        {
+            Vector3 previousPathSegment = debugUser.transform.position + Vector3.up * 0.5f;
+            foreach (Vector3 pathSegment in debugPath)
+            {
+                Vector3 currentSegment = pathSegment + Vector3.up * 0.5f;
+                Gizmos.DrawWireSphere(currentSegment, 0.5f);
+                Gizmos.DrawLine(previousPathSegment, currentSegment);
+                previousPathSegment = currentSegment;
+            }
+        }
+    }
+#endif
 }

@@ -65,9 +65,6 @@ public class PathfindingGrid : MonoBehaviour
 
     void Start()
     {
-        float nodeDiameter = nodeRadius * 2;
-        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
-        gridSizeY = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
         CreateGrid();
     }
 
@@ -84,6 +81,9 @@ public class PathfindingGrid : MonoBehaviour
     void CreateGrid()
     {
         float nodeDiameter = nodeRadius * 2;
+        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
+        gridSizeY = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
+
         grid = new PathfindingNode[gridSizeX, gridSizeY];
 
         Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.forward * gridWorldSize.z / 2;

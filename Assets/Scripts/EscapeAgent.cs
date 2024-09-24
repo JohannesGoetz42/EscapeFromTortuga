@@ -9,6 +9,8 @@ public class EscapeAgent : EscapeAgentBase
     EscapeAgentTask[] tasks;
     [SerializeField, TextArea(10, 100)]
     string searchedDialogueText;
+    [SerializeField]
+    string goToEscapeAreaText;
 
     EscapeAgentTask _currentTask;
     int _currentTaskIndex = -1;
@@ -77,6 +79,7 @@ public class EscapeAgent : EscapeAgentBase
         blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
         blackboardInstance.SetValueAsObject(EscapeAreaKey, escapeArea);
         escapeArea.SetReadyToDepart();
+        GameTaskText.Instance.SetText(FormatText(goToEscapeAreaText));
     }
 
     string FormatText(string format)

@@ -1289,6 +1289,7 @@ MonoBehaviour:
   searchedDialogueText: "You are chased by soldiers.\nIf i shall smuggle you out
     of town, we can't be seen together. \nSo you should loose them before I can help
     you!"
+  goToEscapeAreaText: 'Go to the [escapeArea]'
 --- !u!114 &5786429781497387287
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum SpawnLocationType
 {
@@ -54,6 +55,12 @@ public class SpawnLocation : MonoBehaviour
         }
 
         _allSpawnLocations = new Dictionary<SpawnLocationType, List<GameObject>>();
+        SceneManager.sceneLoaded += ResetSpawnLocations;
+    }
+
+    private void ResetSpawnLocations(Scene arg0, LoadSceneMode arg1)
+    {
+        _allSpawnLocations.Clear();
 
         // initialize spawn locations
         SpawnLocation[] spawnLocations = FindObjectsByType<SpawnLocation>(FindObjectsSortMode.None);

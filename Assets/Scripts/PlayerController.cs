@@ -5,6 +5,11 @@ public class PlayerController : CharacterControllerBase
 {
     public delegate void PlayerSearchedChanged();
 
+    [SerializeField]
+    private float cameraDistance = 10.0f;
+    [SerializeField]
+    private float cameraAngle = 60.0f;
+
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
     public bool isGameOver { get; private set; }
@@ -42,12 +47,31 @@ public class PlayerController : CharacterControllerBase
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
+        GameObject spawnLocation = SpawnLocation.GetRandomSpawnLocation(SpawnLocationType.Player);
+        if (spawnLocation != null)
+        {
+            transform.position = spawnLocation.transform.position;
+            transform.rotation = spawnLocation.transform.rotation;
+        }
+
         gameTime = 0.0f;
         Time.timeScale = 1.0f;
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+        // position the camera based on camera settings
+        if (MainCamera != null)
+        {
+            Quaternion cameraRotation = Quaternion.Euler(cameraAngle, 0.0f, 0.0f);
+            Vector3 cameraOffset = Vector3.up * cameraDistance;
+            cameraOffset = Quaternion.Inverse(cameraRotation) * cameraOffset;
+            MainCamera.transform.position = transform.position + cameraOffset;
+            MainCamera.transform.rotation = cameraRotation;
+        }
+
         OverlayCanvas = GameObject.FindGameObjectWithTag("OverlayCanvas").GetComponent<Canvas>();
 
         _searchingCharacters = new HashSet<NPCController>();
+
 
         base.Start();
     }

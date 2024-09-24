@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public enum SpawnLocationType
 {
     Item,
-    CrewMate
+    CrewMate,
+    Player
 }
 
 public class SpawnLocation : MonoBehaviour
@@ -17,7 +18,7 @@ public class SpawnLocation : MonoBehaviour
 
     public static List<GameObject> GetRandomSpawnLocations(SpawnLocationType locationType, int amount)
     {
-        if (_allSpawnLocations == null || _allSpawnLocations[locationType] == null)
+        if (_allSpawnLocations == null || !_allSpawnLocations.ContainsKey(locationType))
         {
             return new List<GameObject>();
         }
@@ -38,7 +39,7 @@ public class SpawnLocation : MonoBehaviour
 
     public static GameObject GetRandomSpawnLocation(SpawnLocationType locationType)
     {
-        if (_allSpawnLocations == null || _allSpawnLocations[locationType] == null)
+        if (_allSpawnLocations == null || !_allSpawnLocations.ContainsKey(locationType))
         {
             return null;
         }
@@ -102,6 +103,9 @@ public class SpawnLocation : MonoBehaviour
                 case SpawnLocationType.CrewMate:
                     Gizmos.color = Color.green;
                     break;
+                case SpawnLocationType.Player:
+                    Gizmos.color = Color.magenta;
+                    break;
             }
 
             // draw the innermost spere solid for easier clicking
@@ -109,6 +113,7 @@ public class SpawnLocation : MonoBehaviour
             {
 
                 Gizmos.DrawSphere(transform.position + Vector3.up * 0.5f, 0.5f + typeIndex * 0.1f);
+                Gizmos.DrawLine(transform.position + Vector3.up * 0.5f, transform.position + transform.forward + Vector3.up * 0.5f);
             }
             // draw the other speres as wire
             else

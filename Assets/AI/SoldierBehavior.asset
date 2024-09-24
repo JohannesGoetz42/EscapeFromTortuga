@@ -101,6 +101,28 @@ MonoBehaviour:
   children:
   - {fileID: 6476223571963708632}
   - {fileID: 4700887518297563214}
+--- !u!114 &-3971947066619867668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5137697e305a14caa014f38b1feb8c, type: 3}
+  m_Name: WaitAtPatrolPointAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Wait at patrol point
+  nodeName: Wait at patrol point
+  services: []
+  decorators: []
+  position: {x: 0, y: 0}
+  <patrolPoint>k__BackingField:
+    selectedKey: 
+    type: 4
 --- !u!114 &-2901380624455586381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,9 +148,6 @@ MonoBehaviour:
   <lastSeenLocation>k__BackingField:
     selectedKey: LastSeenPlayerLocation
     type: 3
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 64
   rememberLastSeenLocation: 1
   viewAngle: 75
   viewRange: 20
@@ -323,6 +342,7 @@ MonoBehaviour:
   - {fileID: -2890554137865395020}
   - {fileID: -1532567720328710397}
   - {fileID: 321356715720816724}
+  - {fileID: -3971947066619867668}
   embeddedNodes:
   - {fileID: -2547951779013621756}
   - {fileID: 6394525350376022183}

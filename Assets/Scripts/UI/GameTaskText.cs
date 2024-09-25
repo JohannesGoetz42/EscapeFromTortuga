@@ -55,7 +55,7 @@ public class GameTaskText : MonoBehaviour
     public void SetText(string text)
     {
         _currentText = text;
-        if (_taskText != null)
+        if (!PlayerController.Instance.IsChased() && _taskText != null)
         {
             _taskText.text = text;
         }

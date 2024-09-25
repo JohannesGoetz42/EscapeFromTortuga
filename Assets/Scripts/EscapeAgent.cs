@@ -10,6 +10,8 @@ public class EscapeAgent : EscapeAgentBase
     [SerializeField, TextArea(10, 100)]
     string searchedDialogueText;
     [SerializeField]
+    string escapeAgentName = "escape agent";
+    [SerializeField]
     string goToEscapeAreaText;
 
     EscapeAgentTask _currentTask;
@@ -85,6 +87,7 @@ public class EscapeAgent : EscapeAgentBase
     string FormatText(string format)
     {
         format = format.Replace("[" + nameof(escapeArea) + "]", escapeArea.DisplayName);
+        format = format.Replace("[" + nameof(escapeAgentName) + "]", escapeAgentName);
         return format;
     }
 }

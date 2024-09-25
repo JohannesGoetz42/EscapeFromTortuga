@@ -38,7 +38,7 @@ public class EscapeAgent : EscapeAgentBase
             return;
         }
 
-        if (PlayerController.Instance.IsSearched())
+        if (PlayerController.Instance.IsChased())
         {
             dialogueText.SetText(FormatText(searchedDialogueText));
             return;

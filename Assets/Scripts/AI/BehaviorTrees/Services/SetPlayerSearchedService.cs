@@ -16,7 +16,7 @@ public class SetPlayerSearchedService : BehaviorTreeServiceBase
         NPCController controller = user.GetBehaviorUser().GetComponent<NPCController>();
         if (controller != null && PlayerController.Instance != null)
         {
-            PlayerController.Instance.AddSearchingCharacter(controller);
+            PlayerController.Instance.AddChasingCharacter(controller);
         }
     }
 
@@ -25,7 +25,7 @@ public class SetPlayerSearchedService : BehaviorTreeServiceBase
         NPCController controller = user.GetBehaviorUser().GetComponent<NPCController>();
         if (controller != null && PlayerController.Instance != null)
         {
-            PlayerController.Instance.RemoveSearchingCharacter(controller);
+            PlayerController.Instance.RemoveChasingCharacter(controller);
         }
     }
 }

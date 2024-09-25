@@ -147,3 +147,8 @@
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: rgb(0, 206, 255);
 }
+
+.warning {
+    color: rgb(255, 0, 0);
+    -unity-text-outline-width: 0;
+}

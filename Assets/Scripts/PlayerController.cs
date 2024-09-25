@@ -16,26 +16,36 @@ public class PlayerController : CharacterControllerBase
     public Camera MainCamera { get; private set; }
     public Canvas OverlayCanvas { get; private set; }
 
-    public PlayerSearchedChanged playerSearchedChanged;
+    public PlayerSearchedChanged playerChasedChanged;
 
-    private HashSet<NPCController> _searchingCharacters;
-    public bool IsSearched() => _searchingCharacters.Count > 0;
+    private HashSet<INPCController> _chasingCharacters = new HashSet<INPCController>();
+    public bool IsChased() => _chasingCharacters.Count > 0;
 
-    public void AddSearchingCharacter(NPCController controller)
+    public void AddChasingCharacter(INPCController controller)
     {
-        _searchingCharacters.Add(controller);
-        playerSearchedChanged.Invoke();
+        if (controller == null)
+        {
+            return;
+        }
+
+        _chasingCharacters.Add(controller);
+        playerChasedChanged.Invoke();
     }
 
-    public void RemoveSearchingCharacter(NPCController controller)
+    public void RemoveChasingCharacter(INPCController controller)
     {
-        _searchingCharacters.Remove(controller);
-        playerSearchedChanged.Invoke();
+        if (controller == null)
+        {
+            return;
+        }
+
+        _chasingCharacters.Remove(controller);
+        playerChasedChanged.Invoke();
     }
 
     public void TryEscape()
     {
-        if (IsSearched())
+        if (IsChased())
         {
             return;
         }
@@ -69,9 +79,6 @@ public class PlayerController : CharacterControllerBase
         }
 
         OverlayCanvas = GameObject.FindGameObjectWithTag("OverlayCanvas").GetComponent<Canvas>();
-
-        _searchingCharacters = new HashSet<NPCController>();
-
 
         base.Start();
     }

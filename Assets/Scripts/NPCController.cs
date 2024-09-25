@@ -64,7 +64,7 @@ public class NPCController : CharacterControllerBase, INPCController
         {
             if (patrolPoints[i] != null && patrolPoints[i - 1] != null)
             {
-                Gizmos.DrawLine(patrolPoints[i - 1].transform.position + Vector3.up, patrolPoints[i].transform.position + Vector3.up);
+                Gizmos.DrawLine(patrolPoints[i - 1].transform.position + Vector3.up, patrolPoints[i].transform.position + Vector3.up * 0.5f);
             }
         }
 

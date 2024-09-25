@@ -195,7 +195,7 @@ MonoBehaviour:
   nodeName: Hide view cone
   services: []
   decorators: []
-  position: {x: 176.2002, y: 396.35}
+  position: {x: 171.99998, y: 478.00003}
   viewConeMode: 2
 --- !u!114 &-2547951779013621756
 MonoBehaviour:
@@ -336,6 +336,7 @@ MonoBehaviour:
   - {fileID: -2890554137865395020}
   - {fileID: -1532567720328710397}
   - {fileID: 321356715720816724}
+  - {fileID: 4388899003233054872}
   embeddedNodes:
   - {fileID: -2547951779013621756}
   - {fileID: 6394525350376022183}
@@ -403,7 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69de48fdc077764396ca6b777ce9e51, type: 3}
   m_Name: SetPlayerSearchedService
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  parent: {fileID: 6476223571963708632}
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Set player searched
   nodeName: Set player searched
@@ -486,7 +487,7 @@ MonoBehaviour:
   nodeName: Move to target
   services: []
   decorators: []
-  position: {x: 405.00003, y: 396}
+  position: {x: 400.99997, y: 478.00003}
   <movementTarget>k__BackingField:
     selectedKey: Target
     type: 4
@@ -494,6 +495,28 @@ MonoBehaviour:
   updatePathInterval: 0.5
   updateIntervalRange: 0.3
   trackTargetMovement: 1
+--- !u!114 &4388899003233054872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5137697e305a14caa014f38b1feb8c, type: 3}
+  m_Name: WaitAtPatrolPointAction
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  behaviorTree: {fileID: 11400000}
+  nodeTypeName: Wait at patrol point
+  nodeName: Wait at patrol point
+  services: []
+  decorators: []
+  position: {x: 0, y: 0}
+  <patrolPoint>k__BackingField:
+    selectedKey: 
+    type: 4
 --- !u!114 &4700887518297563214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +596,7 @@ MonoBehaviour:
   nodeName: Chase player
   services:
   - {fileID: 2298444687496153170}
+  - {fileID: 2138684766433070317}
   decorators:
   - {fileID: -2547951779013621756}
   position: {x: 283.2002, y: 94.35001}

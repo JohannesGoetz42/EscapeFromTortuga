@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5aa40611a49d1043847f0b63d50afed, type: 3}
   m_Name: Sails
   m_EditorClassIdentifier: 
-  pickUpPrefab: {fileID: 131654, guid: c910aa194784c444da7add57f7a5a8d5, type: 3}
-  thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  pickUpPrefab: {fileID: 131654, guid: 7c807264a84bd7147b6fd8f5a0cae998, type: 3}
+  thumbnail: {fileID: 21300000, guid: 742f94393b9ea2c4db848dcf30b96a48, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}

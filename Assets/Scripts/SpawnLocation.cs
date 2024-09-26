@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,10 +14,13 @@ public class SpawnLocation : MonoBehaviour
 {
     [field: SerializeField]
     SpawnLocationType[] locationTypes;
+    [field: SerializeField]
+    KeyItem[] allowedItems;
 
-    static Dictionary<SpawnLocationType, List<GameObject>> _allSpawnLocations;
+    static Dictionary<SpawnLocationType, List<SpawnLocation>> _allSpawnLocations;
+    bool SupportsObject(Object specificObject) => allowedItems == null || allowedItems.Length == 0 || allowedItems.Contains(specificObject);
 
-    public static List<GameObject> GetRandomSpawnLocations(SpawnLocationType locationType, int amount)
+    public static List<GameObject> GetRandomSpawnLocations(SpawnLocationType locationType, int amount, Object specificObject = null)
     {
         if (_allSpawnLocations == null || !_allSpawnLocations.ContainsKey(locationType))
         {
@@ -24,12 +28,18 @@ public class SpawnLocation : MonoBehaviour
         }
 
         List<GameObject> result = new List<GameObject>();
-        List<GameObject> availableLocations = _allSpawnLocations[locationType];
+        List<SpawnLocation> availableLocations = _allSpawnLocations[locationType];
+
+        // filter locations that do not support the specific object
+        if (specificObject != null)
+        {
+            availableLocations = availableLocations.Where(x => x.SupportsObject(specificObject)).ToList();
+        }
 
         while (amount > 0 && availableLocations.Count > 0)
         {
             int randomIndex = Random.Range(0, availableLocations.Count);
-            result.Add(availableLocations[randomIndex]);
+            result.Add(availableLocations[randomIndex].gameObject);
             availableLocations.RemoveAt(randomIndex);
             amount--;
         }
@@ -37,15 +47,23 @@ public class SpawnLocation : MonoBehaviour
         return result;
     }
 
-    public static GameObject GetRandomSpawnLocation(SpawnLocationType locationType)
+    public static GameObject GetRandomSpawnLocation(SpawnLocationType locationType, Object specificObject = null)
     {
         if (_allSpawnLocations == null || !_allSpawnLocations.ContainsKey(locationType))
         {
             return null;
         }
 
-        int randomIndex = Random.Range(0, _allSpawnLocations[locationType].Count);
-        return _allSpawnLocations[locationType][randomIndex];
+        List<SpawnLocation> availableLocations = _allSpawnLocations[locationType];
+
+        // filter locations that do not support the specific object
+        if (specificObject != null)
+        {
+            availableLocations = availableLocations.Where(x => x.SupportsObject(specificObject)).ToList();
+        }
+
+        int randomIndex = Random.Range(0, availableLocations.Count);
+        return availableLocations[randomIndex].gameObject;
     }
 
     private void Awake()
@@ -55,7 +73,7 @@ public class SpawnLocation : MonoBehaviour
             return;
         }
 
-        _allSpawnLocations = new Dictionary<SpawnLocationType, List<GameObject>>();
+        _allSpawnLocations = new Dictionary<SpawnLocationType, List<SpawnLocation>>();
         SceneManager.sceneLoaded += ResetSpawnLocations;
     }
 
@@ -71,11 +89,11 @@ public class SpawnLocation : MonoBehaviour
             {
                 if (_allSpawnLocations.ContainsKey(type))
                 {
-                    _allSpawnLocations[type].Add(location.gameObject);
+                    _allSpawnLocations[type].Add(location);
                 }
                 else
                 {
-                    List<GameObject> locationsForType = new List<GameObject>() { location.gameObject };
+                    List<SpawnLocation> locationsForType = new List<SpawnLocation>() { location };
                     _allSpawnLocations.Add(type, locationsForType);
                 }
             }

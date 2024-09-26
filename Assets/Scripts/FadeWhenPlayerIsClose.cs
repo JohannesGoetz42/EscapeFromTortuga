@@ -20,13 +20,17 @@ public class FadeWhenPlayerIsClose : MonoBehaviour
             return;
         }
 
-        _trigger = gameObject.AddComponent<SphereCollider>();
-        _trigger.radius = triggerRange;
-        _trigger.isTrigger = true;
+        if (triggerRange > 0)
+        {
+            _trigger = gameObject.AddComponent<SphereCollider>();
+            _trigger.radius = triggerRange;
+            _trigger.isTrigger = true;
+        }
+
         Fade(true);
     }
 
-    void Fade(bool fadeIn)
+    public void Fade(bool fadeIn)
     {
         if (defaultMesh != null && fadedMesh != null)
         {

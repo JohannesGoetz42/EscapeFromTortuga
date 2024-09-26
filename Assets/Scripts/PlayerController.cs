@@ -5,11 +5,6 @@ public class PlayerController : CharacterControllerBase
 {
     public delegate void PlayerSearchedChanged();
 
-    [SerializeField]
-    private float cameraDistance = 10.0f;
-    [SerializeField]
-    private float cameraAngle = 60.0f;
-
     public static PlayerController Instance { get; private set; }
     public float gameTime { get; private set; }
     public bool isGameOver { get; private set; }
@@ -19,6 +14,7 @@ public class PlayerController : CharacterControllerBase
     public PlayerSearchedChanged playerChasedChanged;
 
     private HashSet<INPCController> _chasingCharacters = new HashSet<INPCController>();
+
     public bool IsChased() => _chasingCharacters.Count > 0;
 
     public void AddChasingCharacter(INPCController controller)
@@ -68,15 +64,6 @@ public class PlayerController : CharacterControllerBase
         Time.timeScale = 1.0f;
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 
-        // position the camera based on camera settings
-        if (MainCamera != null)
-        {
-            Quaternion cameraRotation = Quaternion.Euler(cameraAngle, 0.0f, 0.0f);
-            Vector3 cameraOffset = Vector3.up * cameraDistance;
-            cameraOffset = Quaternion.Inverse(cameraRotation) * cameraOffset;
-            MainCamera.transform.position = transform.position + cameraOffset;
-            MainCamera.transform.rotation = cameraRotation;
-        }
 
         OverlayCanvas = GameObject.FindGameObjectWithTag("OverlayCanvas").GetComponent<Canvas>();
 

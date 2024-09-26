@@ -37,7 +37,7 @@ public class EscapeAgentTask : ScriptableObject
             {
                 return false;
             }
-            KeyItemPickUp initializedPickUp = KeyItemPickUp.CreateKeyItemPickup(itemToCollect, spawnLocation.transform.position);
+            KeyItemPickUp initializedPickUp = KeyItemPickUp.CreateKeyItemPickup(itemToCollect, spawnLocation.transform.position, escapeAgent.markerColor);
             PlayerInventory Inventory = PlayerController.Instance.GetComponentInChildren<PlayerInventory>();
             if (Inventory == null)
             {

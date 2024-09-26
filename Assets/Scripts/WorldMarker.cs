@@ -40,7 +40,7 @@ public class WorldMarker : MonoBehaviour
 
         if (visibility == WorldMarkerVisibility.OverheadAndScreenBorder && edgeMarkerPrefab != null && _edgeMarker == null)
         {
-            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab, sourceObject.Thumbnail);
+            _edgeMarker = ScreenEdgeMarker.AddToGameObject(markerMesh, edgeMarkerPrefab, sourceObject.Thumbnail, sourceObject.BackgroundColor);
         }
     }
 

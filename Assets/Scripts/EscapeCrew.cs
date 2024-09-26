@@ -17,6 +17,7 @@ public class EscapeCrew : EscapeAgentBase
         GameObject createdInstance = Instantiate(prefab.gameObject, spawnLocation, Quaternion.identity);
         EscapeCrew createdCrew = createdInstance.GetComponent<EscapeCrew>();
         createdCrew._escapeAgent = escapeAgent;
+        createdCrew.markerColor = escapeAgent.markerColor;
 
         WorldMarker worldMarker = createdInstance.GetComponent<WorldMarker>();
         if (worldMarker != null)

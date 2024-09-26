@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thumbnailImage: {fileID: 6457730915481153019}
+  backgroundImage: {fileID: 2205655184634158754}
 --- !u!1 &8879755560703627086
 GameObject:
   m_ObjectHideFlags: 0

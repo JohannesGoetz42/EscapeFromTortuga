@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class KeyItemPickUp : PickUpBase, IHasThumbnail
 {
+    public Sprite Thumbnail => item == null ? null : item.Thumbnail;
+    public Color BackgroundColor => color;
+
+    Color color = Color.white;
     KeyItem item;
 
-    public Sprite Thumbnail => item == null ? null : item.Thumbnail;
-
-    public static KeyItemPickUp CreateKeyItemPickup(KeyItem item, in Vector3 spawnLocation)
+    public static KeyItemPickUp CreateKeyItemPickup(KeyItem item, in Vector3 spawnLocation, Color markerColor)
     {
         if (item == null || item.pickUpPrefab == null || item.pickUpPrefab.GetComponent<KeyItemPickUp>() == null)
         {
@@ -17,6 +19,7 @@ public class KeyItemPickUp : PickUpBase, IHasThumbnail
         GameObject createdPickUp = Instantiate(item.pickUpPrefab, spawnLocation, Quaternion.identity);
         WorldMarker worldMarker = createdPickUp.GetComponentInChildren<WorldMarker>();
         KeyItemPickUp pickUp = createdPickUp.GetComponent<KeyItemPickUp>();
+        pickUp.color = markerColor;
         pickUp.item = item;
 
         if (worldMarker != null)

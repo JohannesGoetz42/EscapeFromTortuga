@@ -80,7 +80,7 @@ public class EscapeAgent : EscapeAgentBase
         dialogueText.SetText(FormatText(readyToDepartText));
         blackboardInstance.SetValueAsEnum(EscapeAgentStateKey, EscapeAgentState.ReadyToDepart);
         blackboardInstance.SetValueAsObject(EscapeAreaKey, escapeArea);
-        escapeArea.SetReadyToDepart();
+        escapeArea.SetReadyToDepart(markerColor);
         GameTaskText.Instance.SetText(FormatText(goToEscapeAreaText));
     }
 

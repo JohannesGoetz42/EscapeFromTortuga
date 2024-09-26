@@ -22,6 +22,9 @@ public abstract class EscapeAgentBase : RunBehaviorTree, IHasThumbnail
     protected DialogueText dialogueText;
     [SerializeField, TextArea(10, 100)]
     protected string readyToDepartText;
+    [SerializeField]
+    public Color markerColor = Color.white;
+    public Color BackgroundColor => markerColor;
 
     SphereCollider _trigger;
     public Sprite Thumbnail => thumbnail;
@@ -36,4 +39,3 @@ public abstract class EscapeAgentBase : RunBehaviorTree, IHasThumbnail
         _trigger.isTrigger = true;
     }
 }
- 

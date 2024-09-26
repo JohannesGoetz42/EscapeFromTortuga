@@ -7,6 +7,7 @@ public class EscapeArea : MonoBehaviour, IHasThumbnail
     public string DisplayName { get; private set; }
 
     Sprite IHasThumbnail.Thumbnail => thumbnail;
+    public Color BackgroundColor => color;
 
     [SerializeField]
     Sprite thumbnail;
@@ -15,10 +16,12 @@ public class EscapeArea : MonoBehaviour, IHasThumbnail
     [SerializeField]
     SphereCollider triggerSphere;
 
+    Color color = Color.white;
     bool isReadyToDepart;
 
-    public void SetReadyToDepart()
+    public void SetReadyToDepart(Color markerColor)
     {
+        color = markerColor;
         isReadyToDepart = true;
         if (marker != null)
         {

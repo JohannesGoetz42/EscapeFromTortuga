@@ -6,12 +6,14 @@ public class ScreenEdgeMarker : MonoBehaviour
 {
     [SerializeField]
     Image thumbnailImage;
+    [SerializeField]
+    Image backgroundImage;
 
     MeshRenderer _targetMesh;
     RectTransform _screenBorderMarker;
     RectTransform _thumbnail;
 
-    public static ScreenEdgeMarker AddToGameObject(MeshRenderer targetMesh, ScreenEdgeMarker markerPrefab, Sprite thumbnailSprite)
+    public static ScreenEdgeMarker AddToGameObject(MeshRenderer targetMesh, ScreenEdgeMarker markerPrefab, Sprite thumbnailSprite, Color backgroundColor)
     {
         GameObject gameObject = Instantiate(markerPrefab.gameObject);
         ScreenEdgeMarker createdInstance = gameObject.GetComponent<ScreenEdgeMarker>();
@@ -20,6 +22,7 @@ public class ScreenEdgeMarker : MonoBehaviour
         createdInstance._targetMesh = targetMesh;
         gameObject.transform.SetParent(PlayerController.Instance.OverlayCanvas.transform);
 
+        // initialize thumbnail
         if (createdInstance.thumbnailImage != null)
         {
             createdInstance.thumbnailImage.sprite = thumbnailSprite;
@@ -28,6 +31,16 @@ public class ScreenEdgeMarker : MonoBehaviour
         else
         {
             Debug.LogWarningFormat("Screen edge marker {0} has no thumbnail image!", markerPrefab.name);
+        }
+
+        // initialize background color
+        if (createdInstance.backgroundImage!= null)
+        {
+            createdInstance.backgroundImage.color = backgroundColor;
+        }
+        else
+        {
+            Debug.LogWarningFormat("Screen edge marker {0} has no background image!", markerPrefab.name);
         }
 
         return createdInstance;

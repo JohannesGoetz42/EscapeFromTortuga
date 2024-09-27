@@ -1205,11 +1205,7 @@ MonoBehaviour:
   sprintSpeed: 10
   maxStamina: 20
   staminaRecoveryRate: 2
-  cameraDistance: 10
-  cameraAngle: 60
-  <viewCollisionFadeLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 1024
+  characterSounds: {fileID: 11400000, guid: 119b7fb7bd631374aab7e4132cc58d42, type: 2}
 --- !u!54 &8940165893656762262
 Rigidbody:
   m_ObjectHideFlags: 0

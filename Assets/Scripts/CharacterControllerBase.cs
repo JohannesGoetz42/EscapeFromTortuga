@@ -13,6 +13,8 @@ public class CharacterControllerBase : MonoBehaviour
     [SerializeField]
     /** The amount of stamina recovered per second while not sprinting */
     private float staminaRecoveryRate = 2.0f;
+    [SerializeField]
+    CharacterSounds characterSounds;
 
     protected Animator animator;
     private bool isRecoveringFromSprint;
@@ -31,6 +33,8 @@ public class CharacterControllerBase : MonoBehaviour
     {
         animator = gameObject.GetComponent<Animator>();
         CurrentStamina = maxStamina;
+
+        AnimationEventHandler.AddToObject(gameObject, characterSounds);
     }
 
     protected void HandleMovement(Vector3 direction)

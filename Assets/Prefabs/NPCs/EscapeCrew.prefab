@@ -1141,6 +1141,7 @@ MonoBehaviour:
   sprintSpeed: 10
   maxStamina: 20
   staminaRecoveryRate: 2
+  characterSounds: {fileID: 11400000, guid: 119b7fb7bd631374aab7e4132cc58d42, type: 2}
   <patrolPoints>k__BackingField: []
   patrolPathColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!114 &-2503967678105010838

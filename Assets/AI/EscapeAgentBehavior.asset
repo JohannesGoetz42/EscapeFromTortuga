@@ -404,7 +404,7 @@ MonoBehaviour:
   behaviorTree: {fileID: 11400000}
   nodeTypeName: Marker visibility
   nodeName: Overhead marker
-  visibility: 1
+  visibility: 2
 --- !u!114 &4819776042230236191
 MonoBehaviour:
   m_ObjectHideFlags: 0

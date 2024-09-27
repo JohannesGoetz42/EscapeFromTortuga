@@ -34,5 +34,8 @@ public abstract class MenuButtonBase : MonoBehaviour
 
         _button.UnregisterCallback<ClickEvent>(OnClick);
     }
-    virtual protected void OnClick(ClickEvent click) { }
+    virtual protected void OnClick(ClickEvent click) 
+    { 
+        UISoundManager.OnClick(click);
+    }
 }

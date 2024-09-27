@@ -7,6 +7,8 @@ public class CycleMaterialButton : MenuButtonBase
 
     protected override void OnClick(ClickEvent clickEvent)
     {
+        base.OnClick(clickEvent);
+
         foreach (MaterialSwitch materialSwitch in FindObjectsByType<MaterialSwitch>(FindObjectsSortMode.None))
         {
             if (cycleBack)

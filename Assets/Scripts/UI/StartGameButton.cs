@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -11,7 +10,8 @@ public class StartGameButton : MenuButtonBase
 
     protected override void OnClick(ClickEvent clickEvent)
     {
-        Debug.Log("Starting Game");
+        base.OnClick(clickEvent);
+
         SceneManager.LoadScene(Constants.gameScene);
     }
 }

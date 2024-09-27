@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 980210830}
   - component: {fileID: 980210829}
   - component: {fileID: 980210828}
+  - component: {fileID: 980210832}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -598,6 +599,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonName: CycleMaterialButtonPrevious
   cycleBack: 1
+--- !u!114 &980210832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980210822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d86316497e2e01d43aff32496bb21721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPressSound: {fileID: 8300000, guid: 7e564066f0f6ad04fac0046e3b7f957a, type: 3}
+  UIDocuments:
+  - {fileID: 980210823}
+  audioSource: {fileID: 1549882042}
 --- !u!1001 &1189538880
 PrefabInstance:
   m_ObjectHideFlags: 0

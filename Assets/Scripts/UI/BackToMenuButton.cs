@@ -11,6 +11,8 @@ public class BackToMenuButton : MenuButtonBase
 
     protected override void OnClick(ClickEvent clickEvent)
     {
+        base.OnClick(clickEvent);
+
         SceneManager.LoadScene(Constants.mainMenu);
     }
 }

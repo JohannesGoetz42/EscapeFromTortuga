@@ -14,6 +14,8 @@ public class QuitButton : MenuButtonBase
 
     protected override void OnClick(ClickEvent clickEvent)
     {
+        base.OnClick(clickEvent);
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else

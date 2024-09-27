@@ -7,6 +7,8 @@ public class CycleModelButtons : MenuButtonBase
 
     protected override void OnClick(ClickEvent clickEvent)
     {
+        base.OnClick(clickEvent);
+
         foreach (ModelSwitch modelSwitch in FindObjectsByType<ModelSwitch>(FindObjectsSortMode.None))
         {
             if (cycleBack)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class ModelSwitch : MonoBehaviour
 {
+    [SerializeField]
+    private bool isPlayerOwned;
     private List<GameObject> _availableModels = new List<GameObject>();
 
     private void Start()
@@ -31,11 +33,14 @@ public class ModelSwitch : MonoBehaviour
 
     public void SelectNextModel()
     {
-        SelectModel(GameManager.Instance.SelectedCharacter + 1);
+        int newIndex = GameManager.Instance.SelectedCharacter + 1;
+        SelectModel(newIndex);
     }
+
     public void SelectPreviousModel()
     {
-        SelectModel(GameManager.Instance.SelectedCharacter - 1);
+        int newIndex = GameManager.Instance.SelectedCharacter - 1;
+        SelectModel(newIndex);
     }
 
     void SelectModel(int modelIndex)
@@ -53,6 +58,9 @@ public class ModelSwitch : MonoBehaviour
             _availableModels[i].SetActive(modelIndex == i);
         }
 
-        GameManager.Instance.SelectedCharacter = modelIndex;
+        if (isPlayerOwned)
+        {
+            GameManager.Instance.SelectedCharacter = modelIndex;
+        }
     }
 }

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class MaterialSwitch : MonoBehaviour
 {
+    [SerializeField]
+    private bool isPlayerOwned;
+
     void Start()
     {
         if (GameManager.Instance == null)
@@ -22,11 +25,13 @@ public class MaterialSwitch : MonoBehaviour
 
     public void SelectNextMaterial()
     {
-        SelectMaterial(GameManager.Instance.SelectedMaterial + 1);
+        int newMaterial = GameManager.Instance.SelectedMaterial + 1;
+        SelectMaterial(newMaterial);
     }
     public void SelectPreviousMaterial()
     {
-        SelectMaterial(GameManager.Instance.SelectedMaterial - 1);
+        int newMaterial = GameManager.Instance.SelectedMaterial - 1;
+        SelectMaterial(newMaterial);
     }
 
     void SelectMaterial(int materialIndex)
@@ -52,6 +57,9 @@ public class MaterialSwitch : MonoBehaviour
             }
         }
 
-        GameManager.Instance.SelectedMaterial = materialIndex;
+        if (isPlayerOwned)
+        {
+            GameManager.Instance.SelectedMaterial = materialIndex;
+        }
     }
 }

@@ -1128,6 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf0df57e40987a41ad24222ab89d6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerOwned: 1
 --- !u!114 &4733879381319427361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1140,6 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ab37a58c5911e448ed660295fb94ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerOwned: 1
 --- !u!114 &6499872950639519688
 MonoBehaviour:
   m_ObjectHideFlags: 0

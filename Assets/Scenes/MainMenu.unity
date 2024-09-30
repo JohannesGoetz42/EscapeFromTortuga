@@ -612,8 +612,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPressSound: {fileID: 8300000, guid: 7e564066f0f6ad04fac0046e3b7f957a, type: 3}
-  UIDocuments:
-  - {fileID: 980210823}
   audioSource: {fileID: 1549882042}
 --- !u!1001 &1189538880
 PrefabInstance:
@@ -993,7 +991,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.483
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1202,6 +1200,9 @@ PrefabInstance:
     - {fileID: 123564, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
     - {fileID: 124676, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
     - {fileID: 139630, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
+    - {fileID: 149640, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
+    - {fileID: 125904, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
+    - {fileID: 144842, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 126762, guid: 1cc323c6fbf66b44b87cf8f0d2378b05, type: 3}

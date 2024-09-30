@@ -7,6 +7,8 @@ public class BackgroundMusicPlayer : MonoBehaviour
     private AudioClip[] musicTracks;
     [SerializeField]
     private AudioSource soundSource;
+    [SerializeField]
+    private float volume = 0.3f;
 
     private int currentTrack;
 
@@ -28,6 +30,7 @@ public class BackgroundMusicPlayer : MonoBehaviour
         currentTrack = newTrack < currentTrack ? newTrack : newTrack + 1;
 
         soundSource.clip = musicTracks[currentTrack];
+        soundSource.volume = volume;
         soundSource.Play();
         return musicTracks[currentTrack].length;
     }
